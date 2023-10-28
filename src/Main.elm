@@ -57,5 +57,25 @@ view : Model -> Browser.Document Msg
 view _ =
     { title = "Dunnaudio"
     , body =
-        [ layout [] (text "Dunn 🎙 Audio") ]
+        [ layout []
+            (row [ height fill, width fill ]
+                [ column [ width (fillPortion 1) ] []
+                , column [ width (fillPortion 4), height fill ]
+                    [ row [ alignTop, paddingXY 0 50, width fill ]
+                        [ el [ alignLeft ] (text "Dunn 🎙 Audio")
+                        , row [ alignRight, spacing 40 ]
+                            [ text "Home"
+                            , text "About Me"
+                            , text "Portfolio"
+                            , text "Testimonials"
+                            , text "Contact"
+                            , text "Soundcloud"
+                            , text "My CV"
+                            ]
+                        ]
+                    ]
+                , column [ width (fillPortion 1) ] []
+                ]
+            )
+        ]
     }
