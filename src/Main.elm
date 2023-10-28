@@ -2,7 +2,7 @@ module Main exposing (main)
 
 import Browser
 import Browser.Navigation exposing (Key)
-import Html exposing (..)
+import Element exposing (..)
 import Url
 
 
@@ -57,5 +57,5 @@ view : Model -> Browser.Document Msg
 view _ =
     { title = "Dunnaudio"
     , body =
-        [ Html.h1 [] [ Html.text "Dunnaudio" ] ]
+        [ layout [] (text "Dunn 🎙 Audio") ]
     }
