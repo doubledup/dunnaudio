@@ -3,7 +3,7 @@ module Main exposing (main)
 import Browser
 import Browser.Navigation exposing (Key)
 import Element exposing (..)
-import Element.Background
+import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
 import List exposing (repeat)
@@ -139,7 +139,7 @@ view _ =
                                     , paddingXY 30 20
                                     , Border.color orange
                                     , Border.rounded 10
-                                    , Element.Background.color orange
+                                    , Background.color orange
                                     , Font.color (rgb 1 1 1)
                                     ]
                                     (text "View my CV for more")
@@ -168,6 +168,54 @@ view _ =
                             , row [ spacingSmall, width fill, height (px 80), Border.width 1 ] (repeat 7 (el [ centerX, width (px 120), height fill, Border.width 1 ] none))
                             , row [ spacingSmall, width fill, height (px 80), Border.width 1 ] (repeat 7 (el [ centerX, width (px 120), height fill, Border.width 1 ] none))
                             , row [ spacingSmall, width fill, height (px 80), Border.width 1 ] (repeat 7 (el [ centerX, width (px 120), height fill, Border.width 1 ] none))
+                            ]
+                        , column [ spacingSmall, width fill, Border.width 1 ]
+                            [ el [ centerX, Font.bold ] (text "Testimonials")
+                            , row [ width fill ]
+                                [ el [ width (fillPortion 1), height fill, Border.width 1 ]
+                                    (el
+                                        [ centerX
+                                        , centerY
+                                        , width (px 40)
+                                        , height (px 40)
+                                        , Border.rounded 20
+                                        , Font.color orange
+                                        , Font.extraBold
+                                        ]
+                                        (el [ centerX, centerY ] (text "<"))
+                                    )
+                                , column [ spacingSmall, width (fillPortion 8), height fill, Border.width 1 ]
+                                    [ column [ centerX, spacing 5, Font.center, Border.width 1 ]
+                                        [ paragraph [] [ text "“… Despite the incredibly difficult working conditions in Mali and Egypt your sound recording was brilliant." ]
+                                        , paragraph [] [ text "We so appreciate having someone with your enthusiasm, energy and experience." ]
+                                        , paragraph [] [ text "Your stereo recordings of the big ceremonies have created a sound that makes the viewer feel so present…" ]
+                                        , paragraph [] [ text "“Cosmic Africa“ has really benefited in a big way through your dedication to the sound…”" ]
+                                        ]
+                                    , paragraph [ Font.center, Font.bold ] [ text "Craig Foster" ]
+                                    , paragraph [ Font.center ] [ text "Earthrise Productions" ]
+                                    ]
+                                , el [ width (fillPortion 1), height fill, Border.width 1 ]
+                                    (el
+                                        [ centerX
+                                        , centerY
+                                        , width (px 40)
+                                        , height (px 40)
+                                        , Border.rounded 20
+                                        , Font.color orange
+                                        , Font.extraBold
+                                        ]
+                                        (el [ centerX, centerY ] (text ">"))
+                                    )
+                                ]
+                            , row [ centerX, spacing 5 ]
+                                [ dot orange
+                                , dot grey
+                                , dot grey
+                                , dot grey
+                                , dot grey
+                                , dot grey
+                                , dot grey
+                                ]
                             ]
                         ]
                     ]
@@ -198,6 +246,11 @@ orange =
     rgb255 254 102 3
 
 
+grey : Color
+grey =
+    rgb255 204 204 204
+
+
 awardStyle : List (Attribute msg)
 awardStyle =
     [ padding 10
@@ -208,3 +261,8 @@ awardStyle =
     , Font.bold
     , Font.center
     ]
+
+
+dot : Color -> Element msg
+dot color =
+    el [ width (px 16), height (px 16), Border.rounded 8, Background.color color ] none
