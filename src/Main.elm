@@ -217,6 +217,16 @@ view _ =
                                 , dot grey
                                 ]
                             ]
+                        , column [ spacingSmall, width fill, Border.width 1 ]
+                            [ el [ centerX, Font.bold ] (text "Let's Chat!")
+                            , paragraph [ Font.center ]
+                                [ text "Email: "
+                                , link []
+                                    { url = "mailto:seb@dunnaudio.com"
+                                    , label = text "seb@dunnaudio.com"
+                                    }
+                                ]
+                            ]
                         ]
                     ]
                 , column [ width (fillPortion 1) ] []
