@@ -141,7 +141,7 @@ view _ =
                                         , Border.color orange
                                         , Border.rounded 10
                                         , Background.color orange
-                                        , Font.color (rgb 1 1 1)
+                                        , Font.color white
                                         ]
                                         (text "View my CV for more")
                                     ]
@@ -289,12 +289,12 @@ grey =
 
 black : Color
 black =
-    rgb255 20 20 20
+    rgb255 10 10 10
 
 
 white : Color
 white =
-    rgb255 230 230 230
+    rgb255 240 240 240
 
 
 awardStyle : List (Attribute msg)
