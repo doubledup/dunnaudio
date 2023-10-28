@@ -227,6 +227,18 @@ view _ =
                                     }
                                 ]
                             ]
+                        , column [ spacingSmall, width fill, Border.width 1 ]
+                            [ el [ centerX ]
+                                (text "Follow me on my socials!")
+                            , row
+                                [ spaceEvenly, width fill, paddingXY 50 0 ]
+                                [ el [ width (px 40), height (px 40), Background.color black, Border.rounded 20 ] none
+                                , el [ width (px 40), height (px 40), Background.color black, Border.rounded 20 ] none
+                                , el [ width (px 40), height (px 40), Background.color black, Border.rounded 20 ] none
+                                , el [ width (px 40), height (px 40), Background.color black, Border.rounded 20 ] none
+                                , el [ width (px 40), height (px 40), Background.color black, Border.rounded 20 ] none
+                                ]
+                            ]
                         ]
                     ]
                 , column [ width (fillPortion 1) ] []
@@ -259,6 +271,11 @@ orange =
 grey : Color
 grey =
     rgb255 204 204 204
+
+
+black : Color
+black =
+    rgb255 0 0 0
 
 
 awardStyle : List (Attribute msg)
