@@ -118,7 +118,7 @@ view _ =
                             ]
                         , column [ spacingMedium, width fill, Border.width 1 ]
                             [ el [ centerX, Font.bold ] (text "Extra Documents & Notes")
-                            , row [ spaceEvenly, width fill ]
+                            , row [ paddingXY 100 0, spaceEvenly, width fill ]
                                 [ column [ spacingSmall, width (px 300) ]
                                     [ el [ centerX, width (px 100), height (px 100), Border.width 1 ] (paragraph [] [ text "Passport icon" ])
                                     , paragraph [ Font.center, Font.bold ] [ text "British & South African Passport" ]
