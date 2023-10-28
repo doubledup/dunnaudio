@@ -95,9 +95,9 @@ view _ =
                                 [ el [ width (px 350), height (px 250), Element.Border.width 1 ] (text "Pic with Ambisonic")
                                 , column [ spacingMedium, width fill, Element.Font.center ]
                                     [ paragraph [ Element.Font.bold ] [ text "What I Do Now" ]
-                                    , paragraph [] [ text "I spend a lot of my time on documentary productions, although still work in other arenas. This has taken me all over the world, working for the major broadcasting channels in over 30 countries and exploring a diverse range of subjects." ]
+                                    , paragraph [] [ text "I spend a lot of my time on documentary productions, although I still work in other arenas. This has taken me all over the world, working for the major broadcasting channels in over 30 countries and exploring a diverse range of subjects." ]
                                     , paragraph [] [ text "I also now specialise in recording ‘The sounds of Africa’ having been commissioned by several top international production companies to record animals and general ambiences of Africa." ]
-                                    , paragraph [] [ text "My favourite ‘go-to’ is an Ambisonic Microphone that captures immersive surround sounds of the environments I’m recording in. An important tool in the sound design process of most productions." ]
+                                    , paragraph [] [ text "My favourite ‘go-to’ is an Ambisonic Microphone that captures immersive surround sounds of the environments I’m recording in - an important tool in the sound design process of most productions." ]
                                     ]
                                 ]
                             , row [ spacingSmall, width fill ]
