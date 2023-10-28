@@ -78,12 +78,12 @@ view _ =
                     , column [ spacingLarge, width fill ]
                         [ row [ width fill, height (px 700), Border.width 1 ] [ el [ centerX ] (text "Picture Reel") ]
                         , row [ spacingSmall, width fill, Border.width 1 ]
-                            [ column [ spacingMedium, width (fillPortion 1), alignTop, Border.width 1 ]
+                            [ column [ spacingMedium, width (fillPortion 1), alignTop, Border.width 1, Font.center ]
                                 [ el [ centerX, Font.bold ] (text "About Me")
-                                , paragraph [ Font.center ] [ text "I’m a passionate and positive sound recordist with a sharp ear dedicated to getting the best possible sound with technical proficiency. I am calm, level-headed and have the technical ability and versatility to adapt quickly to changing environments." ]
-                                , paragraph [ Font.center ] [ text "I started working as a sound recordist in 1993. My early work was on environmental documentaries, actuality and corporate production." ]
-                                , paragraph [ Font.center ] [ text "Then, in 1994, I achieved a milestone in my career by covering the post-apartheid elections in South Africa for Sky News. Being involved in such a positive and peaceful moment in South African history further solidified my passion for this career." ]
-                                , paragraph [ Font.center ] [ text "The elections opened many doors for me and in 1995, I set myself up as a full-time freelance sound recordist. I worked on several local and international productions in the film industry as a boom operator to broaden my experience." ]
+                                , paragraph [] [ text "I’m a passionate and positive sound recordist with a sharp ear dedicated to getting the best possible sound with technical proficiency. I am calm, level-headed and have the technical ability and versatility to adapt quickly to changing environments." ]
+                                , paragraph [] [ text "I started working as a sound recordist in 1993. My early work was on environmental documentaries, actuality and corporate production." ]
+                                , paragraph [] [ text "Then, in 1994, I achieved a milestone in my career by covering the post-apartheid elections in South Africa for Sky News. Being involved in such a positive and peaceful moment in South African history further solidified my passion for this career." ]
+                                , paragraph [] [ text "The elections opened many doors for me and in 1995, I set myself up as a full-time freelance sound recordist. I worked on several local and international productions in the film industry as a boom operator to broaden my experience." ]
                                 ]
                             , column [ spacingSmall, width (fillPortion 1), Border.width 1 ]
                                 [ el [ width fill, height (px 300), Border.width 1 ] (text "Pic with cheetah")
