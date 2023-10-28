@@ -3,6 +3,7 @@ module Main exposing (main)
 import Browser
 import Browser.Navigation exposing (Key)
 import Element exposing (..)
+import Element.Background
 import Element.Border as Border
 import Element.Font as Font
 import Url
@@ -113,6 +114,34 @@ view _ =
                                 , paragraph awardStyle [ text "Jackson Wild Media Awards nominee 2015 Best Sound for 'Gorongosa Park: Rebirth of Paradise'" ]
                                 , paragraph awardStyle [ text "News and Documentary Emmy Awards nominee 2023 Outstanding Sound for 'Our Universe'" ]
                                 , column [ width (fillPortion 1) ] []
+                                ]
+                            ]
+                        , column [ spacingMedium, width fill, Border.width 1 ]
+                            [ el [ centerX, Font.bold ] (text "Extra Documents & Notes")
+                            , row [ spaceEvenly, width fill ]
+                                [ column [ spacingSmall, width (px 300) ]
+                                    [ el [ centerX, width (px 100), height (px 100), Border.width 1 ] (paragraph [] [ text "Passport icon" ])
+                                    , paragraph [ Font.center, Font.bold ] [ text "British & South African Passport" ]
+                                    ]
+                                , column [ spacingSmall, width (px 300) ]
+                                    [ el [ centerX, width (px 100), height (px 100), Border.width 1 ] (paragraph [] [ text "Teaching icon" ])
+                                    , paragraph [ Font.center, Font.bold ] [ text "Teaching Experience" ]
+                                    ]
+                                , column [ spacingSmall, width (px 300) ]
+                                    [ el [ centerX, width (px 100), height (px 100), Border.width 1 ] (paragraph [] [ text "Passport icon" ])
+                                    , paragraph [ Font.center, Font.bold ] [ text "Updated Immunisations for Foreign Travel" ]
+                                    ]
+                                ]
+                            , row [ width fill ]
+                                [ el
+                                    [ centerX
+                                    , paddingXY 30 20
+                                    , Border.color orange
+                                    , Border.rounded 10
+                                    , Element.Background.color orange
+                                    , Font.color (rgb 1 1 1)
+                                    ]
+                                    (text "View my CV for more")
                                 ]
                             ]
                         ]
