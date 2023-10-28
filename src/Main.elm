@@ -105,6 +105,16 @@ view _ =
                                 , el [ width (fillPortion 1), height (px 400), Element.Border.width 1 ] (text "Pic with CPT")
                                 ]
                             ]
+                        , column [ spacingMedium, width fill, Element.Border.width 1 ]
+                            [ el [ centerX, Element.Font.bold ] (text "Nominations & Awards")
+                            , row [ spacingSmall ]
+                                [ column [ width (fillPortion 1) ] []
+                                , paragraph awardStyle [ text "BAFTA Craft Awards nominee 2013 Best Sound for 'Brazil with Michael Palin'" ]
+                                , paragraph awardStyle [ text "Jackson Wild Media Awards nominee 2015 Best Sound for 'Gorongosa Park: Rebirth of Paradise'" ]
+                                , paragraph awardStyle [ text "News and Documentary Emmy Awards nominee 2023 Outstanding Sound for 'Our Universe'" ]
+                                , column [ width (fillPortion 1) ] []
+                                ]
+                            ]
                         ]
                     ]
                 , column [ width (fillPortion 1) ] []
@@ -127,3 +137,20 @@ spacingMedium =
 spacingLarge : Attribute msg
 spacingLarge =
     spacing 80
+
+
+orange : Color
+orange =
+    rgb255 254 102 3
+
+
+awardStyle : List (Attribute msg)
+awardStyle =
+    [ padding 10
+    , width (fillPortion 2)
+    , Element.Border.color orange
+    , Element.Border.rounded 10
+    , Element.Border.width 1
+    , Element.Font.bold
+    , Element.Font.center
+    ]
