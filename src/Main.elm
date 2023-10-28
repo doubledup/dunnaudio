@@ -113,11 +113,17 @@ view _ =
         ]
     }
 
+
 spacingSmall : Attribute msg
-spacingSmall = spacing 20
+spacingSmall =
+    spacing 20
+
 
 spacingMedium : Attribute msg
-spacingMedium = spacing 40
+spacingMedium =
+    spacing 40
+
 
 spacingLarge : Attribute msg
-spacingLarge = spacing 80
+spacingLarge =
+    spacing 80
