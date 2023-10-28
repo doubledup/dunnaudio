@@ -88,13 +88,13 @@ view _ =
                                 , paragraph [] [ text "The elections opened many doors for me and in 1995, I set myself up as a full-time freelance sound recordist. I worked on several local and international productions in the film industry as a boom operator to broaden my experience." ]
                                 ]
                             , column [ spacingSmall, width (fillPortion 1), Border.width 1 ]
-                                [ el [ width fill, height (px 300), Border.width 1 ] (el [centerX, centerY] (text "Pic with cheetah"))
-                                , el [ width fill, height (px 300), Border.width 1 ] (el [centerX, centerY] (text "Pic with Hadza"))
+                                [ el [ width fill, height (px 300), Border.width 1 ] (el [ centerX, centerY ] (text "Pic with cheetah"))
+                                , el [ width fill, height (px 300), Border.width 1 ] (el [ centerX, centerY ] (text "Pic with Hadza"))
                                 ]
                             ]
                         , column [ spacingMedium, width fill, Border.width 1 ]
                             [ row [ spacingSmall, width fill ]
-                                [ el [ width (px 350), height (px 250), Border.width 1 ] (el [centerX, centerY] (text "Pic with Ambisonic"))
+                                [ el [ width (px 350), height (px 250), Border.width 1 ] (el [ centerX, centerY ] (text "Pic with Ambisonic"))
                                 , column [ spacingMedium, width fill, Font.center ]
                                     [ el [ centerX, Font.bold ] (text "What I Do Now")
                                     , paragraph [] [ text "I spend a lot of my time on documentary productions, although I still work in other arenas. This has taken me all over the world, working for the major broadcasting channels in over 30 countries and exploring a diverse range of subjects." ]
@@ -103,8 +103,8 @@ view _ =
                                     ]
                                 ]
                             , row [ spacingSmall, width fill ]
-                                [ el [ width (fillPortion 1), height (px 400), Border.width 1 ] (el [centerX, centerY] (text "Pic with Wauja"))
-                                , el [ width (fillPortion 1), height (px 400), Border.width 1 ] (el [centerX, centerY] (text "Pic with CPT"))
+                                [ el [ width (fillPortion 1), height (px 400), Border.width 1 ] (el [ centerX, centerY ] (text "Pic with Wauja"))
+                                , el [ width (fillPortion 1), height (px 400), Border.width 1 ] (el [ centerX, centerY ] (text "Pic with CPT"))
                                 ]
                             ]
                         , column [ spacingMedium, width fill, Border.width 1 ]
