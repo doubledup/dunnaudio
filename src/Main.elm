@@ -144,6 +144,21 @@ view _ =
                                     (text "View my CV for more")
                                 ]
                             ]
+                        , column [ spacingMedium, width fill, Border.width 1 ]
+                            [ el [ centerX, Font.bold ] (text "Portfolio links")
+                            , column [ spacingSmall, width fill ]
+                                [ row [ centerX, spacingSmall ]
+                                    [ el [ width (px 320), height (px 180), Border.width 1 ] (el [ centerX, centerY ] (text "Our universe"))
+                                    , el [ width (px 320), height (px 180), Border.width 1 ] (el [ centerX, centerY ] (text "Survivor"))
+                                    , el [ width (px 320), height (px 180), Border.width 1 ] (el [ centerX, centerY ] (text "Elephants"))
+                                    ]
+                                , row [ centerX, spacingSmall ]
+                                    [ el [ width (px 320), height (px 180), Border.width 1 ] (el [ centerX, centerY ] (text "Malawi"))
+                                    , el [ width (px 320), height (px 180), Border.width 1 ] (el [ centerX, centerY ] (text "Monkeys"))
+                                    , el [ width (px 320), height (px 180), Border.width 1 ] (el [ centerX, centerY ] (text "Lions"))
+                                    ]
+                                ]
+                            ]
                         ]
                     ]
                 , column [ width (fillPortion 1) ] []
