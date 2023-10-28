@@ -6,6 +6,7 @@ import Element exposing (..)
 import Element.Background
 import Element.Border as Border
 import Element.Font as Font
+import List exposing (repeat)
 import Url
 
 
@@ -158,6 +159,15 @@ view _ =
                                     , el [ width (px 320), height (px 180), Border.width 1 ] (el [ centerX, centerY ] (text "Lions"))
                                     ]
                                 ]
+                            ]
+                        , column [ spacingSmall, width fill, Border.width 1 ]
+                            [ el [ centerX, Font.bold ] (text "Clients")
+                            , row [ spacingSmall, width fill, height (px 80), Border.width 1 ] (repeat 8 (el [ centerX, width (px 120), height fill, Border.width 1 ] none))
+                            , row [ spacingSmall, width fill, height (px 80), Border.width 1 ] (repeat 7 (el [ centerX, width (px 120), height fill, Border.width 1 ] none))
+                            , row [ spacingSmall, width fill, height (px 80), Border.width 1 ] (repeat 7 (el [ centerX, width (px 120), height fill, Border.width 1 ] none))
+                            , row [ spacingSmall, width fill, height (px 80), Border.width 1 ] (repeat 7 (el [ centerX, width (px 120), height fill, Border.width 1 ] none))
+                            , row [ spacingSmall, width fill, height (px 80), Border.width 1 ] (repeat 7 (el [ centerX, width (px 120), height fill, Border.width 1 ] none))
+                            , row [ spacingSmall, width fill, height (px 80), Border.width 1 ] (repeat 7 (el [ centerX, width (px 120), height fill, Border.width 1 ] none))
                             ]
                         ]
                     ]
