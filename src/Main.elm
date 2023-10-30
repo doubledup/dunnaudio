@@ -178,14 +178,24 @@ view _ =
                                     )
                                 ]
                             ]
-                        , column [ spacingMedium, width fill, Border.width 1 ]
-                            [ el [ centerX, Font.bold ] (text "Nominations & Awards")
+                        , column [ spacingMedium, width fill ]
+                            [ el [ centerX, Font.bold, Font.size 42 ] (text "Nominations & Awards")
                             , row [ centerX, spacingSmall ]
-                                [ column [ width (fillPortion 1) ] []
-                                , paragraph awardStyle [ text "BAFTA Craft Awards nominee 2013 Best Sound for 'Brazil with Michael Palin'" ]
-                                , paragraph awardStyle [ text "Jackson Wild Media Awards nominee 2015 Best Sound for 'Gorongosa Park: Rebirth of Paradise'" ]
-                                , paragraph awardStyle [ text "News and Documentary Emmy Awards nominee 2023 Outstanding Sound for 'Our Universe'" ]
-                                , column [ width (fillPortion 1) ] []
+                                [ column awardStyle
+                                    [ paragraph [] [ text "BAFTA Craft Awards nominee" ]
+                                    , paragraph [] [ text "2013" ]
+                                    , paragraph [] [ text "Best Sound for 'Brazil with Michael Palin'" ]
+                                    ]
+                                , column awardStyle
+                                    [ paragraph [] [ text "Jackson Wild Media Awards nominee" ]
+                                    , paragraph [] [ text "2015" ]
+                                    , paragraph [] [ text "Best Sound for 'Gorongosa Park: Rebirth of Paradise'" ]
+                                    ]
+                                , column awardStyle
+                                    [ paragraph [] [ text "News and Documentary Emmy Awards nominee" ]
+                                    , paragraph [] [ text "2023" ]
+                                    , paragraph [] [ text "Outstanding Sound for 'Our Universe'" ]
+                                    ]
                                 ]
                             ]
                         , column [ spacingMedium, width fill, Border.width 1 ]
@@ -374,7 +384,7 @@ white =
 awardStyle : List (Attribute msg)
 awardStyle =
     [ padding 10
-    , width (fillPortion 2)
+    , width (px 280)
     , Border.color orange
     , Border.rounded 10
     , Border.width 1
