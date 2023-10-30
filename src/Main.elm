@@ -95,7 +95,7 @@ view _ =
                     , el [ width (fillPortion 1) ] none
                     ]
                 , el [ width fill ]
-                    (image [ width fill, height (px 800), centerX ]
+                    (image [ width fill, height (px 800) ]
                         { src =
                             "https://dunnaudio.com/wp-content/uploads/slider/cache/8008af127f40c45b0e646af4f0f70aa2/E62D442A-A3B2-4883-BE5E-D995FAABE6FA.jpg"
                         , description = "Sebastian recording elephants"
