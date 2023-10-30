@@ -63,10 +63,10 @@ view _ =
     , body =
         [ layout []
             (column [ height fill, width fill ]
-                [ row [ paddingXY 0 50, width fill, Border.width 1 ]
+                [ row [ paddingXY 0 30, width fill, Border.width 1 ]
                     [ el [ width (fillPortion 1) ] none
                     , row [ width (fillPortion 4) ]
-                        [ el [ alignLeft, Border.width 1 ] (text "Dunn 🎙 Audio")
+                        [ image [ alignLeft, width (px 200) ] {src = "https://dunnaudio.com/wp-content/uploads/2022/09/cropped-DunnAudio.jpg", description = "Dunn 🎙 Audio"}
                         , row [ alignRight, spacingMedium, Border.width 1 ]
                             [ text "Home"
                             , text "About Me"
