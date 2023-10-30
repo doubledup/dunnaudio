@@ -75,11 +75,11 @@ view _ =
                                 [ Font.external
                                     { name = "Open Sans"
                                     , url =
-                                        "https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap"
+                                        "https://fonts.googleapis.com/css2?family=Open+Sans&display=swap"
                                     }
                                 , Font.sansSerif
                                 ]
-                            , Font.light
+                            , Font.extraLight
                             , Font.size 16
                             , htmlAttribute (Html.Attributes.attribute "webkit-font-smoothing" "antialiased")
                             ]
