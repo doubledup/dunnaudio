@@ -114,7 +114,7 @@ view _ =
                                 ]
                             , column [ spacingMedium, width fill, Border.width 1 ]
                                 [ el [ centerX, Font.bold ] (text "Nominations & Awards")
-                                , row [ spacingSmall ]
+                                , row [ centerX, spacingSmall ]
                                     [ column [ width (fillPortion 1) ] []
                                     , paragraph awardStyle [ text "BAFTA Craft Awards nominee 2013 Best Sound for 'Brazil with Michael Palin'" ]
                                     , paragraph awardStyle [ text "Jackson Wild Media Awards nominee 2015 Best Sound for 'Gorongosa Park: Rebirth of Paradise'" ]
