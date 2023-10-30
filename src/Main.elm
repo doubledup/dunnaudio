@@ -63,22 +63,26 @@ view _ =
     , body =
         [ layout []
             (column [ height fill, width fill ]
-                [ row [ height fill, width fill, paddingEach { top = 0, left = 0, right = 0, bottom = 30 } ]
+                [ row [ paddingXY 0 50, width fill, Border.width 1 ]
+                    [ el [ width (fillPortion 1) ] none
+                    , row [ width (fillPortion 4) ]
+                        [ el [ alignLeft, Border.width 1 ] (text "Dunn 🎙 Audio")
+                        , row [ alignRight, spacingMedium, Border.width 1 ]
+                            [ text "Home"
+                            , text "About Me"
+                            , text "Portfolio"
+                            , text "Testimonials"
+                            , text "Contact"
+                            , text "Soundcloud"
+                            , text "My CV"
+                            ]
+                        ]
+                    , el [ width (fillPortion 1) ] none
+                    ]
+                , row [ height fill, width fill, paddingEach { top = 0, left = 0, right = 0, bottom = 30 } ]
                     [ column [ width (fillPortion 1) ] []
                     , column [ width (fillPortion 4), height fill, Border.width 1 ]
-                        [ row [ paddingXY 0 50, width fill, Border.width 1 ]
-                            [ el [ alignLeft, Border.width 1 ] (text "Dunn 🎙 Audio")
-                            , row [ alignRight, spacingMedium, Border.width 1 ]
-                                [ text "Home"
-                                , text "About Me"
-                                , text "Portfolio"
-                                , text "Testimonials"
-                                , text "Contact"
-                                , text "Soundcloud"
-                                , text "My CV"
-                                ]
-                            ]
-                        , column [ spacingLarge, width fill ]
+                        [ column [ spacingLarge, width fill ]
                             [ el [ width fill, height (px 700), Border.width 1 ] (el [ centerX, centerY ] (text "Picture Reel"))
                             , row [ spacingSmall, width fill, Border.width 1 ]
                                 [ column [ spacingMedium, width (fillPortion 1), alignTop, Border.width 1, Font.center ]
