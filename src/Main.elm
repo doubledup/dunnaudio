@@ -119,10 +119,10 @@ view _ =
                         [ row [ spacingSmall, width fill ]
                             [ column [ spacingMedium, width (fillPortion 1), alignTop, Font.center ]
                                 [ el [ centerX, Font.bold, Font.size 42 ] (text "About Me")
-                                , paragraph [ spacing 10 ] [ text "I’m a passionate and positive sound recordist with a sharp ear dedicated to getting the best possible sound with technical proficiency. I am calm, level-headed and have the technical ability and versatility to adapt quickly to changing environments." ]
-                                , paragraph [ spacing 10 ] [ text "I started working as a sound recordist in 1993. My early work was on environmental documentaries, actuality and corporate production." ]
-                                , paragraph [ spacing 10 ] [ text "Then, in 1994, I achieved a milestone in my career by covering the post-apartheid elections in South Africa for Sky News. Being involved in such a positive and peaceful moment in South African history further solidified my passion for this career." ]
-                                , paragraph [ spacing 10 ] [ text "The elections opened many doors for me and in 1995, I set myself up as a full-time freelance sound recordist. I worked on several local and international productions in the film industry as a boom operator to broaden my experience." ]
+                                , paragraph [ spacingParagraph ] [ text "I’m a passionate and positive sound recordist with a sharp ear dedicated to getting the best possible sound with technical proficiency. I am calm, level-headed and have the technical ability and versatility to adapt quickly to changing environments." ]
+                                , paragraph [ spacingParagraph ] [ text "I started working as a sound recordist in 1993. My early work was on environmental documentaries, actuality and corporate production." ]
+                                , paragraph [ spacingParagraph ] [ text "Then, in 1994, I achieved a milestone in my career by covering the post-apartheid elections in South Africa for Sky News. Being involved in such a positive and peaceful moment in South African history further solidified my passion for this career." ]
+                                , paragraph [ spacingParagraph ] [ text "The elections opened many doors for me and in 1995, I set myself up as a full-time freelance sound recordist. I worked on several local and international productions in the film industry as a boom operator to broaden my experience." ]
                                 ]
                             , column [ alignTop, spacingSmall, width (fillPortion 1) ]
                                 [ el [ width fill ]
@@ -145,19 +145,41 @@ view _ =
                                     )
                                 ]
                             ]
-                        , column [ spacingMedium, width fill, Border.width 1 ]
+                        , column [ spacingMedium, width fill ]
                             [ row [ spacingSmall, width fill ]
-                                [ el [ width (px 350), height (px 250), Border.width 1 ] (el [ centerX, centerY ] (text "Pic with Ambisonic"))
-                                , column [ spacingMedium, width fill, Font.center ]
-                                    [ el [ centerX, Font.bold ] (text "What I Do Now")
-                                    , paragraph [] [ text "I spend a lot of my time on documentary productions, although I still work in other arenas. This has taken me all over the world, working for the major broadcasting channels in over 30 countries and exploring a diverse range of subjects." ]
-                                    , paragraph [] [ text "I also now specialise in recording ‘The sounds of Africa’ having been commissioned by several top international production companies to record animals and general ambiences of Africa." ]
-                                    , paragraph [] [ text "My favourite ‘go-to’ is an Ambisonic Microphone that captures immersive surround sounds of the environments I’m recording in - an important tool in the sound design process of most productions." ]
+                                [ el [ width (fillPortion 2), height fill, clip ]
+                                    (image
+                                        [ centerX, centerY, width fill ]
+                                        { src = "https://dunnaudio.com/wp-content/uploads/2022/09/img-1515E7DB99D4-ADB2-5104-C6E1-CD9094CB9E9A-scaled.jpeg"
+                                        , description = "Sebastian recording ambisonic sound on top of a car in Gorongosa National Park in Mozambique"
+                                        }
+                                    )
+                                , column [ spacingMedium, width (fillPortion 5), Font.center ]
+                                    [ el [ centerX, Font.bold, Font.size 42 ] (text "What I Do Now")
+                                    , paragraph [ spacingParagraph ] [ text "I spend a lot of my time on documentary productions, although I still work in other arenas. This has taken me all over the world, working for the major broadcasting channels in over 30 countries and exploring a diverse range of subjects." ]
+                                    , paragraph [ spacingParagraph ] [ text "I also now specialise in recording ‘The sounds of Africa’ having been commissioned by several top international production companies to record animals and general ambiences of Africa." ]
+                                    , paragraph [ spacingParagraph ] [ text "My favourite ‘go-to’ is an Ambisonic Microphone that captures immersive surround sounds of the environments I’m recording in - an important tool in the sound design process of most productions." ]
                                     ]
                                 ]
                             , row [ spacingSmall, width fill ]
-                                [ el [ width (fillPortion 1), height (px 400), Border.width 1 ] (el [ centerX, centerY ] (text "Pic with Wauja"))
-                                , el [ width (fillPortion 1), height (px 400), Border.width 1 ] (el [ centerX, centerY ] (text "Pic with CPT"))
+                                [ el [ width (fillPortion 1), height (px 300), clip ]
+                                    (el [ centerX, centerY ]
+                                        (image
+                                            [ width fill ]
+                                            { src = "https://dunnaudio.com/wp-content/uploads/2022/09/img-22916E6B3E7A-3173-1576-2EF7-9B1CFA553751-scaled.jpg"
+                                            , description = "Sebastian standing with a member of the Wauja community in the Amazon"
+                                            }
+                                        )
+                                    )
+                                , el [ width (fillPortion 1), height (px 300), clip ]
+                                    (el [ centerX, centerY ]
+                                        (image
+                                            [ width fill ]
+                                            { src = "https://dunnaudio.com/wp-content/uploads/2022/09/img-2323B683801B-1B19-5CB3-AD7E-CBAE4EC97E04-scaled.jpeg"
+                                            , description = "Sebastian recording sound in front of Cape Town city hall during lockdown"
+                                            }
+                                        )
+                                    )
                                 ]
                             ]
                         , column [ spacingMedium, width fill, Border.width 1 ]
@@ -311,6 +333,11 @@ view _ =
             )
         ]
     }
+
+
+spacingParagraph : Attribute Msg
+spacingParagraph =
+    spacing 10
 
 
 spacingSmall : Attribute msg
