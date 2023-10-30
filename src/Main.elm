@@ -79,12 +79,12 @@ view _ =
                         ]
                     , el [ width (fillPortion 1) ] none
                     ]
+                , el [ width fill, height (px 700), Border.width 1 ] (el [ centerX, centerY ] (text "Picture Reel"))
                 , row [ height fill, width fill, paddingEach { top = 0, left = 0, right = 0, bottom = 30 } ]
                     [ el [ width (fillPortion 1) ] none
                     , column [ width (fillPortion 4), height fill, Border.width 1 ]
                         [ column [ spacingLarge, width fill ]
-                            [ el [ width fill, height (px 700), Border.width 1 ] (el [ centerX, centerY ] (text "Picture Reel"))
-                            , row [ spacingSmall, width fill, Border.width 1 ]
+                            [ row [ spacingSmall, width fill, Border.width 1 ]
                                 [ column [ spacingMedium, width (fillPortion 1), alignTop, Border.width 1, Font.center ]
                                     [ el [ centerX, Font.bold ] (text "About Me")
                                     , paragraph [] [ text "I’m a passionate and positive sound recordist with a sharp ear dedicated to getting the best possible sound with technical proficiency. I am calm, level-headed and have the technical ability and versatility to adapt quickly to changing environments." ]
