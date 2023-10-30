@@ -6,6 +6,7 @@ import Element exposing (..)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
+import Html.Attributes
 import List exposing (repeat)
 import Url
 
@@ -63,11 +64,25 @@ view _ =
     , body =
         [ layout []
             (column [ height fill, width fill ]
-                [ row [ paddingXY 0 30, width fill, Border.width 1 ]
+                [ row [ paddingXY 0 30, width fill ]
                     [ el [ width (fillPortion 1) ] none
                     , row [ width (fillPortion 4) ]
-                        [ image [ alignLeft, width (px 200) ] {src = "https://dunnaudio.com/wp-content/uploads/2022/09/cropped-DunnAudio.jpg", description = "Dunn 🎙 Audio"}
-                        , row [ alignRight, spacingMedium, Border.width 1 ]
+                        [ image [ alignLeft, width (px 200) ] { src = "https://dunnaudio.com/wp-content/uploads/2022/09/cropped-DunnAudio.jpg", description = "Dunn 🎙 Audio" }
+                        , row
+                            [ alignRight
+                            , spacingMedium
+                            , Font.family
+                                [ Font.external
+                                    { name = "Open Sans"
+                                    , url =
+                                        "https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap"
+                                    }
+                                , Font.sansSerif
+                                ]
+                            , Font.light
+                            , Font.size 16
+                            , htmlAttribute (Html.Attributes.attribute "webkit-font-smoothing" "antialiased")
+                            ]
                             [ text "Home"
                             , text "About Me"
                             , text "Portfolio"
