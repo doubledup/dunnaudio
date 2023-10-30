@@ -125,23 +125,19 @@ view _ =
                                 , paragraph [ spacingParagraph ] [ text "The elections opened many doors for me and in 1995, I set myself up as a full-time freelance sound recordist. I worked on several local and international productions in the film industry as a boom operator to broaden my experience." ]
                                 ]
                             , column [ alignTop, spacingSmall, width (fillPortion 1) ]
-                                [ el [ width fill ]
-                                    (el []
-                                        (image
-                                            [ width fill, height (px 330) ]
-                                            { src = "https://dunnaudio.com/wp-content/uploads/2022/09/cheetah-2F363AA19-8B11-1EF2-8A0D-93A3D603CE68.jpeg"
-                                            , description = "Sebastian wearing sound equipment and standing next to a cheetah"
-                                            }
-                                        )
+                                [ el [ width fill, height (px 330), clip ]
+                                    (image
+                                        [ width fill, moveUp 50 ]
+                                        { src = "https://dunnaudio.com/wp-content/uploads/2022/09/cheetah-2F363AA19-8B11-1EF2-8A0D-93A3D603CE68.jpeg"
+                                        , description = "Sebastian wearing sound equipment and standing next to a cheetah"
+                                        }
                                     )
-                                , el [ width fill ]
-                                    (el []
-                                        (image
-                                            [ width fill, height (px 330) ]
-                                            { src = "https://dunnaudio.com/wp-content/uploads/2022/09/img-1107B693DE77-E415-00E8-223D-D374E3ED3911-scaled.jpeg"
-                                            , description = "Sebastian recording members of the Hadza community in Tanzania"
-                                            }
-                                        )
+                                , el [ width fill, height (px 330), clip ]
+                                    (image
+                                        [ width fill, moveUp 50 ]
+                                        { src = "https://dunnaudio.com/wp-content/uploads/2022/09/img-1107B693DE77-E415-00E8-223D-D374E3ED3911-scaled.jpeg"
+                                        , description = "Sebastian recording members of the Hadza community in Tanzania"
+                                        }
                                     )
                                 ]
                             ]
