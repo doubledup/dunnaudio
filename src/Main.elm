@@ -59,7 +59,7 @@ onUrlChange _ =
 
 view : Model -> Browser.Document Msg
 view _ =
-    { title = "Dunnaudio"
+    { title = "Dunn Audio"
     , body =
         [ layout []
             (column [ height fill, width fill ]
