@@ -80,7 +80,7 @@ view _ =
                     , el [ width (fillPortion 1) ] none
                     ]
                 , row [ height fill, width fill, paddingEach { top = 0, left = 0, right = 0, bottom = 30 } ]
-                    [ column [ width (fillPortion 1) ] []
+                    [ el [ width (fillPortion 1) ] none
                     , column [ width (fillPortion 4), height fill, Border.width 1 ]
                         [ column [ spacingLarge, width fill ]
                             [ el [ width fill, height (px 700), Border.width 1 ] (el [ centerX, centerY ] (text "Picture Reel"))
@@ -246,7 +246,7 @@ view _ =
                                 ]
                             ]
                         ]
-                    , column [ width (fillPortion 1) ] []
+                    , el [ width (fillPortion 1) ] none
                     ]
                 , column [ width fill, padding 30, spacing 10, Background.color black, Font.center, Font.color white ]
                     [ paragraph []
