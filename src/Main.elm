@@ -534,7 +534,7 @@ white =
 awardStyle : List (Attribute msg)
 awardStyle =
     [ padding 10
-    , width (px 280)
+    , width (px 300)
     , Border.color orange
     , Border.rounded 10
     , Border.width 1
