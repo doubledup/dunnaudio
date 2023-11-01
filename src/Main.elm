@@ -197,7 +197,7 @@ view _ =
                             ]
                         , column [ spacingMedium, width fill ]
                             [ el [ centerX, Font.bold, Font.size 42 ] (text "Extra Documents & Notes")
-                            , row [ paddingXY 100 0, spacingLarge, width fill ]
+                            , row [ spacingLarge, width fill ]
                                 [ column [ centerX, spacingSmall, width (px 300) ]
                                     [ el
                                         [ centerX
@@ -209,18 +209,11 @@ view _ =
                                         , Font.color orange
                                         ]
                                         (el [ centerX, centerY, width (px 50), height (px 50) ]
-                                            (html
-                                                (Icon.view
-                                                    (Icon.styled
-                                                        [ IconAttributes.xs ]
-                                                        IconSolid.passport
-                                                    )
-                                                )
-                                            )
+                                            (html (Icon.view IconSolid.passport))
                                         )
                                     , paragraph [ Font.center, Font.bold, Font.size 24 ] [ text "British & South African Passport" ]
                                     ]
-                                , column [ centerX, spacingSmall, width (px 300) ]
+                                , column [ centerX, alignTop, spacingSmall, width (px 300) ]
                                     [ el
                                         [ centerX
                                         , width (px 100)
@@ -231,14 +224,7 @@ view _ =
                                         , Font.color orange
                                         ]
                                         (el [ centerX, centerY, width (px 50), height (px 50) ]
-                                            (html
-                                                (Icon.view
-                                                    (Icon.styled
-                                                        [ IconAttributes.xs ]
-                                                        IconSolid.chalkboardTeacher
-                                                    )
-                                                )
-                                            )
+                                            (html (Icon.view IconSolid.chalkboardTeacher))
                                         )
                                     , paragraph [ Font.center, Font.bold, Font.size 24 ] [ text "Teaching Experience" ]
                                     ]
@@ -253,14 +239,7 @@ view _ =
                                         , Font.color orange
                                         ]
                                         (el [ centerX, centerY, width (px 50), height (px 50) ]
-                                            (html
-                                                (Icon.view
-                                                    (Icon.styled
-                                                        [ IconAttributes.xs ]
-                                                        IconSolid.syringe
-                                                    )
-                                                )
-                                            )
+                                            (html (Icon.view IconSolid.syringe))
                                         )
                                     , paragraph [ Font.center, Font.bold, Font.size 24 ] [ text "Updated Immunisations for Foreign Travel" ]
                                     ]
