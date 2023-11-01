@@ -353,7 +353,7 @@ view _ =
                             , row [ width fill, fontOpenSans, Font.size 16, Font.letterSpacing 0.4 ]
                                 [ el [ width (fillPortion 1), height fill ]
                                     (el [ centerX, centerY, width (px 20), height (px 20), Font.color orange ]
-                                        (html (Icon.view (Icon.styled [] IconSolid.angleLeft)))
+                                        (html (Icon.view IconSolid.angleLeft))
                                     )
                                 , column [ width (fillPortion 8), height fill ]
                                     [ column [ centerX, spacing 10, Font.center, Font.light ]
@@ -372,7 +372,7 @@ view _ =
                                     ]
                                 , el [ width (fillPortion 1), height fill ]
                                     (el [ centerX, centerY, width (px 20), height (px 20), Font.color orange ]
-                                        (html (Icon.view (Icon.styled [] IconSolid.angleRight)))
+                                        (html (Icon.view IconSolid.angleRight))
                                     )
                                 ]
                             , row [ centerX, spacing 5 ]
