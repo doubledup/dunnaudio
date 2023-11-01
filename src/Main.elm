@@ -401,11 +401,31 @@ view _ =
                                 (text "Follow me on my socials!")
                             , row
                                 [ spacing 200, width fill, paddingXY 50 0 ]
-                                [ el [ centerX, width (px 45), height (px 45) ] (html (Icon.view IconBrands.facebook))
-                                , el [ centerX, width (px 45), height (px 45) ] (html (Icon.view IconBrands.instagram))
-                                , el [ centerX, width (px 45), height (px 45) ] (html (Icon.view IconBrands.twitter))
-                                , el [ centerX, width (px 45), height (px 45) ] (html (Icon.view IconBrands.linkedin))
-                                , el [ centerX, width (px 45), height (px 45) ] (html (Icon.view IconBrands.imdb))
+                                [ link [ width fill ]
+                                    { url =
+                                        "https://www.facebook.com/dunnaudio"
+                                    , label = el [ centerX, width (px 45), height (px 45) ] (html (Icon.view IconBrands.facebook))
+                                    }
+                                , link [ width fill ]
+                                    { url =
+                                        "https://www.instagram.com/sebdunnaudio"
+                                    , label = el [ centerX, width (px 45), height (px 45) ] (html (Icon.view IconBrands.instagram))
+                                    }
+                                , link [ width fill ]
+                                    { url =
+                                        "https://twitter.com/sebdunnaudio"
+                                    , label = el [ centerX, width (px 45), height (px 45) ] (html (Icon.view IconBrands.twitter))
+                                    }
+                                , link [ width fill ]
+                                    { url =
+                                        "https://www.linkedin.com/in/dunnaudio"
+                                    , label = el [ centerX, width (px 45), height (px 45) ] (html (Icon.view IconBrands.linkedin))
+                                    }
+                                , link [ width fill ]
+                                    { url =
+                                        "https://www.imdb.com/name/nm2271521"
+                                    , label = el [ centerX, width (px 45), height (px 45) ] (html (Icon.view IconBrands.imdb))
+                                    }
                                 ]
                             ]
                         ]
