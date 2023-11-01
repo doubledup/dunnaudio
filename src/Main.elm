@@ -108,7 +108,7 @@ view _ =
                             [ Font.external
                                 { name = "Roboto"
                                 , url =
-                                    "https://fonts.googleapis.com/css2?family=Roboto:300,700&display=swap"
+                                    "https://fonts.googleapis.com/css2?family=Roboto&display=swap"
                                 }
                             , Font.sansSerif
                             ]
@@ -433,7 +433,7 @@ fontOpenSans =
         [ Font.external
             { name = "Open Sans"
             , url =
-                "https://fonts.googleapis.com/css2?family=Open+Sans:100,300&display=swap"
+                "https://fonts.googleapis.com/css2?family=Open+Sans&display=swap"
             }
         , Font.sansSerif
         ]
