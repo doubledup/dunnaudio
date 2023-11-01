@@ -140,9 +140,9 @@ view _ =
                             ]
                         , column [ spacingMedium, width fill ]
                             [ row [ spacingSmall, width fill ]
-                                [ el [ width (fillPortion 2), height fill, clip ]
+                                [ el [ width (fillPortion 2), clip ]
                                     (image
-                                        [ centerX, centerY, width fill ]
+                                        [ width fill, moveUp 50 ]
                                         { src = "https://dunnaudio.com/wp-content/uploads/2022/09/img-1515E7DB99D4-ADB2-5104-C6E1-CD9094CB9E9A-scaled.jpeg"
                                         , description = "Sebastian recording ambisonic sound on top of a car in Gorongosa National Park in Mozambique"
                                         }
@@ -155,23 +155,19 @@ view _ =
                                     ]
                                 ]
                             , row [ spacingSmall, width fill ]
-                                [ el [ width (fillPortion 1), height (px 300), clip ]
-                                    (el [ centerX, centerY ]
-                                        (image
-                                            [ width fill ]
-                                            { src = "https://dunnaudio.com/wp-content/uploads/2022/09/img-22916E6B3E7A-3173-1576-2EF7-9B1CFA553751-scaled.jpg"
-                                            , description = "Sebastian standing with a member of the Wauja community in the Amazon"
-                                            }
-                                        )
+                                [ el [ width (fillPortion 1), height (px 350), clip ]
+                                    (image
+                                        [ width fill, moveUp 30 ]
+                                        { src = "https://dunnaudio.com/wp-content/uploads/2022/09/img-22916E6B3E7A-3173-1576-2EF7-9B1CFA553751-scaled.jpg"
+                                        , description = "Sebastian standing with a member of the Wauja community in the Amazon"
+                                        }
                                     )
-                                , el [ width (fillPortion 1), height (px 300), clip ]
-                                    (el [ centerX, centerY ]
-                                        (image
-                                            [ width fill ]
-                                            { src = "https://dunnaudio.com/wp-content/uploads/2022/09/img-2323B683801B-1B19-5CB3-AD7E-CBAE4EC97E04-scaled.jpeg"
-                                            , description = "Sebastian recording sound in front of Cape Town city hall during lockdown"
-                                            }
-                                        )
+                                , el [ width (fillPortion 1), height (px 350), clip ]
+                                    (image
+                                        [ width fill, moveUp 60 ]
+                                        { src = "https://dunnaudio.com/wp-content/uploads/2022/09/img-2323B683801B-1B19-5CB3-AD7E-CBAE4EC97E04-scaled.jpeg"
+                                        , description = "Sebastian recording sound in front of Cape Town city hall during lockdown"
+                                        }
                                     )
                                 ]
                             ]
