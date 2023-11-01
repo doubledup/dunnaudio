@@ -449,11 +449,19 @@ view _ =
 
 clientLogo : { src : String, description : String } -> Element msg
 clientLogo imageSrc =
-    image
+    el
         [ centerX
         , width (px 120)
+        , Border.color (rgb 1 1 1)
+        , Border.rounded 5
+        , Border.width 1
+        , clip
         ]
-        imageSrc
+        (image
+            [ width (px 120)
+            ]
+            imageSrc
+        )
 
 
 youtubeVideo : { a | width : Int, height : Int, src : String } -> Element msg
