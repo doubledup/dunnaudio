@@ -420,7 +420,7 @@ spacingLarge =
 
 orange : Color
 orange =
-    rgb255 254 102 3
+    rgb255 255 132 52
 
 
 grey : Color
