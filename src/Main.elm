@@ -6,6 +6,9 @@ import Element exposing (..)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
+import FontAwesome as Icon
+import FontAwesome.Attributes as IconAttributes
+import FontAwesome.Solid as IconSolid
 import Html.Attributes
 import List exposing (repeat)
 import Url
@@ -198,20 +201,74 @@ view _ =
                                     ]
                                 ]
                             ]
-                        , column [ spacingMedium, width fill, Border.width 1 ]
-                            [ el [ centerX, Font.bold ] (text "Extra Documents & Notes")
-                            , row [ paddingXY 100 0, spaceEvenly, width fill ]
-                                [ column [ spacingSmall, width (px 300) ]
-                                    [ el [ centerX, width (px 100), height (px 100), Border.width 1 ] (paragraph [] [ text "Passport icon" ])
-                                    , paragraph [ Font.center, Font.bold ] [ text "British & South African Passport" ]
+                        , column [ spacingMedium, width fill ]
+                            [ el [ centerX, Font.bold, Font.size 42 ] (text "Extra Documents & Notes")
+                            , row [ paddingXY 100 0, spacingLarge, width fill ]
+                                [ column [ centerX, spacingSmall, width (px 300) ]
+                                    [ el
+                                        [ centerX
+                                        , width (px 100)
+                                        , height (px 100)
+                                        , Border.color orange
+                                        , Border.rounded 50
+                                        , Border.width 3
+                                        , Font.color orange
+                                        ]
+                                        (el [ centerX, centerY, width (px 50), height (px 50) ]
+                                            (html
+                                                (Icon.view
+                                                    (Icon.styled
+                                                        [ IconAttributes.xs ]
+                                                        IconSolid.passport
+                                                    )
+                                                )
+                                            )
+                                        )
+                                    , paragraph [ Font.center, Font.bold, Font.size 24 ] [ text "British & South African Passport" ]
                                     ]
-                                , column [ spacingSmall, width (px 300) ]
-                                    [ el [ centerX, width (px 100), height (px 100), Border.width 1 ] (paragraph [] [ text "Teaching icon" ])
-                                    , paragraph [ Font.center, Font.bold ] [ text "Teaching Experience" ]
+                                , column [ centerX, spacingSmall, width (px 300) ]
+                                    [ el
+                                        [ centerX
+                                        , width (px 100)
+                                        , height (px 100)
+                                        , Border.color orange
+                                        , Border.rounded 50
+                                        , Border.width 3
+                                        , Font.color orange
+                                        ]
+                                        (el [ centerX, centerY, width (px 50), height (px 50) ]
+                                            (html
+                                                (Icon.view
+                                                    (Icon.styled
+                                                        [ IconAttributes.xs ]
+                                                        IconSolid.chalkboardTeacher
+                                                    )
+                                                )
+                                            )
+                                        )
+                                    , paragraph [ Font.center, Font.bold, Font.size 24 ] [ text "Teaching Experience" ]
                                     ]
-                                , column [ spacingSmall, width (px 300) ]
-                                    [ el [ centerX, width (px 100), height (px 100), Border.width 1 ] (paragraph [] [ text "Passport icon" ])
-                                    , paragraph [ Font.center, Font.bold ] [ text "Updated Immunisations for Foreign Travel" ]
+                                , column [ centerX, spacingSmall, width (px 300) ]
+                                    [ el
+                                        [ centerX
+                                        , width (px 100)
+                                        , height (px 100)
+                                        , Border.color orange
+                                        , Border.rounded 50
+                                        , Border.width 3
+                                        , Font.color orange
+                                        ]
+                                        (el [ centerX, centerY, width (px 50), height (px 50) ]
+                                            (html
+                                                (Icon.view
+                                                    (Icon.styled
+                                                        [ IconAttributes.xs ]
+                                                        IconSolid.syringe
+                                                    )
+                                                )
+                                            )
+                                        )
+                                    , paragraph [ Font.center, Font.bold, Font.size 24 ] [ text "Updated Immunisations for Foreign Travel" ]
                                     ]
                                 ]
                             , row [ width fill ]
