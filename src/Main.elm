@@ -11,7 +11,6 @@ import FontAwesome.Attributes as IconAttributes
 import FontAwesome.Solid as IconSolid
 import Html
 import Html.Attributes
-import List exposing (repeat)
 import Url
 
 
@@ -75,15 +74,8 @@ view _ =
                         , row
                             [ alignRight
                             , spacingMedium
-                            , Font.family
-                                [ Font.external
-                                    { name = "Open Sans"
-                                    , url =
-                                        "https://fonts.googleapis.com/css2?family=Open+Sans&display=swap"
-                                    }
-                                , Font.sansSerif
-                                ]
-                            , Font.extraLight
+                            , fontOpenSans
+                            , Font.light
                             , Font.size 16
                             , htmlAttribute (Html.Attributes.attribute "webkit-font-smoothing" "antialiased")
                             ]
@@ -115,7 +107,7 @@ view _ =
                             [ Font.external
                                 { name = "Roboto"
                                 , url =
-                                    "https://fonts.googleapis.com/css2?family=Roboto&display=swap"
+                                    "https://fonts.googleapis.com/css2?family=Roboto:300,700&display=swap"
                                 }
                             , Font.sansSerif
                             ]
@@ -356,42 +348,31 @@ view _ =
                                 , clientLogo { description = "kykNET", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-27.jpg" }
                                 ]
                             ]
-                        , column [ spacingSmall, width fill, Border.width 1 ]
-                            [ el [ centerX, Font.bold ] (text "Testimonials")
-                            , row [ width fill ]
-                                [ el [ width (fillPortion 1), height fill, Border.width 1 ]
-                                    (el
-                                        [ centerX
-                                        , centerY
-                                        , width (px 40)
-                                        , height (px 40)
-                                        , Border.rounded 20
-                                        , Font.color orange
-                                        , Font.extraBold
-                                        ]
-                                        (el [ centerX, centerY ] (text "<"))
+                        , column [ spacingSmall, width fill ]
+                            [ el [ centerX, Font.bold, Font.size 42 ] (text "Testimonials")
+                            , row [ width fill, fontOpenSans, Font.size 16, Font.letterSpacing 0.4 ]
+                                [ el [ width (fillPortion 1), height fill ]
+                                    (el [ centerX, centerY, width (px 20), height (px 20), Font.color orange ]
+                                        (html (Icon.view (Icon.styled [] IconSolid.angleLeft)))
                                     )
-                                , column [ spacingSmall, width (fillPortion 8), height fill, Border.width 1 ]
-                                    [ column [ centerX, spacing 5, Font.center, Border.width 1 ]
+                                , column [ width (fillPortion 8), height fill ]
+                                    [ column [ centerX, spacing 10, Font.center, Font.light ]
                                         [ paragraph [] [ text "“… Despite the incredibly difficult working conditions in Mali and Egypt your sound recording was brilliant." ]
                                         , paragraph [] [ text "We so appreciate having someone with your enthusiasm, energy and experience." ]
                                         , paragraph [] [ text "Your stereo recordings of the big ceremonies have created a sound that makes the viewer feel so present…" ]
                                         , paragraph [] [ text "“Cosmic Africa“ has really benefited in a big way through your dedication to the sound…”" ]
                                         ]
-                                    , paragraph [ Font.center, Font.bold ] [ text "Craig Foster" ]
-                                    , paragraph [ Font.center ] [ text "Earthrise Productions" ]
-                                    ]
-                                , el [ width (fillPortion 1), height fill, Border.width 1 ]
-                                    (el
-                                        [ centerX
-                                        , centerY
-                                        , width (px 40)
-                                        , height (px 40)
-                                        , Border.rounded 20
-                                        , Font.color orange
-                                        , Font.extraBold
+                                    , paragraph [ paddingEach { top = 30, left = 0, right = 0, bottom = 0 }, Font.center, Font.bold ] [ text "Craig Foster" ]
+                                    , paragraph
+                                        [ paddingEach { top = 15, left = 0, right = 0, bottom = 0 }
+                                        , Font.center
+                                        , Font.light
                                         ]
-                                        (el [ centerX, centerY ] (text ">"))
+                                        [ text "Earthrise Productions" ]
+                                    ]
+                                , el [ width (fillPortion 1), height fill ]
+                                    (el [ centerX, centerY, width (px 20), height (px 20), Font.color orange ]
+                                        (html (Icon.view (Icon.styled [] IconSolid.angleRight)))
                                     )
                                 ]
                             , row [ centerX, spacing 5 ]
@@ -445,6 +426,18 @@ view _ =
             )
         ]
     }
+
+
+fontOpenSans : Attribute Msg
+fontOpenSans =
+    Font.family
+        [ Font.external
+            { name = "Open Sans"
+            , url =
+                "https://fonts.googleapis.com/css2?family=Open+Sans:100,300&display=swap"
+            }
+        , Font.sansSerif
+        ]
 
 
 clientLogo : { src : String, description : String } -> Element msg
