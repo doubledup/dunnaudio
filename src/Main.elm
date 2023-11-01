@@ -108,7 +108,7 @@ view _ =
                             [ Font.external
                                 { name = "Roboto"
                                 , url =
-                                    "https://fonts.googleapis.com/css2?family=Roboto&display=swap"
+                                    "https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
                                 }
                             , Font.sansSerif
                             ]
@@ -429,7 +429,7 @@ fontOpenSans =
         [ Font.external
             { name = "Open Sans"
             , url =
-                "https://fonts.googleapis.com/css2?family=Open+Sans&display=swap"
+                "https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700&display=swap"
             }
         , Font.sansSerif
         ]
@@ -528,7 +528,7 @@ white =
 awardStyle : List (Attribute msg)
 awardStyle =
     [ padding 10
-    , width (px 300)
+    , width (px 280)
     , Border.color orange
     , Border.rounded 10
     , Border.width 1
