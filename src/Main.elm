@@ -208,7 +208,7 @@ view _ =
                                         , Border.width 3
                                         , Font.color orange
                                         ]
-                                        (el [ centerX, centerY, width (px 50), height (px 50) ]
+                                        (el [ centerX, centerY, width (fill |> maximum 50), height (px 50) ]
                                             (html (Icon.view IconSolid.passport))
                                         )
                                     , paragraph [ Font.center, Font.bold, Font.size 24 ] [ text "British & South African Passport" ]
@@ -223,7 +223,7 @@ view _ =
                                         , Border.width 3
                                         , Font.color orange
                                         ]
-                                        (el [ centerX, centerY, width (px 50), height (px 50) ]
+                                        (el [ centerX, centerY, width (fill |> maximum 70), height (px 50) ]
                                             (html (Icon.view IconSolid.chalkboardTeacher))
                                         )
                                     , paragraph [ Font.center, Font.bold, Font.size 24 ] [ text "Teaching Experience" ]
@@ -238,7 +238,7 @@ view _ =
                                         , Border.width 3
                                         , Font.color orange
                                         ]
-                                        (el [ centerX, centerY, width (px 50), height (px 50) ]
+                                        (el [ centerX, centerY, width (fill |> maximum 50), height (px 50) ]
                                             (html (Icon.view IconSolid.syringe))
                                         )
                                     , paragraph [ Font.center, Font.bold, Font.size 24 ] [ text "Updated Immunisations for Foreign Travel" ]
