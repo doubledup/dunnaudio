@@ -99,10 +99,10 @@ view _ =
                         }
                     )
                 , row [ height fill, width fill, paddingEach { top = 80, left = 0, right = 0, bottom = 30 } ]
-                    [ el [ width (fillPortion 1) ] none
-                    , column
+                    [ column
                         [ spacingLarge
-                        , width (fillPortion 4)
+                        , centerX
+                        , width (px 1200)
                         , height fill
                         , Font.family
                             [ Font.external
@@ -122,7 +122,7 @@ view _ =
                                 , paragraph [ spacingParagraph ] [ text "The elections opened many doors for me and in 1995, I set myself up as a full-time freelance sound recordist. I worked on several local and international productions in the film industry as a boom operator to broaden my experience." ]
                                 ]
                             , column [ alignTop, spacingSmall, width (fillPortion 1) ]
-                                [ el [ width fill, height (px 330), clip ]
+                                [ el [ height (px 330), clip ]
                                     (image
                                         [ width fill, moveUp 50 ]
                                         { src = "https://dunnaudio.com/wp-content/uploads/2022/09/cheetah-2F363AA19-8B11-1EF2-8A0D-93A3D603CE68.jpeg"
@@ -409,7 +409,6 @@ view _ =
                                 ]
                             ]
                         ]
-                    , el [ width (fillPortion 1) ] none
                     ]
                 , column [ width fill, padding 30, spacing 10, Background.color black, Font.center, Font.size 16, Font.light, Font.color white ]
                     [ paragraph []
