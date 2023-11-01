@@ -8,6 +8,7 @@ import Element.Border as Border
 import Element.Font as Font
 import FontAwesome as Icon
 import FontAwesome.Attributes as IconAttributes
+import FontAwesome.Brands as IconBrands
 import FontAwesome.Solid as IconSolid
 import Html
 import Html.Attributes
@@ -385,32 +386,32 @@ view _ =
                                 , dot grey
                                 ]
                             ]
-                        , column [ spacingSmall, width fill, Border.width 1 ]
-                            [ el [ centerX, Font.bold ] (text "Let's Chat!")
+                        , column [ spacingSmall, width fill ]
+                            [ el [ centerX, Font.bold, Font.size 42 ] (text "Let's Chat!")
                             , paragraph [ Font.center ]
                                 [ text "Email: "
                                 , link []
                                     { url = "mailto:seb@dunnaudio.com"
-                                    , label = text "seb@dunnaudio.com"
+                                    , label = el [ Font.underline ] (text "seb@dunnaudio.com")
                                     }
                                 ]
                             ]
-                        , column [ spacingSmall, width fill, Border.width 1 ]
+                        , column [ spacingMedium, width fill ]
                             [ el [ centerX ]
                                 (text "Follow me on my socials!")
                             , row
-                                [ spaceEvenly, width fill, paddingXY 50 0 ]
-                                [ el [ width (px 40), height (px 40), Background.color black, Border.rounded 20 ] none
-                                , el [ width (px 40), height (px 40), Background.color black, Border.rounded 20 ] none
-                                , el [ width (px 40), height (px 40), Background.color black, Border.rounded 20 ] none
-                                , el [ width (px 40), height (px 40), Background.color black, Border.rounded 20 ] none
-                                , el [ width (px 40), height (px 40), Background.color black, Border.rounded 20 ] none
+                                [ spacing 200, width fill, paddingXY 50 0 ]
+                                [ el [ centerX, width (px 45), height (px 45) ] (html (Icon.view IconBrands.facebook))
+                                , el [ centerX, width (px 45), height (px 45) ] (html (Icon.view IconBrands.instagram))
+                                , el [ centerX, width (px 45), height (px 45) ] (html (Icon.view IconBrands.twitter))
+                                , el [ centerX, width (px 45), height (px 45) ] (html (Icon.view IconBrands.linkedin))
+                                , el [ centerX, width (px 45), height (px 45) ] (html (Icon.view IconBrands.imdb))
                                 ]
                             ]
                         ]
                     , el [ width (fillPortion 1) ] none
                     ]
-                , column [ width fill, padding 30, spacing 10, Background.color black, Font.center, Font.color white ]
+                , column [ width fill, padding 30, spacing 10, Background.color black, Font.center, Font.size 16, Font.light, Font.color white ]
                     [ paragraph []
                         [ text "Copyright © 2023 Dunn Audio" ]
                     , paragraph []
