@@ -245,59 +245,64 @@ view _ =
                                     ]
                                 ]
                             , row [ spacingSmall, width fill ]
-                                [ clientLogo { description = "National Geographic", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-31.jpg" }
-                                , clientLogo { description = "Love4kNature", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-28.png" }
-                                , clientLogo { description = "M-Net", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-29.jpg" }
-                                , clientLogo { description = "NatGeo Wild", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-30.jpg" }
+                                [ clientLogo { description = "Survivor", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-45.png" }
+                                , clientLogo { description = "HBO", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-22.jpg" }
                                 , clientLogo { description = "Netflix", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-32.jpg" }
-                                , clientLogo { description = "NOVA", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-33.jpg" }
-                                , clientLogo { description = "PBS", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-34.jpg" }
                                 , clientLogo { description = "Apple TV", src = "https://dunnaudio.com/wp-content/uploads/2023/06/apple-tv__e7aqjl2rqzau_og.png" }
                                 ]
                             , row [ spacingSmall, width fill ]
-                                [ clientLogo { description = "SABC 2", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-38.jpg" }
-                                , clientLogo { description = "SARU", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-39.jpg" }
-                                , clientLogo { description = "Sky Sports", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-40-300x50.jpg" }
-                                , clientLogo { description = "Sky 1", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-41.gif" }
-                                , clientLogo { description = "raw TV", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-35.jpg" }
-                                , clientLogo { description = "RTL", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-36.jpg" }
-                                , clientLogo { description = "SABC 1", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-37.jpg" }
-                                ]
-                            , row [ spacingSmall, width fill ]
-                                [ clientLogo { description = "Animal Planet", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-4.jpg" }
-                                , clientLogo { description = "Al Rayyan", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-3.jpg" }
-                                , clientLogo { description = "abc primetime", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-2.jpg" }
-                                , clientLogo { description = "Survivor", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-45.png" }
-                                , clientLogo { description = "BBC Two", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-7.jpg" }
-                                , clientLogo { description = "arte", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-6.jpg" }
-                                , clientLogo { description = "ARD", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-5.jpg" }
-                                ]
-                            , row [ spacingSmall, width fill ]
-                                [ clientLogo { description = "BBC One", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-13.jpg" }
-                                , clientLogo { description = "BBC", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-12.jpg" }
-                                , clientLogo { description = "BBC World News", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-11.jpg" }
-                                , clientLogo { description = "BBC Entertainment", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-10.jpg" }
-                                , clientLogo { description = "BBC Lifestyle", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-9.jpg" }
-                                , clientLogo { description = "BBC Four", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-8.jpg" }
-                                , clientLogo { description = "CBS", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-14.jpg" }
-                                ]
-                            , row [ spacingSmall, width fill ]
-                                [ clientLogo { description = "4", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-15.jpg" }
-                                , clientLogo { description = "National Geographic Channel", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-21.jpg" }
-                                , clientLogo { description = "food network", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-20.jpg" }
+                                [ clientLogo { description = "BBC", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-12.jpg" }
+                                , clientLogo { description = "National Geographic", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-31.jpg" }
+                                , clientLogo { description = "Animal Planet", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-4.jpg" }
                                 , clientLogo { description = "Discovery Channel", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-19.jpg" }
-                                , clientLogo { description = "colors Viacom", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-18.jpg" }
-                                , clientLogo { description = "Channel 5", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-17.jpg" }
-                                , clientLogo { description = "Channel 5", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-16.jpg" }
                                 ]
                             , row [ spacingSmall, width fill ]
-                                [ clientLogo { description = "HBO", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-22.jpg" }
-                                , clientLogo { description = "HDNet", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-23.jpg" }
-                                , clientLogo { description = "HGTV", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-24.jpg" }
+                                [ clientLogo { description = "PBS", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-34.jpg" }
                                 , clientLogo { description = "History", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-25.jpg" }
-                                , clientLogo { description = "itv", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-26.jpg" }
-                                , clientLogo { description = "kykNET", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-27.jpg" }
+                                , clientLogo { description = "CBS", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-14.jpg" }
+                                , clientLogo { description = "abc primetime", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-2.jpg" }
+                                , clientLogo { description = "Sky 1", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-41.gif" }
                                 ]
+
+                            -- , row [ spacingSmall, width fill ]
+                            --     [ clientLogo { description = "BBC One", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-13.jpg" }
+                            --     , clientLogo { description = "BBC Two", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-7.jpg" }
+                            --     , clientLogo { description = "BBC World News", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-11.jpg" }
+                            --     , clientLogo { description = "BBC Entertainment", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-10.jpg" }
+                            --     , clientLogo { description = "BBC Lifestyle", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-9.jpg" }
+                            --     , clientLogo { description = "BBC Four", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-8.jpg" }
+                            --     ]
+                            -- , row [ spacingSmall, width fill ]
+                            --     [ clientLogo { description = "4", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-15.jpg" }
+                            --     , clientLogo { description = "food network", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-20.jpg" }
+                            --     , clientLogo { description = "Channel 5", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-16.jpg" }
+                            --     , clientLogo { description = "Sky Sports", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-40-300x50.jpg" }
+                            --     , clientLogo { description = "ARD", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-5.jpg" }
+                            --     , clientLogo { description = "Al Rayyan", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-3.jpg" }
+                            --     , clientLogo { description = "Channel 5", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-17.jpg" }
+                            --     , clientLogo { description = "HDNet", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-23.jpg" }
+                            --     ]
+                            -- , row [ spacingSmall, width fill ]
+                            --     [ clientLogo { description = "HGTV", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-24.jpg" }
+                            --     , clientLogo { description = "Love4kNature", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-28.png" }
+                            --     , clientLogo { description = "NOVA", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-33.jpg" }
+                            --     , clientLogo { description = "NatGeo Wild", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-30.jpg" }
+                            --     , clientLogo { description = "National Geographic Channel", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-21.jpg" }
+                            --     ]
+                            -- , row [ spacingSmall, width fill ]
+                            --     [ clientLogo { description = "RTL", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-36.jpg" }
+                            --     , clientLogo { description = "arte", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-6.jpg" }
+                            --     , clientLogo { description = "colors Viacom", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-18.jpg" }
+                            --     , clientLogo { description = "itv", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-26.jpg" }
+                            --     , clientLogo { description = "raw TV", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-35.jpg" }
+                            --     ]
+                            -- , row [ spacingSmall, width fill ]
+                            --     [ clientLogo { description = "kykNET", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-27.jpg" }
+                            --     , clientLogo { description = "M-Net", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-29.jpg" }
+                            --     , clientLogo { description = "SARU", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-39.jpg" }
+                            --     , clientLogo { description = "SABC 1", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-37.jpg" }
+                            --     , clientLogo { description = "SABC 2", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-38.jpg" }
+                            --     ]
                             ]
                         , column [ spacingSmall, width fill ]
                             [ el [ centerX, Font.bold, Font.size 42 ] (text "Testimonials")
@@ -416,14 +421,14 @@ clientLogo : { src : String, description : String } -> Element msg
 clientLogo imageSrc =
     el
         [ centerX
-        , width (px 120)
+        , width (px 180)
         , Border.color (rgb 1 1 1)
         , Border.rounded 5
         , Border.width 1
         , clip
         ]
         (image
-            [ width (px 120)
+            [ width (px 180)
             ]
             imageSrc
         )
