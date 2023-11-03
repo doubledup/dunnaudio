@@ -77,7 +77,6 @@ view _ =
                             , text "Portfolio"
                             , text "Testimonials"
                             , text "Contact"
-                            , text "Soundcloud"
                             , text "My CV"
                             ]
                         ]
@@ -351,7 +350,7 @@ view _ =
                             [ el [ centerX ]
                                 (text "Follow me on my socials!")
                             , row
-                                [ spacing 200, width fill, paddingXY 50 0 ]
+                                [ spacing 150, width fill, paddingXY 50 0 ]
                                 [ link [ width fill ]
                                     { url =
                                         "https://www.facebook.com/dunnaudio"
@@ -376,6 +375,11 @@ view _ =
                                     { url =
                                         "https://www.imdb.com/name/nm2271521"
                                     , label = el [ centerX, width (px 45), height (px 45) ] (html (Icon.view IconBrands.imdb))
+                                    }
+                                , link [ width fill ]
+                                    { url =
+                                        "https://soundcloud.com/user-716251106"
+                                    , label = el [ centerX, width (px 45), height (px 45) ] (html (Icon.view IconBrands.soundcloud))
                                     }
                                 ]
                             ]
