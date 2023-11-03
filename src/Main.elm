@@ -7,7 +7,6 @@ import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
 import FontAwesome as Icon
-import FontAwesome.Attributes as IconAttributes
 import FontAwesome.Brands as IconBrands
 import FontAwesome.Solid as IconSolid
 import Html
