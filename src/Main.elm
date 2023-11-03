@@ -231,7 +231,7 @@ view _ =
                                 ]
                             ]
                         , column [ spacingMedium, width fill ]
-                            [ el [ centerX, Font.bold, Font.size 42 ] (text "Portfolio links")
+                            [ el [ centerX, Font.bold, Font.size 42 ] (text "Portfolio")
                             , column [ spacingSmall, width fill ]
                                 [ row [ centerX, spacingSmall ]
                                     [ youtubeVideo { width = 320, height = 180, src = "https://www.youtube.com/embed/Q33TkQKlIMg?controls=1&rel=0&playsinline=0&modestbranding=0&autoplay=0&enablejsapi=1&origin=https%3A%2F%2Fdunnaudio.com&widgetid=1" }
@@ -244,9 +244,6 @@ view _ =
                                     , vimeoVideo { width = 320, height = 180, src = "https://player.vimeo.com/video/168173513?color&autopause=0&loop=0&muted=0&title=1&portrait=1&byline=1#t=" }
                                     ]
                                 ]
-                            ]
-                        , column [ spacingSmall, width fill ]
-                            [ el [ centerX, Font.bold, Font.size 42 ] (text "Clients")
                             , row [ spacingSmall, width fill ]
                                 [ clientLogo { description = "National Geographic", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-31.jpg" }
                                 , clientLogo { description = "Love4kNature", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-28.png" }
