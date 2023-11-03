@@ -382,7 +382,7 @@ view _ =
                             ]
                         ]
                     ]
-                , column [ width fill, padding 30, spacing 10, Background.color black, Font.center, Font.size 16, Font.light, Font.color white ]
+                , column [ padding 30, spacing 10, width fill, Background.color black, Font.center, Font.size 16, Font.light, Font.color white ]
                     [ paragraph []
                         [ text "Copyright © 2023 Dunn Audio" ]
                     , paragraph []
