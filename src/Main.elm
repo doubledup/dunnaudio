@@ -67,19 +67,12 @@ view _ =
     { title = "Dunn Audio"
     , body =
         [ layout []
-            (column [ height fill, width fill ]
+            (column [ height fill, width fill, Font.color black ]
                 [ row [ paddingXY 0 30, width fill ]
                     [ el [ width (fillPortion 1) ] none
                     , row [ width (fillPortion 4) ]
                         [ image [ alignLeft, width (px 200) ] { src = "https://dunnaudio.com/wp-content/uploads/2022/09/cropped-DunnAudio.jpg", description = "Dunn 🎙 Audio" }
-                        , row
-                            [ alignRight
-                            , spacingMedium
-                            , fontOpenSans
-                            , Font.light
-                            , Font.size 16
-                            , htmlAttribute (Html.Attributes.attribute "webkit-font-smoothing" "antialiased")
-                            ]
+                        , row [ alignRight, spacingMedium, fontRaleway, Font.size 16, Font.light ]
                             [ text "Home"
                             , text "About Me"
                             , text "Portfolio"
@@ -99,20 +92,7 @@ view _ =
                         }
                     )
                 , row [ height fill, width fill, paddingEach { top = 80, left = 0, right = 0, bottom = 30 } ]
-                    [ column
-                        [ spacingLarge
-                        , centerX
-                        , width (px 1200)
-                        , height fill
-                        , Font.family
-                            [ Font.external
-                                { name = "Roboto"
-                                , url =
-                                    "https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
-                                }
-                            , Font.sansSerif
-                            ]
-                        ]
+                    [ column [ spacingLarge, centerX, width (px 1200), height fill, fontRaleway ]
                         [ row [ spacingSmall, width fill ]
                             [ column [ spacingMedium, width (fillPortion 1), alignTop, Font.center ]
                                 [ el [ centerX, Font.bold, Font.size 42 ] (text "About Me")
@@ -326,24 +306,21 @@ view _ =
                             ]
                         , column [ spacingSmall, width fill ]
                             [ el [ centerX, Font.bold, Font.size 42 ] (text "Testimonials")
-                            , row [ width fill, fontOpenSans, Font.size 16, Font.letterSpacing 0.4 ]
+                            , row [ width fill ]
                                 [ el [ width (fillPortion 1), height fill ]
                                     (el [ centerX, centerY, width (px 20), height (px 20), Font.color orange ]
                                         (html (Icon.view IconSolid.angleLeft))
                                     )
-                                , column [ width (fillPortion 8), height fill ]
-                                    [ column [ centerX, spacing 10, Font.center, Font.light ]
+                                , column [ width (fillPortion 8), height fill, Font.center, fontRaleway, Font.size 16, Font.light, Font.letterSpacing 0.3 ]
+                                    [ column [ centerX, spacing 10 ]
                                         [ paragraph [] [ text "“… Despite the incredibly difficult working conditions in Mali and Egypt your sound recording was brilliant." ]
                                         , paragraph [] [ text "We so appreciate having someone with your enthusiasm, energy and experience." ]
                                         , paragraph [] [ text "Your stereo recordings of the big ceremonies have created a sound that makes the viewer feel so present…" ]
                                         , paragraph [] [ text "“Cosmic Africa“ has really benefited in a big way through your dedication to the sound…”" ]
                                         ]
-                                    , paragraph [ paddingEach { top = 30, left = 0, right = 0, bottom = 0 }, Font.center, Font.bold ] [ text "Craig Foster" ]
+                                    , paragraph [ paddingEach { top = 30, left = 0, right = 0, bottom = 0 }, fontRaleway, Font.bold ] [ text "Craig Foster" ]
                                     , paragraph
-                                        [ paddingEach { top = 15, left = 0, right = 0, bottom = 0 }
-                                        , Font.center
-                                        , Font.light
-                                        ]
+                                        [ paddingEach { top = 15, left = 0, right = 0, bottom = 0 } ]
                                         [ text "Earthrise Productions" ]
                                     ]
                                 , el [ width (fillPortion 1), height fill ]
@@ -423,13 +400,13 @@ view _ =
     }
 
 
-fontOpenSans : Attribute Msg
-fontOpenSans =
+fontRaleway : Attribute msg
+fontRaleway =
     Font.family
         [ Font.external
-            { name = "Open Sans"
+            { name = "Raleway"
             , url =
-                "https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700&display=swap"
+                "https://fonts.googleapis.com/css2?family=Raleway:wght@300;500;700&display=swap"
             }
         , Font.sansSerif
         ]
@@ -532,6 +509,7 @@ awardStyle =
     , Border.color orange
     , Border.rounded 10
     , Border.width 1
+    , Font.size 20
     , Font.bold
     , Font.center
     ]
