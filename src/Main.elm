@@ -133,14 +133,14 @@ view _ =
                                     ]
                                 ]
                             , row [ spacingSmall, width fill ]
-                                [ el [ width (fillPortion 1), height (px 350), clip ]
+                                [ el [ width (fillPortion 1), height (px 340), clip ]
                                     (image
                                         [ width fill, moveUp 30 ]
                                         { src = "https://dunnaudio.com/wp-content/uploads/2022/09/img-22916E6B3E7A-3173-1576-2EF7-9B1CFA553751-scaled.jpg"
                                         , description = "Sebastian standing with a member of the Wauja community in the Amazon"
                                         }
                                     )
-                                , el [ width (fillPortion 1), height (px 350), clip ]
+                                , el [ width (fillPortion 1), height (px 340), clip ]
                                     (image
                                         [ width fill, moveUp 60 ]
                                         { src = "https://dunnaudio.com/wp-content/uploads/2022/09/img-2323B683801B-1B19-5CB3-AD7E-CBAE4EC97E04-scaled.jpeg"
