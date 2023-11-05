@@ -66,12 +66,12 @@ view _ =
     { title = "Dunn Audio"
     , body =
         [ layout []
-            (column [ height fill, width fill, Font.color black ]
+            (column [ height fill, width fill, fontNormal, Font.color black, Font.letterSpacing 0.5 ]
                 [ row [ paddingXY 0 30, width fill ]
                     [ el [ width (fillPortion 1) ] none
                     , row [ width (fillPortion 4) ]
                         [ image [ alignLeft, width (px 200) ] { src = "https://dunnaudio.com/wp-content/uploads/2022/09/cropped-DunnAudio.jpg", description = "Dunn 🎙 Audio" }
-                        , row [ alignRight, spacingMedium, fontRaleway, fontSmall, Font.light ]
+                        , row [ alignRight, spacingMedium, fontRaleway, fontNormal, Font.light ]
                             [ text "Home"
                             , text "About Me"
                             , text "Portfolio"
@@ -93,7 +93,7 @@ view _ =
                     [ column [ spacingLarge, centerX, width (px 1200), height fill, fontRaleway ]
                         [ row [ spacingSmall, width fill ]
                             [ column [ spacingMedium, width (fillPortion 1), alignTop, Font.center ]
-                                [ el [ centerX, Font.bold, fontLarge ] (text "About Me")
+                                [ el [ centerX, Font.bold, fontHeading ] (text "About Me")
                                 , paragraph [ spacingParagraph ] [ text "I’m a passionate and positive sound recordist with a sharp ear dedicated to getting the best possible sound with technical proficiency. I am calm, level-headed and have the technical ability and versatility to adapt quickly to changing environments." ]
                                 , paragraph [ spacingParagraph ] [ text "I started working as a sound recordist in 1993. My early work was on environmental documentaries, actuality and corporate production." ]
                                 , paragraph [ spacingParagraph ] [ text "Then, in 1994, I achieved a milestone in my career by covering the post-apartheid elections in South Africa for Sky News. Being involved in such a positive and peaceful moment in South African history further solidified my passion for this career." ]
@@ -126,7 +126,7 @@ view _ =
                                         }
                                     )
                                 , column [ spacingMedium, width (fillPortion 5), Font.center ]
-                                    [ el [ centerX, Font.bold, fontLarge ] (text "What I Do Now")
+                                    [ el [ centerX, Font.bold, fontHeading ] (text "What I Do Now")
                                     , paragraph [ spacingParagraph ] [ text "I spend a lot of my time on documentary productions, although I still work in other arenas. This has taken me all over the world, working for the major broadcasting channels in over 30 countries and exploring a diverse range of subjects." ]
                                     , paragraph [ spacingParagraph ] [ text "I also now specialise in recording ‘The sounds of Africa’ having been commissioned by several top international production companies to record animals and general ambiences of Africa." ]
                                     , paragraph [ spacingParagraph ] [ text "My favourite ‘go-to’ is an Ambisonic Microphone that captures immersive surround sounds of the environments I’m recording in - an important tool in the sound design process of most productions." ]
@@ -150,7 +150,7 @@ view _ =
                                 ]
                             ]
                         , column [ spacingMedium, width fill ]
-                            [ el [ centerX, Font.bold, fontLarge ] (text "Nominations & Awards")
+                            [ el [ centerX, Font.bold, fontHeading ] (text "Nominations & Awards")
                             , row [ centerX, spacingSmall ]
                                 [ column awardStyle
                                     [ paragraph [] [ text "BAFTA Craft Awards nominee" ]
@@ -170,9 +170,9 @@ view _ =
                                 ]
                             ]
                         , column [ spacingMedium, width fill ]
-                            [ el [ centerX, Font.bold, fontLarge ] (text "Extra Documents & Notes")
-                            , row [ spacingLarge, width fill ]
-                                [ column [ centerX, spacingSmall, width (px 300) ]
+                            [ el [ centerX, Font.bold, fontHeading ] (text "Extra Documents & Notes")
+                            , row [ spacingSmall, width fill ]
+                                [ column [ centerX, alignTop, spacingSmall, width (px 380) ]
                                     [ el
                                         [ centerX
                                         , width (px 100)
@@ -185,9 +185,9 @@ view _ =
                                         (el [ centerX, centerY, width (fill |> maximum 50), height (px 50) ]
                                             (html (Icon.view IconSolid.passport))
                                         )
-                                    , paragraph [ Font.center, Font.bold, fontNormal ] [ text "British & South African Passport" ]
+                                    , paragraph [ Font.center, Font.bold, fontLarge ] [ text "British & South African Passport" ]
                                     ]
-                                , column [ centerX, alignTop, spacingSmall, width (px 300) ]
+                                , column [ centerX, alignTop, spacingSmall, width (px 380) ]
                                     [ el
                                         [ centerX
                                         , width (px 100)
@@ -200,9 +200,9 @@ view _ =
                                         (el [ centerX, centerY, width (fill |> maximum 70), height (px 50) ]
                                             (html (Icon.view IconSolid.chalkboardTeacher))
                                         )
-                                    , paragraph [ Font.center, Font.bold, fontNormal ] [ text "Teaching Experience" ]
+                                    , paragraph [ Font.center, Font.bold, fontLarge ] [ text "Teaching Experience" ]
                                     ]
-                                , column [ centerX, spacingSmall, width (px 300) ]
+                                , column [ centerX, alignTop, spacingSmall, width (px 380) ]
                                     [ el
                                         [ centerX
                                         , width (px 100)
@@ -215,7 +215,7 @@ view _ =
                                         (el [ centerX, centerY, width (fill |> maximum 50), height (px 50) ]
                                             (html (Icon.view IconSolid.syringe))
                                         )
-                                    , paragraph [ Font.center, Font.bold, fontNormal ] [ text "Updated Immunisations for Foreign Travel" ]
+                                    , paragraph [ Font.center, Font.bold, fontLarge ] [ text "Updated Immunisations for Foreign Travel" ]
                                     ]
                                 ]
                             , row [ width fill ]
@@ -231,7 +231,7 @@ view _ =
                                 ]
                             ]
                         , column [ spacingMedium, width fill ]
-                            [ el [ centerX, Font.bold, fontLarge ] (text "Portfolio")
+                            [ el [ centerX, Font.bold, fontHeading ] (text "Portfolio")
                             , column [ spacingSmall, width fill ]
                                 [ row [ centerX, spacingSmall ]
                                     [ youtubeVideo { width = 320, height = 180, src = "https://www.youtube.com/embed/Q33TkQKlIMg?controls=1&rel=0&playsinline=0&modestbranding=0&autoplay=0&enablejsapi=1&origin=https%3A%2F%2Fdunnaudio.com&widgetid=1" }
@@ -305,13 +305,13 @@ view _ =
                             --     ]
                             ]
                         , column [ spacingSmall, width fill ]
-                            [ el [ centerX, Font.bold, fontLarge ] (text "Testimonials")
+                            [ el [ centerX, Font.bold, fontHeading ] (text "Testimonials")
                             , row [ width fill ]
                                 [ el [ width (fillPortion 1), height fill ]
                                     (el [ centerX, centerY, width (px 20), height (px 20), Font.color orange ]
                                         (html (Icon.view IconSolid.angleLeft))
                                     )
-                                , column [ width (fillPortion 8), height fill, Font.center, fontRaleway, fontSmall, Font.light, Font.letterSpacing 0.3 ]
+                                , column [ width (fillPortion 10), height fill, Font.center, fontRaleway, fontNormal, Font.light, Font.letterSpacing 0.3 ]
                                     [ column [ centerX, spacing 10 ]
                                         [ paragraph [] [ text "“… Despite the incredibly difficult working conditions in Mali and Egypt your sound recording was brilliant." ]
                                         , paragraph [] [ text "We so appreciate having someone with your enthusiasm, energy and experience." ]
@@ -339,7 +339,7 @@ view _ =
                                 ]
                             ]
                         , column [ spacingSmall, width fill ]
-                            [ el [ centerX, Font.bold, fontLarge ] (text "Let's Chat!")
+                            [ el [ centerX, Font.bold, fontHeading ] (text "Let's Chat!")
                             , paragraph [ Font.center ]
                                 [ text "Email: "
                                 , link []
@@ -387,7 +387,7 @@ view _ =
                             ]
                         ]
                     ]
-                , column [ padding 30, spacing 10, width fill, Background.color black, Font.center, fontSmall, Font.light, Font.color white ]
+                , column [ padding 30, spacing 10, width fill, Background.color black, Font.center, fontNormal, Font.light, Font.color white ]
                     [ paragraph []
                         [ text "Copyright © 2023 Dunn Audio" ]
                     , paragraph []
@@ -507,29 +507,29 @@ white =
     rgb255 240 240 240
 
 
-fontSmall : Attr decorative msg
-fontSmall =
-    Font.size 16
-
-
 fontNormal : Attr decorative msg
 fontNormal =
-    Font.size 24
+    Font.size 20
 
 
 fontLarge : Attr decorative msg
 fontLarge =
-    Font.size 48
+    Font.size 28
+
+
+fontHeading : Attr decorative msg
+fontHeading =
+    Font.size 56
 
 
 awardStyle : List (Attribute msg)
 awardStyle =
     [ padding 10
-    , width (px 340)
+    , width (px 380)
     , Border.color orange
     , Border.rounded 10
     , Border.width 1
-    , fontNormal
+    , fontLarge
     , Font.bold
     , Font.center
     ]
