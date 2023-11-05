@@ -151,7 +151,7 @@ view _ =
                             ]
                         , column [ spacingMedium, width fill ]
                             [ el [ centerX, Font.bold, fontHeading ] (text "Nominations & Awards")
-                            , row [ centerX, spacingSmall ]
+                            , row [ centerX, spacingMedium ]
                                 [ column awardStyle
                                     [ paragraph [] [ text "BAFTA Craft Awards nominee" ]
                                     , paragraph [] [ text "2013" ]
@@ -524,8 +524,8 @@ fontHeading =
 
 awardStyle : List (Attribute msg)
 awardStyle =
-    [ padding 10
-    , width (px 380)
+    [ padding 20
+    , width (px 330)
     , Border.color orange
     , Border.rounded 10
     , Border.width 1
