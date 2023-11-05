@@ -89,7 +89,7 @@ view _ =
                         , description = "Sebastian recording elephants"
                         }
                     )
-                , row [ height fill, width fill, paddingEach { top = 80, left = 0, right = 0, bottom = 30 } ]
+                , row [ height fill, width fill, paddingEach { top = 60, left = 0, right = 0, bottom = 40 } ]
                     [ column [ spacingLarge, centerX, width (px 1200), height fill, fontRaleway ]
                         [ row [ spacingSmall, width fill ]
                             [ column [ spacingMedium, width (fillPortion 1), alignTop, Font.center ]
