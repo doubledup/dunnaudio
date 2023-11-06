@@ -1,0 +1,13 @@
+{
+  "name": "dunnaudio",
+  "module": "",
+  "devDependencies": {
+    "bun-types": "latest",
+    "elm-live": "^4.0.2"
+  },
+  "peerDependencies": {},
+  "scripts": {
+    "start": "bun run elm-live src/Main.elm --open"
+  },
+  "type": "module"
+}

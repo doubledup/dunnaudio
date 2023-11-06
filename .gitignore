@@ -2,3 +2,7 @@
 elm-stuff
 # elm-repl generated files
 repl-temp-*
+# elm-live output
+index.html
+# node packages
+node_modules/
