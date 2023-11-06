@@ -70,7 +70,7 @@ view _ =
                 [ row [ paddingXY 0 30, width fill ]
                     [ el [ width (fillPortion 1) ] none
                     , row [ width (fillPortion 4) ]
-                        [ image [ alignLeft, width (px 200) ] { src = "https://dunnaudio.com/wp-content/uploads/2022/09/cropped-DunnAudio.jpg", description = "Dunn 🎙 Audio" }
+                        [ image [ alignLeft, width (px 200), height (px 88) ] { src = "images/logo.webp", description = "Dunn 🎙 Audio" }
                         , row [ alignRight, spacingMedium, fontRaleway, fontNormal, Font.light ]
                             [ text "Home"
                             , text "About Me"
@@ -85,7 +85,7 @@ view _ =
                 , el [ width fill ]
                     (image [ width fill, height (px 800) ]
                         { src =
-                            "https://dunnaudio.com/wp-content/uploads/slider/cache/8008af127f40c45b0e646af4f0f70aa2/E62D442A-A3B2-4883-BE5E-D995FAABE6FA.jpg"
+                            "images/elephants.webp"
                         , description = "Sebastian recording elephants"
                         }
                     )
@@ -100,17 +100,17 @@ view _ =
                                 , paragraph [ spacingParagraph ] [ text "The elections opened many doors for me and in 1995, I set myself up as a full-time freelance sound recordist. I worked on several local and international productions in the film industry as a boom operator to broaden my experience." ]
                                 ]
                             , column [ alignTop, spacingSmall, width (fillPortion 1) ]
-                                [ el [ height (px 330), clip ]
+                                [ el [ width (px 590), height (px 350), clip ]
                                     (image
-                                        [ width fill, moveUp 50 ]
-                                        { src = "https://dunnaudio.com/wp-content/uploads/2022/09/cheetah-2F363AA19-8B11-1EF2-8A0D-93A3D603CE68.jpeg"
+                                        [ width fill, height fill ]
+                                        { src = "images/cheetah.webp"
                                         , description = "Sebastian wearing sound equipment and standing next to a cheetah"
                                         }
                                     )
-                                , el [ width fill, height (px 330), clip ]
+                                , el [ width (px 590), height (px 350), clip ]
                                     (image
-                                        [ width fill, moveUp 50 ]
-                                        { src = "https://dunnaudio.com/wp-content/uploads/2022/09/img-1107B693DE77-E415-00E8-223D-D374E3ED3911-scaled.jpeg"
+                                        [ width fill, height fill ]
+                                        { src = "images/hadza.webp"
                                         , description = "Sebastian recording members of the Hadza community in Tanzania"
                                         }
                                     )
@@ -118,10 +118,10 @@ view _ =
                             ]
                         , column [ spacingMedium, width fill ]
                             [ row [ spacingSmall, width fill ]
-                                [ el [ width (fillPortion 2), clip ]
+                                [ el [ width (fillPortion 2), height fill, clip ]
                                     (image
-                                        [ width fill, moveUp 50 ]
-                                        { src = "https://dunnaudio.com/wp-content/uploads/2022/09/img-1515E7DB99D4-ADB2-5104-C6E1-CD9094CB9E9A-scaled.jpeg"
+                                        [ width fill, height fill ]
+                                        { src = "images/ambisonic-gorongosa.webp"
                                         , description = "Sebastian recording ambisonic sound on top of a car in Gorongosa National Park in Mozambique"
                                         }
                                     )
@@ -133,17 +133,17 @@ view _ =
                                     ]
                                 ]
                             , row [ spacingSmall, width fill ]
-                                [ el [ width (fillPortion 1), height (px 340), clip ]
+                                [ el [ alignTop, width (fillPortion 1), height (px 340), clip ]
                                     (image
-                                        [ width fill, moveUp 30 ]
-                                        { src = "https://dunnaudio.com/wp-content/uploads/2022/09/img-22916E6B3E7A-3173-1576-2EF7-9B1CFA553751-scaled.jpg"
+                                        [ width fill, height fill ]
+                                        { src = "images/wauja-palin.webp"
                                         , description = "Sebastian standing with a member of the Wauja community in the Amazon"
                                         }
                                     )
-                                , el [ width (fillPortion 1), height (px 340), clip ]
+                                , el [ alignTop, width (fillPortion 1), height (px 340), clip ]
                                     (image
-                                        [ width fill, moveUp 60 ]
-                                        { src = "https://dunnaudio.com/wp-content/uploads/2022/09/img-2323B683801B-1B19-5CB3-AD7E-CBAE4EC97E04-scaled.jpeg"
+                                        [ width fill, height fill ]
+                                        { src = "images/cape-town.webp"
                                         , description = "Sebastian recording sound in front of Cape Town city hall during lockdown"
                                         }
                                     )
