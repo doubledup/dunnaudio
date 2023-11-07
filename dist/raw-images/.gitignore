@@ -1,3 +1,4 @@
 # This directory is for images that haven't been resized yet
 # Ignore everything here except this file
+*
 !.gitignore
