@@ -17,7 +17,7 @@ Place images in [`dist/raw-images/`](./dist/raw-images/). Run image conversion:
 ```
 bun run convertImages
 ```
-Output images will be in [`dist/images/`][./dist/images/]. This will fail with exit code 1 if there are no images in
+Output images will be in [`dist/images/`]( ./dist/images/ ). This will fail with exit code 1 if there are no images in
 `dist/raw-images/`.
 
 ## Local environment
