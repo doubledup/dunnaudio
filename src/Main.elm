@@ -123,7 +123,7 @@ view model =
                 case class of
                     Phone ->
                         [ layout []
-                            (column [ width fill, height fill, fontNormal, Font.color black, Font.letterSpacing 0.5 ]
+                            (column [ width fill, height fill, fontRaleway, fontNormal, Font.color black, Font.letterSpacing 0.5 ]
                                 [ row
                                     ([ width fill
                                      , padding 30
@@ -135,7 +135,7 @@ view model =
                                                 [ below
                                                     (row [ width fill, Background.color (rgb255 255 255 255) ]
                                                         [ el [ width (fillPortion 1) ] none
-                                                        , column [ width (fillPortion 8), padding 20, spacingSmall, fontRaleway, fontNormal, Font.light ]
+                                                        , column [ width (fillPortion 8), padding 20, spacingSmall, fontNormal, Font.light ]
                                                             [ el [ width fill, Font.center ] (text "Home")
                                                             , row [ width fill ] [ el [ width fill, height (px 0), Border.widthEach { top = 1, bottom = 0, left = 0, right = 0 }, Border.color orange ] none ]
                                                             , el [ width fill, Font.center ] (text "About Me")
@@ -164,7 +164,7 @@ view model =
                                         , description = "Sebastian recording elephants"
                                         }
                                     )
-                                , column [ width fill, height fill, paddingXY 20 40, spacingMedium, fontRaleway ]
+                                , column [ width fill, height fill, paddingXY 20 40, spacingMedium ]
                                     [ column [ width fill, spacingSmall, Font.center ]
                                         [ el [ centerX, Font.bold, fontLarge ] (text "About Me")
                                         , paragraph [ spacingParagraph ] [ text "I’m a passionate and positive sound recordist with a sharp ear dedicated to getting the best possible sound with technical proficiency. I am calm, level-headed and have the technical ability and versatility to adapt quickly to changing environments." ]
@@ -431,12 +431,12 @@ view model =
 
                     Desktop ->
                         [ layout []
-                            (column [ width fill, height fill, fontNormal, Font.color black, Font.letterSpacing 0.5 ]
+                            (column [ width fill, height fill, fontRaleway, fontNormal, Font.color black, Font.letterSpacing 0.5 ]
                                 [ row [ width fill, paddingXY 0 30 ]
                                     [ el [ width (fillPortion 1) ] none
                                     , row [ width (fillPortion 4) ]
                                         [ image [ width (px 200), height (px 88), alignLeft ] { src = "images/logo.webp", description = "Dunn 🎙 Audio" }
-                                        , row [ alignRight, spacingMedium, fontRaleway, fontNormal, Font.light ]
+                                        , row [ alignRight, spacingMedium, fontNormal, Font.light ]
                                             [ text "Home"
                                             , text "About Me"
                                             , text "Portfolio"
@@ -454,7 +454,7 @@ view model =
                                         , description = "Sebastian recording elephants"
                                         }
                                     )
-                                , column [ width (px 1200), height fill, centerX, paddingXY 0 50, spacingLarge, fontRaleway ]
+                                , column [ width (px 1200), height fill, centerX, paddingXY 0 50, spacingLarge ]
                                     [ row [ width fill, spacingSmall ]
                                         [ column [ spacingMedium, width (fillPortion 1), alignTop, Font.center ]
                                             [ el [ centerX, Font.bold, fontHeading ] (text "About Me")
