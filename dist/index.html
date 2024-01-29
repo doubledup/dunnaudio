@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="main.js"></script>
+  </head>
+  <body>
+    <script>
+      var app = Elm.Main.init({
+        flags: {
+          window: {
+            innerWidth: window.innerWidth,
+            innerHeight: window.innerHeight,
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
