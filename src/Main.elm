@@ -6,6 +6,7 @@ import Browser.Navigation exposing (Key)
 import Element exposing (..)
 import Element.Background as Background
 import Element.Border as Border
+import Element.Events as ElementEvents
 import Element.Font as Font
 import FontAwesome as Icon
 import FontAwesome.Brands as IconBrands
@@ -37,7 +38,13 @@ type alias Flags =
 
 type alias Model =
     { device : Device
+    , menuState : MenuState
     }
+
+
+type MenuState
+    = Closed
+    | Open
 
 
 init : Flags -> Url.Url -> Key -> ( Model, Cmd Msg )
@@ -47,6 +54,7 @@ init flags _ _ =
                 { width = flags.window.innerWidth
                 , height = flags.window.innerHeight
                 }
+      , menuState = Closed
       }
     , Cmd.none
     )
@@ -54,6 +62,7 @@ init flags _ _ =
 
 type Msg
     = UpdateDevice { width : Int, height : Int }
+    | ToggleMenuState
     | Noop
 
 
@@ -62,6 +71,19 @@ update msg model =
     case msg of
         UpdateDevice window ->
             ( { model | device = classifyDevice window }, Cmd.none )
+
+        ToggleMenuState ->
+            ( { model
+                | menuState =
+                    case model.menuState of
+                        Open ->
+                            Closed
+
+                        Closed ->
+                            Open
+              }
+            , Cmd.none
+            )
 
         Noop ->
             ( model, Cmd.none )
@@ -102,18 +124,38 @@ view model =
                     Phone ->
                         [ layout []
                             (column [ width fill, height fill, fontNormal, Font.color black, Font.letterSpacing 0.5 ]
-                                [ row [ width fill, padding 30 ]
-                                    [ image [ width (px 200), centerY, alignLeft, paddingEach { bottom = 20, top = 0, left = 0, right = 0 } ] { src = "images/logo.webp", description = "Dunn 🎙 Audio" }
-                                    , el [ width (px 30), centerY, alignRight ] (html (Icon.view IconSolid.bars))
+                                [ row
+                                    ([ width fill
+                                     , padding 30
+                                     ]
+                                        ++ (if model.menuState == Closed then
+                                                []
 
-                                    -- , row [ alignRight, spacingMedium, fontRaleway, fontNormal, Font.light ]
-                                    --     [ text "Home"
-                                    --     , text "About Me"
-                                    --     , text "Portfolio"
-                                    --     , text "Testimonials"
-                                    --     , text "Contact"
-                                    --     , text "My CV"
-                                    --     ]
+                                            else
+                                                [ below
+                                                    (row [ width fill, Background.color (rgb255 255 255 255) ]
+                                                        [ el [ width (fillPortion 1) ] none
+                                                        , column [ width (fillPortion 8), padding 20, spacingSmall, fontRaleway, fontNormal, Font.light ]
+                                                            [ el [ width fill, Font.center ] (text "Home")
+                                                            , row [ width fill ] [ el [ width fill, height (px 0), Border.widthEach { top = 1, bottom = 0, left = 0, right = 0 }, Border.color orange ] none ]
+                                                            , el [ width fill, Font.center ] (text "About Me")
+                                                            , row [ width fill ] [ el [ width fill, height (px 0), Border.widthEach { top = 1, bottom = 0, left = 0, right = 0 }, Border.color orange ] none ]
+                                                            , el [ width fill, Font.center ] (text "Portfolio")
+                                                            , row [ width fill ] [ el [ width fill, height (px 0), Border.widthEach { top = 1, bottom = 0, left = 0, right = 0 }, Border.color orange ] none ]
+                                                            , el [ width fill, Font.center ] (text "Testimonials")
+                                                            , row [ width fill ] [ el [ width fill, height (px 0), Border.widthEach { top = 1, bottom = 0, left = 0, right = 0 }, Border.color orange ] none ]
+                                                            , el [ width fill, Font.center ] (text "Contact")
+                                                            , row [ width fill ] [ el [ width fill, height (px 0), Border.widthEach { top = 1, bottom = 0, left = 0, right = 0 }, Border.color orange ] none ]
+                                                            , el [ width fill, Font.center ] (text "My CV")
+                                                            ]
+                                                        , el [ width (fillPortion 1) ] none
+                                                        ]
+                                                    )
+                                                ]
+                                           )
+                                    )
+                                    [ image [ width (px 200), centerY, alignLeft, paddingEach { bottom = 20, top = 0, left = 0, right = 0 } ] { src = "images/logo.webp", description = "Dunn 🎙 Audio" }
+                                    , el [ width (px 30), centerY, alignRight, ElementEvents.onClick ToggleMenuState ] (html (Icon.view IconSolid.bars))
                                     ]
                                 , el [ width fill ]
                                     (image [ width fill, height (px 250) ]
