@@ -13,12 +13,12 @@ Install [imagemagick](https://imagemagick.org/).
 
 ## Convert images
 
-Place images in [`dist/raw-images/`](./dist/raw-images/). Run image conversion:
+Place images in [`raw-images/`](./raw-images/). Run image conversion:
 ```
 bun run convertImages
 ```
 Output images will be in [`dist/images/`]( ./dist/images/ ). This will fail with exit code 1 if there are no images in
-`dist/raw-images/`.
+`raw-images/`.
 
 ## Local environment
 

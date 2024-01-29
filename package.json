@@ -7,7 +7,7 @@
   "peerDependencies": {},
   "scripts": {
     "start": "bun run elm-live src/Main.elm --dir=./dist/ --open -- --output=dist/index.html",
-    "convertImages": "magick mogrify -format webp -resize 1920x -path ./dist/images/ ./dist/raw-images/*"
+    "convertImages": "magick mogrify -format webp -resize 1920x -path ./dist/images/ ./raw-images/*"
   },
   "type": "module"
 }
