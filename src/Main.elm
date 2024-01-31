@@ -214,7 +214,7 @@ view model =
                                             )
                                         ]
                                     , column [ width fill, spacingSmall, Font.center ]
-                                        [ el [ centerX, Font.bold, fontLarge ] (text "Nominations & Awards")
+                                        [ el [ centerX, Font.bold, fontLarge ] (text "Achievements")
                                         , column [ centerX, spacingSmall ]
                                             [ column (awardStyle ++ [ fontNormal ])
                                                 [ paragraph [] [ text "BAFTA Craft Awards nominee" ]
@@ -514,7 +514,7 @@ view model =
                                             ]
                                         ]
                                     , column [ spacingMedium, width fill ]
-                                        [ el [ centerX, Font.bold, fontHeading ] (text "Nominations & Awards")
+                                        [ el [ centerX, Font.bold, fontHeading ] (text "Achievements")
                                         , row [ centerX, spacingMedium ]
                                             [ column awardStyle
                                                 [ paragraph [] [ text "BAFTA Craft Awards nominee" ]
