@@ -519,9 +519,14 @@ view model =
                                         [ el [ centerX, Font.bold, fontHeading ] (text "Achievements")
                                         , row [ centerX, spacingMedium ]
                                             [ column awardStyle
-                                                [ paragraph [] [ text "BAFTA Craft Awards nominee" ]
-                                                , paragraph [] [ text "2013" ]
-                                                , paragraph [] [ text "Best Sound for 'Brazil with Michael Palin'" ]
+                                                [ paragraph [] [ text "News and Documentary Emmy Awards nominee" ]
+                                                , paragraph [] [ text "2023" ]
+                                                , paragraph [] [ text "Outstanding Sound for 'Our Universe'" ]
+                                                ]
+                                            , column awardStyle
+                                                [ paragraph [] [ text "Innovation in Business Award Winner" ]
+                                                , paragraph [] [ text "2023" ]
+                                                , paragraph [] [ text "Most Trusted Sound Recordist" ]
                                                 ]
                                             , column awardStyle
                                                 [ paragraph [] [ text "Jackson Wild Media Awards nominee" ]
@@ -529,9 +534,9 @@ view model =
                                                 , paragraph [] [ text "Best Sound for 'Gorongosa Park: Rebirth of Paradise'" ]
                                                 ]
                                             , column awardStyle
-                                                [ paragraph [] [ text "News and Documentary Emmy Awards nominee" ]
-                                                , paragraph [] [ text "2023" ]
-                                                , paragraph [] [ text "Outstanding Sound for 'Our Universe'" ]
+                                                [ paragraph [] [ text "BAFTA Craft Awards nominee" ]
+                                                , paragraph [] [ text "2013" ]
+                                                , paragraph [] [ text "Best Sound for 'Brazil with Michael Palin'" ]
                                                 ]
                                             ]
                                         ]
