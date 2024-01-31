@@ -437,7 +437,7 @@ view model =
                                 [ row [ width fill, paddingXY 0 30 ]
                                     [ el [ width (fillPortion 1) ] none
                                     , row [ width (fillPortion 4) ]
-                                        [ image [ width (px 200), height (px 88), alignLeft ] { src = "images/logo.webp", description = "Dunn 🎙 Audio" }
+                                        [ image [ width (px 200), alignLeft, paddingEach { bottom = 20, top = 0, left = 0, right = 0 } ] { src = "images/logo.webp", description = "Dunn 🎙 Audio" }
                                         , row [ alignRight, spacingMedium, fontNormal, Font.light ]
                                             [ text "Home"
                                             , text "About Me"
