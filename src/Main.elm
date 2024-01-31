@@ -234,65 +234,6 @@ view model =
                                             ]
                                         ]
                                     , column [ width fill, spacingSmall, Font.center ]
-                                        [ el [ centerX, Font.bold, fontLarge ] (text "Extra Documents & Notes")
-                                        , column [ centerX, alignTop, spacingSmall, width fill ]
-                                            [ el
-                                                [ centerX
-                                                , width (px 100)
-                                                , height (px 100)
-                                                , Border.color orange
-                                                , Border.rounded 50
-                                                , Border.width 3
-                                                , Font.color orange
-                                                ]
-                                                (el [ centerX, centerY, width (fill |> maximum 50), height (px 50) ]
-                                                    (html (Icon.view IconSolid.passport))
-                                                )
-                                            , paragraph [ Font.center, Font.bold, fontNormal ] [ text "British & South African Passport" ]
-                                            ]
-                                        , column [ centerX, alignTop, spacingSmall, width fill ]
-                                            [ el
-                                                [ centerX
-                                                , width (px 100)
-                                                , height (px 100)
-                                                , Border.color orange
-                                                , Border.rounded 50
-                                                , Border.width 3
-                                                , Font.color orange
-                                                ]
-                                                (el [ centerX, centerY, width (fill |> maximum 70), height (px 50) ]
-                                                    (html (Icon.view IconSolid.chalkboardTeacher))
-                                                )
-                                            , paragraph [ Font.center, Font.bold, fontNormal ] [ text "Teaching Experience" ]
-                                            ]
-                                        , column [ centerX, alignTop, spacingSmall, width fill ]
-                                            [ el
-                                                [ centerX
-                                                , width (px 100)
-                                                , height (px 100)
-                                                , Border.color orange
-                                                , Border.rounded 50
-                                                , Border.width 3
-                                                , Font.color orange
-                                                ]
-                                                (el [ centerX, centerY, width (fill |> maximum 50), height (px 50) ]
-                                                    (html (Icon.view IconSolid.syringe))
-                                                )
-                                            , paragraph [ Font.center, Font.bold, fontNormal ] [ text "Updated Immunisations for Foreign Travel" ]
-                                            ]
-                                        , row [ width fill ]
-                                            [ el
-                                                [ centerX
-                                                , paddingXY 30 20
-                                                , Border.color orange
-                                                , Border.rounded 10
-                                                , Background.color orange
-                                                , Font.color white
-                                                ]
-                                                (text "View my CV for more")
-                                            ]
-                                        ]
-                                    , column [ width fill, spacingSmall, Font.center ]
                                         [ el [ centerX, Font.bold, fontLarge ] (text "Portfolio")
                                         , column [ centerX, spacingSmall ]
                                             [ youtubeVideo { width = 320, height = 180, src = "https://www.youtube.com/embed/Q33TkQKlIMg?controls=1&rel=0&playsinline=0&modestbranding=0&autoplay=0&enablejsapi=1&origin=https%3A%2F%2Fdunnaudio.com&widgetid=1" }
@@ -538,67 +479,6 @@ view model =
                                                 , paragraph [] [ text "2013" ]
                                                 , paragraph [] [ text "Best Sound for 'Brazil with Michael Palin'" ]
                                                 ]
-                                            ]
-                                        ]
-                                    , column [ spacingMedium, width fill ]
-                                        [ el [ centerX, Font.bold, fontHeading ] (text "Extra Documents & Notes")
-                                        , row [ spacingSmall, width fill ]
-                                            [ column [ centerX, alignTop, spacingSmall, width (px 380) ]
-                                                [ el
-                                                    [ centerX
-                                                    , width (px 100)
-                                                    , height (px 100)
-                                                    , Border.color orange
-                                                    , Border.rounded 50
-                                                    , Border.width 3
-                                                    , Font.color orange
-                                                    ]
-                                                    (el [ centerX, centerY, width (fill |> maximum 50), height (px 50) ]
-                                                        (html (Icon.view IconSolid.passport))
-                                                    )
-                                                , paragraph [ Font.center, Font.bold, fontLarge ] [ text "British & South African Passport" ]
-                                                ]
-                                            , column [ centerX, alignTop, spacingSmall, width (px 380) ]
-                                                [ el
-                                                    [ centerX
-                                                    , width (px 100)
-                                                    , height (px 100)
-                                                    , Border.color orange
-                                                    , Border.rounded 50
-                                                    , Border.width 3
-                                                    , Font.color orange
-                                                    ]
-                                                    (el [ centerX, centerY, width (fill |> maximum 70), height (px 50) ]
-                                                        (html (Icon.view IconSolid.chalkboardTeacher))
-                                                    )
-                                                , paragraph [ Font.center, Font.bold, fontLarge ] [ text "Teaching Experience" ]
-                                                ]
-                                            , column [ centerX, alignTop, spacingSmall, width (px 380) ]
-                                                [ el
-                                                    [ centerX
-                                                    , width (px 100)
-                                                    , height (px 100)
-                                                    , Border.color orange
-                                                    , Border.rounded 50
-                                                    , Border.width 3
-                                                    , Font.color orange
-                                                    ]
-                                                    (el [ centerX, centerY, width (fill |> maximum 50), height (px 50) ]
-                                                        (html (Icon.view IconSolid.syringe))
-                                                    )
-                                                , paragraph [ Font.center, Font.bold, fontLarge ] [ text "Updated Immunisations for Foreign Travel" ]
-                                                ]
-                                            ]
-                                        , row [ width fill ]
-                                            [ el
-                                                [ centerX
-                                                , paddingXY 30 20
-                                                , Border.color orange
-                                                , Border.rounded 10
-                                                , Background.color orange
-                                                , Font.color white
-                                                ]
-                                                (text "View my CV for more")
                                             ]
                                         ]
                                     , column [ spacingMedium, width fill ]
