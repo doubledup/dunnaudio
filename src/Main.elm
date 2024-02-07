@@ -177,9 +177,14 @@ view model =
                                 [ el [ centerX, Font.bold, fontLarge ] (text "Achievements")
                                 , column [ centerX, spacingSmall ]
                                     [ column (awardStyle ++ [ fontNormal ])
-                                        [ paragraph [] [ text "BAFTA Craft Awards nominee" ]
-                                        , paragraph [] [ text "2013" ]
-                                        , paragraph [] [ text "Best Sound for 'Brazil with Michael Palin'" ]
+                                        [ paragraph [] [ text "News and Documentary Emmy Awards nominee" ]
+                                        , paragraph [] [ text "2023" ]
+                                        , paragraph [] [ text "Outstanding Sound for 'Our Universe'" ]
+                                        ]
+                                    , column (awardStyle ++ [ fontNormal ])
+                                        [ paragraph [] [ text "Innovation in Business Award Winner" ]
+                                        , paragraph [] [ text "2023" ]
+                                        , paragraph [] [ text "Most Trusted Sound Recordist" ]
                                         ]
                                     , column (awardStyle ++ [ fontNormal ])
                                         [ paragraph [] [ text "Jackson Wild Media Awards nominee" ]
@@ -187,9 +192,9 @@ view model =
                                         , paragraph [] [ text "Best Sound for 'Gorongosa Park: Rebirth of Paradise'" ]
                                         ]
                                     , column (awardStyle ++ [ fontNormal ])
-                                        [ paragraph [] [ text "News and Documentary Emmy Awards nominee" ]
-                                        , paragraph [] [ text "2023" ]
-                                        , paragraph [] [ text "Outstanding Sound for 'Our Universe'" ]
+                                        [ paragraph [] [ text "BAFTA Craft Awards nominee" ]
+                                        , paragraph [] [ text "2013" ]
+                                        , paragraph [] [ text "Best Sound for 'Brazil with Michael Palin'" ]
                                         ]
                                     ]
                                 ]
@@ -399,7 +404,9 @@ view model =
                                         , paragraph [] [ text "2023" ]
                                         , paragraph [] [ text "Most Trusted Sound Recordist" ]
                                         ]
-                                    , column awardStyle
+                                    ]
+                                , row [ centerX, spacingMedium ]
+                                    [ column awardStyle
                                         [ paragraph [] [ text "Jackson Wild Media Awards nominee" ]
                                         , paragraph [] [ text "2015" ]
                                         , paragraph [] [ text "Best Sound for 'Gorongosa Park: Rebirth of Paradise'" ]
