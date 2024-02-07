@@ -125,27 +125,7 @@ view model =
                         [ navbar model
                         , banner { bannerHeight = px 250 }
                         , column [ width fill, height fill, paddingXY 20 40, spacingMedium ]
-                            [ column [ width fill, spacingSmall, Font.center ]
-                                [ el [ centerX, Font.bold, fontLarge ] (text "About Me")
-                                , paragraph [ spacingParagraph ] [ text "I’m a passionate and positive sound recordist with a sharp ear dedicated to getting the best possible sound with technical proficiency. I am calm, level-headed and have the technical ability and versatility to adapt quickly to changing environments." ]
-                                , el [ width fill ]
-                                    (image
-                                        [ width fill, height fill ]
-                                        { src = "images/cheetah.webp"
-                                        , description = "Sebastian wearing sound equipment and standing next to a cheetah"
-                                        }
-                                    )
-                                , paragraph [ spacingParagraph ] [ text "I started working as a sound recordist in 1993. My early work was on environmental documentaries, actuality and corporate production." ]
-                                , paragraph [ spacingParagraph ] [ text "Then, in 1994, I achieved a milestone in my career by covering the post-apartheid elections in South Africa for Sky News. Being involved in such a positive and peaceful moment in South African history further solidified my passion for this career." ]
-                                , el [ width fill ]
-                                    (image
-                                        [ width fill, height fill ]
-                                        { src = "images/hadza.webp"
-                                        , description = "Sebastian recording members of the Hadza community in Tanzania"
-                                        }
-                                    )
-                                , paragraph [ spacingParagraph ] [ text "The elections opened many doors for me and in 1995, I set myself up as a full-time freelance sound recordist. I worked on several local and international productions in the film industry as a boom operator to broaden my experience." ]
-                                ]
+                            [ aboutMe model
                             , column [ width fill, spacingSmall, Font.center ]
                                 [ el [ centerX, Font.bold, fontLarge ] (text "What I Do Now")
                                 , paragraph [ spacingParagraph ] [ text "I spend a lot of my time on documentary productions, although I still work in other arenas. This has taken me all over the world, working for the major broadcasting channels in over 30 countries and exploring a diverse range of subjects." ]
@@ -333,31 +313,7 @@ view model =
                         [ navbar model
                         , banner { bannerHeight = px 800 }
                         , column [ width (px 1200), height fill, centerX, paddingXY 0 50, spacingLarge ]
-                            [ row [ width fill, spacingSmall ]
-                                [ column [ spacingMedium, width (fillPortion 1), alignTop, Font.center ]
-                                    [ el [ centerX, Font.bold, fontHeading ] (text "About Me")
-                                    , paragraph [ spacingParagraph ] [ text "I’m a passionate and positive sound recordist with a sharp ear dedicated to getting the best possible sound with technical proficiency. I am calm, level-headed and have the technical ability and versatility to adapt quickly to changing environments." ]
-                                    , paragraph [ spacingParagraph ] [ text "I started working as a sound recordist in 1993. My early work was on environmental documentaries, actuality and corporate production." ]
-                                    , paragraph [ spacingParagraph ] [ text "Then, in 1994, I achieved a milestone in my career by covering the post-apartheid elections in South Africa for Sky News. Being involved in such a positive and peaceful moment in South African history further solidified my passion for this career." ]
-                                    , paragraph [ spacingParagraph ] [ text "The elections opened many doors for me and in 1995, I set myself up as a full-time freelance sound recordist. I worked on several local and international productions in the film industry as a boom operator to broaden my experience." ]
-                                    ]
-                                , column [ alignTop, spacingSmall, width (fillPortion 1) ]
-                                    [ el [ width (px 590), height (px 350), clip ]
-                                        (image
-                                            [ width fill, height fill ]
-                                            { src = "images/cheetah.webp"
-                                            , description = "Sebastian wearing sound equipment and standing next to a cheetah"
-                                            }
-                                        )
-                                    , el [ width (px 590), height (px 350), clip ]
-                                        (image
-                                            [ width fill, height fill ]
-                                            { src = "images/hadza.webp"
-                                            , description = "Sebastian recording members of the Hadza community in Tanzania"
-                                            }
-                                        )
-                                    ]
-                                ]
+                            [ aboutMe model
                             , column [ spacingMedium, width fill ]
                                 [ row [ spacingSmall, width fill ]
                                     [ el [ width (fillPortion 2), height fill, clip ]
@@ -712,6 +668,79 @@ toString page =
 
         Contact ->
             "Contact"
+
+
+aboutMe : { a | device : Device } -> Element Msg
+aboutMe { device } =
+    let
+        paragraph1 =
+            paragraph [ spacingParagraph ] [ text "I’m a passionate and positive sound recordist with a sharp ear dedicated to getting the best possible sound with technical proficiency. I am calm, level-headed and have the technical ability and versatility to adapt quickly to changing environments." ]
+
+        paragraph2 =
+            paragraph [ spacingParagraph ] [ text "I started working as a sound recordist in 1993. My early work was on environmental documentaries, actuality and corporate production." ]
+
+        paragraph3 =
+            paragraph [ spacingParagraph ] [ text "Then, in 1994, I achieved a milestone in my career by covering the post-apartheid elections in South Africa for Sky News. Being involved in such a positive and peaceful moment in South African history further solidified my passion for this career." ]
+
+        paragraph4 =
+            paragraph [ spacingParagraph ] [ text "The elections opened many doors for me and in 1995, I set myself up as a full-time freelance sound recordist. I worked on several local and international productions in the film industry as a boom operator to broaden my experience." ]
+    in
+    case device.class of
+        Phone ->
+            column [ width fill, spacingSmall, Font.center ]
+                [ el [ centerX, Font.bold, fontLarge ] (text "About Me")
+                , paragraph1
+                , el [ width fill ]
+                    (image
+                        [ width fill, height fill ]
+                        { src = "images/cheetah.webp"
+                        , description = "Sebastian wearing sound equipment and standing next to a cheetah"
+                        }
+                    )
+                , paragraph2
+                , paragraph3
+                , el [ width fill ]
+                    (image
+                        [ width fill, height fill ]
+                        { src = "images/hadza.webp"
+                        , description = "Sebastian recording members of the Hadza community in Tanzania"
+                        }
+                    )
+                , paragraph4
+                ]
+
+        Desktop ->
+            row [ width fill, spacingSmall ]
+                [ column [ spacingMedium, width (fillPortion 1), alignTop, Font.center ]
+                    [ el [ centerX, Font.bold, fontHeading ] (text "About Me")
+                    , paragraph1
+                    , paragraph2
+                    , paragraph3
+                    , paragraph4
+                    ]
+                , column [ alignTop, spacingSmall, width (fillPortion 1) ]
+                    [ el [ width (px 590), height (px 350), clip ]
+                        (image
+                            [ width fill, height fill ]
+                            { src = "images/cheetah.webp"
+                            , description = "Sebastian wearing sound equipment and standing next to a cheetah"
+                            }
+                        )
+                    , el [ width (px 590), height (px 350), clip ]
+                        (image
+                            [ width fill, height fill ]
+                            { src = "images/hadza.webp"
+                            , description = "Sebastian recording members of the Hadza community in Tanzania"
+                            }
+                        )
+                    ]
+                ]
+
+        Tablet ->
+            none
+
+        BigDesktop ->
+            none
 
 
 fontRaleway : Attribute msg
