@@ -722,30 +722,33 @@ testimonials { device } =
 letschat : { a | device : Device } -> Element msg
 letschat { device } =
     let
-        headingFontSize =
-            case device.class of
-                Phone ->
-                    fontLarge
-
-                Desktop ->
-                    fontHeading
-
-                Tablet ->
-                    fontHeading
-
-                BigDesktop ->
-                    fontHeading
+        emailContact =
+            paragraph [ Font.center ]
+                [ text "Email: "
+                , link []
+                    { url = "mailto:seb@dunnaudio.com"
+                    , label = el [ Font.underline ] (text "seb@dunnaudio.com")
+                    }
+                ]
     in
-    column [ width fill, spacingSmall ]
-        [ el [ centerX, Font.bold, headingFontSize ] (text "Let's Chat!")
-        , paragraph [ Font.center ]
-            [ text "Email: "
-            , link []
-                { url = "mailto:seb@dunnaudio.com"
-                , label = el [ Font.underline ] (text "seb@dunnaudio.com")
-                }
-            ]
-        ]
+    case device.class of
+        Phone ->
+            column [ width fill, spacingSmall ]
+                [ el [ centerX, Font.bold, fontLarge ] (text "Let's Chat!")
+                , emailContact
+                ]
+
+        Desktop ->
+            column [ width fill, spacingSmall ]
+                [ el [ centerX, Font.bold, fontHeading ] (text "Let's Chat!")
+                , emailContact
+                ]
+
+        Tablet ->
+            none
+
+        BigDesktop ->
+            none
 
 
 socials : { a | device : Device } -> Element msg
