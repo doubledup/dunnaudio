@@ -759,18 +759,6 @@ whatIDo { device } =
             none
 
 
-fontRaleway : Attribute msg
-fontRaleway =
-    Font.family
-        [ Font.external
-            { name = "Raleway"
-            , url =
-                "https://fonts.googleapis.com/css2?family=Raleway:wght@300;500;700&display=swap"
-            }
-        , Font.sansSerif
-        ]
-
-
 clientLogo : { src : String, description : String, logoWidth : Int } -> Element msg
 clientLogo logoParams =
     el
@@ -821,6 +809,32 @@ vimeoVideo { width, height, src } =
         )
 
 
+dot : Color -> Element msg
+dot color =
+    el [ width (px 16), height (px 16), Border.rounded 8, Background.color color ] none
+
+
+
+-- STYLE
+
+
+awardStyle : List (Attribute msg)
+awardStyle =
+    [ padding 20
+    , width (px 330)
+    , Border.color orange
+    , Border.rounded 10
+    , Border.width 1
+    , fontLarge
+    , Font.bold
+    , Font.center
+    ]
+
+
+
+-- SPACING
+
+
 spacingParagraph : Attribute Msg
 spacingParagraph =
     spacing 10
@@ -841,24 +855,20 @@ spacingLarge =
     spacing 80
 
 
-orange : Color
-orange =
-    rgb255 255 132 52
+
+-- FONT
 
 
-grey : Color
-grey =
-    rgb255 204 204 204
-
-
-black : Color
-black =
-    rgb255 10 10 10
-
-
-white : Color
-white =
-    rgb255 250 250 250
+fontRaleway : Attribute msg
+fontRaleway =
+    Font.family
+        [ Font.external
+            { name = "Raleway"
+            , url =
+                "https://fonts.googleapis.com/css2?family=Raleway:wght@300;500;700&display=swap"
+            }
+        , Font.sansSerif
+        ]
 
 
 fontSmall : Attr decorative msg
@@ -881,19 +891,25 @@ fontHeading =
     Font.size 56
 
 
-awardStyle : List (Attribute msg)
-awardStyle =
-    [ padding 20
-    , width (px 330)
-    , Border.color orange
-    , Border.rounded 10
-    , Border.width 1
-    , fontLarge
-    , Font.bold
-    , Font.center
-    ]
+
+-- COLORS
 
 
-dot : Color -> Element msg
-dot color =
-    el [ width (px 16), height (px 16), Border.rounded 8, Background.color color ] none
+orange : Color
+orange =
+    rgb255 255 132 52
+
+
+grey : Color
+grey =
+    rgb255 204 204 204
+
+
+black : Color
+black =
+    rgb255 10 10 10
+
+
+white : Color
+white =
+    rgb255 250 250 250
