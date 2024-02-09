@@ -127,31 +127,7 @@ view model =
                         , column [ width fill, height fill, paddingXY 20 40, spacingMedium ]
                             [ aboutMe model
                             , whatIDo model
-                            , column [ width fill, spacingSmall, Font.center ]
-                                [ el [ centerX, Font.bold, fontLarge ] (text "Achievements")
-                                , column [ centerX, spacingSmall ]
-                                    [ column (awardStyle ++ [ fontNormal ])
-                                        [ paragraph [] [ text "News and Documentary Emmy Awards nominee" ]
-                                        , paragraph [] [ text "2023" ]
-                                        , paragraph [] [ text "Outstanding Sound for 'Our Universe'" ]
-                                        ]
-                                    , column (awardStyle ++ [ fontNormal ])
-                                        [ paragraph [] [ text "Innovation in Business Award Winner" ]
-                                        , paragraph [] [ text "2023" ]
-                                        , paragraph [] [ text "Most Trusted Sound Recordist" ]
-                                        ]
-                                    , column (awardStyle ++ [ fontNormal ])
-                                        [ paragraph [] [ text "Jackson Wild Media Awards nominee" ]
-                                        , paragraph [] [ text "2015" ]
-                                        , paragraph [] [ text "Best Sound for 'Gorongosa Park: Rebirth of Paradise'" ]
-                                        ]
-                                    , column (awardStyle ++ [ fontNormal ])
-                                        [ paragraph [] [ text "BAFTA Craft Awards nominee" ]
-                                        , paragraph [] [ text "2013" ]
-                                        , paragraph [] [ text "Best Sound for 'Brazil with Michael Palin'" ]
-                                        ]
-                                    ]
-                                ]
+                            , achievements model
                             , column [ width fill, spacingSmall, Font.center ]
                                 [ el [ centerX, Font.bold, fontLarge ] (text "Portfolio")
                                 , column [ centerX, spacingSmall ]
@@ -289,33 +265,7 @@ view model =
                         , column [ width (px 1200), height fill, centerX, paddingXY 0 50, spacingLarge ]
                             [ aboutMe model
                             , whatIDo model
-                            , column [ spacingMedium, width fill ]
-                                [ el [ centerX, Font.bold, fontHeading ] (text "Achievements")
-                                , row [ centerX, spacingMedium ]
-                                    [ column awardStyle
-                                        [ paragraph [] [ text "News and Documentary Emmy Awards nominee" ]
-                                        , paragraph [] [ text "2023" ]
-                                        , paragraph [] [ text "Outstanding Sound for 'Our Universe'" ]
-                                        ]
-                                    , column awardStyle
-                                        [ paragraph [] [ text "Innovation in Business Award Winner" ]
-                                        , paragraph [] [ text "2023" ]
-                                        , paragraph [] [ text "Most Trusted Sound Recordist" ]
-                                        ]
-                                    ]
-                                , row [ centerX, spacingMedium ]
-                                    [ column awardStyle
-                                        [ paragraph [] [ text "Jackson Wild Media Awards nominee" ]
-                                        , paragraph [] [ text "2015" ]
-                                        , paragraph [] [ text "Best Sound for 'Gorongosa Park: Rebirth of Paradise'" ]
-                                        ]
-                                    , column awardStyle
-                                        [ paragraph [] [ text "BAFTA Craft Awards nominee" ]
-                                        , paragraph [] [ text "2013" ]
-                                        , paragraph [] [ text "Best Sound for 'Brazil with Michael Palin'" ]
-                                        ]
-                                    ]
-                                ]
+                            , achievements model
                             , column [ spacingMedium, width fill ]
                                 [ el [ centerX, Font.bold, fontHeading ] (text "Portfolio")
                                 , column [ spacingSmall, width fill ]
@@ -749,6 +699,72 @@ whatIDo { device } =
                             , description = "Sebastian recording sound in front of Cape Town city hall during lockdown"
                             }
                         )
+                    ]
+                ]
+
+        Tablet ->
+            none
+
+        BigDesktop ->
+            none
+
+
+achievements : { a | device : { b | class : DeviceClass } } -> Element msg
+achievements { device } =
+    case device.class of
+        Phone ->
+            column [ width fill, spacingSmall, Font.center ]
+                [ el [ centerX, Font.bold, fontLarge ] (text "Achievements")
+                , column [ centerX, spacingSmall ]
+                    [ column (awardStyle ++ [ fontNormal ])
+                        [ paragraph [] [ text "News and Documentary Emmy Awards nominee" ]
+                        , paragraph [] [ text "2023" ]
+                        , paragraph [] [ text "Outstanding Sound for 'Our Universe'" ]
+                        ]
+                    , column (awardStyle ++ [ fontNormal ])
+                        [ paragraph [] [ text "Innovation in Business Award Winner" ]
+                        , paragraph [] [ text "2023" ]
+                        , paragraph [] [ text "Most Trusted Sound Recordist" ]
+                        ]
+                    , column (awardStyle ++ [ fontNormal ])
+                        [ paragraph [] [ text "Jackson Wild Media Awards nominee" ]
+                        , paragraph [] [ text "2015" ]
+                        , paragraph [] [ text "Best Sound for 'Gorongosa Park: Rebirth of Paradise'" ]
+                        ]
+                    , column (awardStyle ++ [ fontNormal ])
+                        [ paragraph [] [ text "BAFTA Craft Awards nominee" ]
+                        , paragraph [] [ text "2013" ]
+                        , paragraph [] [ text "Best Sound for 'Brazil with Michael Palin'" ]
+                        ]
+                    ]
+                ]
+
+        Desktop ->
+            column [ spacingMedium, width fill ]
+                [ el [ centerX, Font.bold, fontHeading ] (text "Achievements")
+                , row [ centerX, spacingMedium ]
+                    [ column awardStyle
+                        [ paragraph [] [ text "News and Documentary Emmy Awards nominee" ]
+                        , paragraph [] [ text "2023" ]
+                        , paragraph [] [ text "Outstanding Sound for 'Our Universe'" ]
+                        ]
+                    , column awardStyle
+                        [ paragraph [] [ text "Innovation in Business Award Winner" ]
+                        , paragraph [] [ text "2023" ]
+                        , paragraph [] [ text "Most Trusted Sound Recordist" ]
+                        ]
+                    ]
+                , row [ centerX, spacingMedium ]
+                    [ column awardStyle
+                        [ paragraph [] [ text "Jackson Wild Media Awards nominee" ]
+                        , paragraph [] [ text "2015" ]
+                        , paragraph [] [ text "Best Sound for 'Gorongosa Park: Rebirth of Paradise'" ]
+                        ]
+                    , column awardStyle
+                        [ paragraph [] [ text "BAFTA Craft Awards nominee" ]
+                        , paragraph [] [ text "2013" ]
+                        , paragraph [] [ text "Best Sound for 'Brazil with Michael Palin'" ]
+                        ]
                     ]
                 ]
 
