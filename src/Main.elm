@@ -565,7 +565,7 @@ aboutMe { device } =
             none
 
 
-whatIDo : { model | device : { device | class : DeviceClass } } -> Element Msg
+whatIDo : { model | device : Device } -> Element Msg
 whatIDo { device } =
     case device.class of
         Phone ->
@@ -639,7 +639,7 @@ whatIDo { device } =
             none
 
 
-achievements : { a | device : { b | class : DeviceClass } } -> Element msg
+achievements : { a | device : Device } -> Element msg
 achievements { device } =
     case device.class of
         Phone ->
@@ -705,7 +705,7 @@ achievements { device } =
             none
 
 
-portfolio : { a | device : { b | class : DeviceClass } } -> Element msg
+portfolio : { a | device : Device } -> Element msg
 portfolio { device } =
     case device.class of
         Phone ->
