@@ -129,38 +129,7 @@ view model =
                             , whatIDo model
                             , achievements model
                             , portfolio model
-                            , column [ width fill, spacingSmall, Font.center ]
-                                [ el [ centerX, Font.bold, fontLarge ] (text "Testimonials")
-                                , row [ width fill ]
-                                    [ el [ width (fillPortion 1), height fill ]
-                                        (el [ centerX, centerY, width (px 20), height (px 20), Font.color orange ]
-                                            (html (Icon.view IconSolid.angleLeft))
-                                        )
-                                    , column [ width (fillPortion 10), height fill, Font.center, fontNormal, Font.light, Font.letterSpacing 0.3 ]
-                                        [ column [ centerX, spacing 10 ]
-                                            [ paragraph [] [ text "“… Despite the incredibly difficult working conditions in Mali and Egypt your sound recording was brilliant." ]
-                                            , paragraph [] [ text "We so appreciate having someone with your enthusiasm, energy and experience." ]
-                                            , paragraph [] [ text "Your stereo recordings of the big ceremonies have created a sound that makes the viewer feel so present…" ]
-                                            , paragraph [] [ text "“Cosmic Africa“ has really benefited in a big way through your dedication to the sound…”" ]
-                                            ]
-                                        , paragraph [ paddingEach { top = 30, left = 0, right = 0, bottom = 0 }, Font.bold ] [ text "Craig Foster" ]
-                                        , paragraph [ paddingEach { top = 15, left = 0, right = 0, bottom = 0 } ] [ text "Earthrise Productions" ]
-                                        ]
-                                    , el [ width (fillPortion 1), height fill ]
-                                        (el [ centerX, centerY, width (px 20), height (px 20), Font.color orange ]
-                                            (html (Icon.view IconSolid.angleRight))
-                                        )
-                                    ]
-                                , row [ centerX, spacing 5 ]
-                                    [ dot orange
-                                    , dot grey
-                                    , dot grey
-                                    , dot grey
-                                    , dot grey
-                                    , dot grey
-                                    , dot grey
-                                    ]
-                                ]
+                            , testimonials model
                             , column [ width fill, spacingSmall, Font.center ]
                                 [ el [ centerX, Font.bold, fontLarge ] (text "Let's Chat!")
                                 , paragraph [ Font.center ]
@@ -230,38 +199,7 @@ view model =
                             , whatIDo model
                             , achievements model
                             , portfolio model
-                            , column [ spacingSmall, width fill ]
-                                [ el [ centerX, Font.bold, fontHeading ] (text "Testimonials")
-                                , row [ width fill ]
-                                    [ el [ width (fillPortion 1), height fill ]
-                                        (el [ centerX, centerY, width (px 20), height (px 20), Font.color orange ]
-                                            (html (Icon.view IconSolid.angleLeft))
-                                        )
-                                    , column [ width (fillPortion 10), height fill, Font.center, fontNormal, Font.light, Font.letterSpacing 0.3 ]
-                                        [ column [ centerX, spacing 10 ]
-                                            [ paragraph [] [ text "“… Despite the incredibly difficult working conditions in Mali and Egypt your sound recording was brilliant." ]
-                                            , paragraph [] [ text "We so appreciate having someone with your enthusiasm, energy and experience." ]
-                                            , paragraph [] [ text "Your stereo recordings of the big ceremonies have created a sound that makes the viewer feel so present…" ]
-                                            , paragraph [] [ text "“Cosmic Africa“ has really benefited in a big way through your dedication to the sound…”" ]
-                                            ]
-                                        , paragraph [ paddingEach { top = 30, left = 0, right = 0, bottom = 0 }, Font.bold ] [ text "Craig Foster" ]
-                                        , paragraph [ paddingEach { top = 15, left = 0, right = 0, bottom = 0 } ] [ text "Earthrise Productions" ]
-                                        ]
-                                    , el [ width (fillPortion 1), height fill ]
-                                        (el [ centerX, centerY, width (px 20), height (px 20), Font.color orange ]
-                                            (html (Icon.view IconSolid.angleRight))
-                                        )
-                                    ]
-                                , row [ centerX, spacing 5 ]
-                                    [ dot orange
-                                    , dot grey
-                                    , dot grey
-                                    , dot grey
-                                    , dot grey
-                                    , dot grey
-                                    , dot grey
-                                    ]
-                                ]
+                            , testimonials model
                             , column [ spacingSmall, width fill ]
                                 [ el [ centerX, Font.bold, fontHeading ] (text "Let's Chat!")
                                 , paragraph [ Font.center ]
@@ -781,6 +719,84 @@ portfolio { device } =
                     , clientLogo { description = "CBS", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-14.jpg", logoWidth = 180 }
                     , clientLogo { description = "abc primetime", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-2.jpg", logoWidth = 180 }
                     , clientLogo { description = "Sky 1", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-41.gif", logoWidth = 180 }
+                    ]
+                ]
+
+        Tablet ->
+            none
+
+        BigDesktop ->
+            none
+
+
+testimonials : { a | device : Device } -> Element msg
+testimonials { device } =
+    case device.class of
+        Phone ->
+            column [ width fill, spacingSmall, Font.center ]
+                [ el [ centerX, Font.bold, fontLarge ] (text "Testimonials")
+                , row [ width fill ]
+                    [ el [ width (fillPortion 1), height fill ]
+                        (el [ centerX, centerY, width (px 20), height (px 20), Font.color orange ]
+                            (html (Icon.view IconSolid.angleLeft))
+                        )
+                    , column [ width (fillPortion 10), height fill, Font.center, fontNormal, Font.light, Font.letterSpacing 0.3 ]
+                        [ column [ centerX, spacing 10 ]
+                            [ paragraph [] [ text "“… Despite the incredibly difficult working conditions in Mali and Egypt your sound recording was brilliant." ]
+                            , paragraph [] [ text "We so appreciate having someone with your enthusiasm, energy and experience." ]
+                            , paragraph [] [ text "Your stereo recordings of the big ceremonies have created a sound that makes the viewer feel so present…" ]
+                            , paragraph [] [ text "“Cosmic Africa“ has really benefited in a big way through your dedication to the sound…”" ]
+                            ]
+                        , paragraph [ paddingEach { top = 30, left = 0, right = 0, bottom = 0 }, Font.bold ] [ text "Craig Foster" ]
+                        , paragraph [ paddingEach { top = 15, left = 0, right = 0, bottom = 0 } ] [ text "Earthrise Productions" ]
+                        ]
+                    , el [ width (fillPortion 1), height fill ]
+                        (el [ centerX, centerY, width (px 20), height (px 20), Font.color orange ]
+                            (html (Icon.view IconSolid.angleRight))
+                        )
+                    ]
+                , row [ centerX, spacing 5 ]
+                    [ dot orange
+                    , dot grey
+                    , dot grey
+                    , dot grey
+                    , dot grey
+                    , dot grey
+                    , dot grey
+                    ]
+                ]
+
+        Desktop ->
+            column [ spacingSmall, width fill ]
+                [ el [ centerX, Font.bold, fontHeading ] (text "Testimonials")
+                , row [ width fill ]
+                    [ el [ width (fillPortion 1), height fill ]
+                        (el [ centerX, centerY, width (px 20), height (px 20), Font.color orange ]
+                            (html (Icon.view IconSolid.angleLeft))
+                        )
+                    , column [ width (fillPortion 10), height fill, Font.center, fontNormal, Font.light, Font.letterSpacing 0.3 ]
+                        [ column [ centerX, spacing 10 ]
+                            [ paragraph [] [ text "“… Despite the incredibly difficult working conditions in Mali and Egypt your sound recording was brilliant." ]
+                            , paragraph [] [ text "We so appreciate having someone with your enthusiasm, energy and experience." ]
+                            , paragraph [] [ text "Your stereo recordings of the big ceremonies have created a sound that makes the viewer feel so present…" ]
+                            , paragraph [] [ text "“Cosmic Africa“ has really benefited in a big way through your dedication to the sound…”" ]
+                            ]
+                        , paragraph [ paddingEach { top = 30, left = 0, right = 0, bottom = 0 }, Font.bold ] [ text "Craig Foster" ]
+                        , paragraph [ paddingEach { top = 15, left = 0, right = 0, bottom = 0 } ] [ text "Earthrise Productions" ]
+                        ]
+                    , el [ width (fillPortion 1), height fill ]
+                        (el [ centerX, centerY, width (px 20), height (px 20), Font.color orange ]
+                            (html (Icon.view IconSolid.angleRight))
+                        )
+                    ]
+                , row [ centerX, spacing 5 ]
+                    [ dot orange
+                    , dot grey
+                    , dot grey
+                    , dot grey
+                    , dot grey
+                    , dot grey
+                    , dot grey
                     ]
                 ]
 
