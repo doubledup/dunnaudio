@@ -111,7 +111,7 @@ onUrlChange _ =
 
 
 
--- attributes are organised by width, height, alignment, padding, spacing, background, font
+-- attribute order: width, height, alignment, padding, spacing, background, font
 
 
 view : Model -> Browser.Document Msg
@@ -125,14 +125,7 @@ view model =
                         [ navbar model
                         , banner { bannerHeight = px 250 }
                         , column [ width fill, height fill, paddingXY 20 40, spacingMedium ]
-                            [ aboutMe model
-                            , whatIDo model
-                            , achievements model
-                            , portfolio model
-                            , testimonials model
-                            , letschat model
-                            , socials model
-                            ]
+                            (List.map (\section -> section model) sections)
                         , footer model
                         ]
 
@@ -140,14 +133,7 @@ view model =
                         [ navbar model
                         , banner { bannerHeight = px 800 }
                         , column [ width (px 1200), height fill, centerX, paddingXY 0 50, spacingLarge ]
-                            [ aboutMe model
-                            , whatIDo model
-                            , achievements model
-                            , portfolio model
-                            , testimonials model
-                            , letschat model
-                            , socials model
-                            ]
+                            (List.map (\section -> section model) sections)
                         , footer model
                         ]
 
@@ -160,6 +146,22 @@ view model =
             )
         ]
     }
+
+
+
+-- ELEMENTS
+
+
+sections : List ({ a | device : Device } -> Element Msg)
+sections =
+    [ aboutMe
+    , whatIDo
+    , achievements
+    , portfolio
+    , testimonials
+    , letschat
+    , socials
+    ]
 
 
 navbar : { a | menuState : MenuState, device : Device } -> Element Msg
