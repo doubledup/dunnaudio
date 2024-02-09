@@ -130,16 +130,7 @@ view model =
                             , achievements model
                             , portfolio model
                             , testimonials model
-                            , column [ width fill, spacingSmall, Font.center ]
-                                [ el [ centerX, Font.bold, fontLarge ] (text "Let's Chat!")
-                                , paragraph [ Font.center ]
-                                    [ text "Email: "
-                                    , link []
-                                        { url = "mailto:seb@dunnaudio.com"
-                                        , label = el [ Font.underline ] (text "seb@dunnaudio.com")
-                                        }
-                                    ]
-                                ]
+                            , letschat model
                             , column [ width fill, spacingSmall, Font.center ]
                                 [ el [ centerX ]
                                     (text "Follow me on my socials!")
@@ -200,16 +191,7 @@ view model =
                             , achievements model
                             , portfolio model
                             , testimonials model
-                            , column [ spacingSmall, width fill ]
-                                [ el [ centerX, Font.bold, fontHeading ] (text "Let's Chat!")
-                                , paragraph [ Font.center ]
-                                    [ text "Email: "
-                                    , link []
-                                        { url = "mailto:seb@dunnaudio.com"
-                                        , label = el [ Font.underline ] (text "seb@dunnaudio.com")
-                                        }
-                                    ]
-                                ]
+                            , letschat model
                             , column [ spacingMedium, width fill ]
                                 [ el [ centerX ]
                                     (text "Follow me on my socials!")
@@ -805,6 +787,35 @@ testimonials { device } =
 
         BigDesktop ->
             none
+
+
+letschat : { a | device : Device } -> Element msg
+letschat { device } =
+    let
+        headingFontSize =
+            case device.class of
+                Phone ->
+                    fontLarge
+
+                Desktop ->
+                    fontHeading
+
+                Tablet ->
+                    fontHeading
+
+                BigDesktop ->
+                    fontHeading
+    in
+    column [ width fill, spacingSmall ]
+        [ el [ centerX, Font.bold, headingFontSize ] (text "Let's Chat!")
+        , paragraph [ Font.center ]
+            [ text "Email: "
+            , link []
+                { url = "mailto:seb@dunnaudio.com"
+                , label = el [ Font.underline ] (text "seb@dunnaudio.com")
+                }
+            ]
+        ]
 
 
 clientLogo : { src : String, description : String, logoWidth : Int } -> Element msg
