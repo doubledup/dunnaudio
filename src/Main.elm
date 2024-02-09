@@ -151,7 +151,13 @@ view model =
                         phoneLayout
 
                     Tablet ->
-                        phoneLayout
+                        [ navbar model
+                        , banner { bannerHeight = px 400 }
+                        , column [ width (px 600), height fill, centerX, paddingXY 20 50, spacingLarge ]
+                            -- TODO: rework each section for tablets
+                            (List.map (\section -> section desktopModel) sections)
+                        , footer desktopModel
+                        ]
 
                     Desktop ->
                         desktopLayout
@@ -191,15 +197,14 @@ navbar { menuState, device } =
                 , ElementEvents.onClick ToggleMenuState
                 ]
                 (html (Icon.view IconSolid.bars))
-    in
-    case device.class of
-        Phone ->
+
+        mobile =
             row ([ width fill, height (px 150), padding 20, spacing 10 ] ++ dropdown menuState)
                 [ logo
                 , menuButton
                 ]
 
-        Desktop ->
+        desktop =
             row [ width fill, paddingXY 20 30 ]
                 [ el [ width (fillPortion 1) ] none
                 , row [ width (fillPortion 4), spacingMedium ]
@@ -215,12 +220,19 @@ navbar { menuState, device } =
                     ]
                 , el [ width (fillPortion 1) ] none
                 ]
+    in
+    case device.class of
+        Phone ->
+            mobile
 
         Tablet ->
-            text "tablet navbar"
+            mobile
+
+        Desktop ->
+            desktop
 
         BigDesktop ->
-            text "big desktop navbar"
+            desktop
 
 
 banner : { a | bannerHeight : Length } -> Element msg
