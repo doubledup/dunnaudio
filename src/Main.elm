@@ -132,7 +132,7 @@ view model =
                     Desktop ->
                         [ navbar model
                         , banner { bannerHeight = px 800 }
-                        , column [ width (px 1200), height fill, centerX, paddingXY 0 50, spacingLarge ]
+                        , column [ width (px 1200), height fill, centerX, paddingXY 20 50, spacingLarge ]
                             (List.map (\section -> section model) sections)
                         , footer model
                         ]
@@ -178,15 +178,15 @@ navbar { menuState, device } =
     in
     case device.class of
         Phone ->
-            row ([ width fill, padding 30 ] ++ dropdown menuState)
+            row ([ width fill, height (px 150), padding 20, spacing 10 ] ++ dropdown menuState)
                 [ logo
                 , menuButton
                 ]
 
         Desktop ->
-            row [ width fill, paddingXY 0 30 ]
+            row [ width fill, paddingXY 20 30 ]
                 [ el [ width (fillPortion 1) ] none
-                , row [ width (fillPortion 4) ]
+                , row [ width (fillPortion 4), spacingMedium ]
                     [ logo
                     , row [ alignRight, spacingMedium, fontNormal, Font.light ]
                         [ text "Home"
@@ -238,7 +238,7 @@ orangeRule =
 
 logo : Element msg
 logo =
-    image [ width (px 200), alignLeft ]
+    image [ width (px 240), alignLeft ]
         { src = "images/logo2.webp", description = "Dunn 🎙 Audio" }
 
 
