@@ -126,33 +126,7 @@ view model =
                         , banner { bannerHeight = px 250 }
                         , column [ width fill, height fill, paddingXY 20 40, spacingMedium ]
                             [ aboutMe model
-                            , column [ width fill, spacingSmall, Font.center ]
-                                [ el [ centerX, Font.bold, fontLarge ] (text "What I Do Now")
-                                , paragraph [ spacingParagraph ] [ text "I spend a lot of my time on documentary productions, although I still work in other arenas. This has taken me all over the world, working for the major broadcasting channels in over 30 countries and exploring a diverse range of subjects." ]
-                                , paragraph [ spacingParagraph ] [ text "I also now specialise in recording ‘The sounds of Africa’ having been commissioned by several top international production companies to record animals and general ambiences of Africa." ]
-                                , el [ width fill ]
-                                    (image
-                                        [ width fill, height fill ]
-                                        { src = "images/ambisonic-gorongosa.webp"
-                                        , description = "Sebastian recording ambisonic sound on top of a car in Gorongosa National Park in Mozambique"
-                                        }
-                                    )
-                                , el [ width fill ]
-                                    (image
-                                        [ width fill, height fill ]
-                                        { src = "images/wauja-palin.webp"
-                                        , description = "Sebastian standing with a member of the Wauja community in the Amazon"
-                                        }
-                                    )
-                                , paragraph [ spacingParagraph ] [ text "My favourite ‘go-to’ is an Ambisonic Microphone that captures immersive surround sounds of the environments I’m recording in - an important tool in the sound design process of most productions." ]
-                                , el [ width fill ]
-                                    (image
-                                        [ width fill, height fill ]
-                                        { src = "images/cape-town.webp"
-                                        , description = "Sebastian recording sound in front of Cape Town city hall during lockdown"
-                                        }
-                                    )
-                                ]
+                            , whatIDo model
                             , column [ width fill, spacingSmall, Font.center ]
                                 [ el [ centerX, Font.bold, fontLarge ] (text "Achievements")
                                 , column [ centerX, spacingSmall ]
@@ -314,39 +288,7 @@ view model =
                         , banner { bannerHeight = px 800 }
                         , column [ width (px 1200), height fill, centerX, paddingXY 0 50, spacingLarge ]
                             [ aboutMe model
-                            , column [ spacingMedium, width fill ]
-                                [ row [ spacingSmall, width fill ]
-                                    [ el [ width (fillPortion 2), height fill, clip ]
-                                        (image
-                                            [ width fill, height fill ]
-                                            { src = "images/ambisonic-gorongosa.webp"
-                                            , description = "Sebastian recording ambisonic sound on top of a car in Gorongosa National Park in Mozambique"
-                                            }
-                                        )
-                                    , column [ spacingMedium, width (fillPortion 5), Font.center ]
-                                        [ el [ centerX, Font.bold, fontHeading ] (text "What I Do Now")
-                                        , paragraph [ spacingParagraph ] [ text "I spend a lot of my time on documentary productions, although I still work in other arenas. This has taken me all over the world, working for the major broadcasting channels in over 30 countries and exploring a diverse range of subjects." ]
-                                        , paragraph [ spacingParagraph ] [ text "I also now specialise in recording ‘The sounds of Africa’ having been commissioned by several top international production companies to record animals and general ambiences of Africa." ]
-                                        , paragraph [ spacingParagraph ] [ text "My favourite ‘go-to’ is an Ambisonic Microphone that captures immersive surround sounds of the environments I’m recording in - an important tool in the sound design process of most productions." ]
-                                        ]
-                                    ]
-                                , row [ spacingSmall, width fill ]
-                                    [ el [ alignTop, width (fillPortion 1), height (px 340), clip ]
-                                        (image
-                                            [ width fill, height fill ]
-                                            { src = "images/wauja-palin.webp"
-                                            , description = "Sebastian standing with a member of the Wauja community in the Amazon"
-                                            }
-                                        )
-                                    , el [ alignTop, width (fillPortion 1), height (px 340), clip ]
-                                        (image
-                                            [ width fill, height fill ]
-                                            { src = "images/cape-town.webp"
-                                            , description = "Sebastian recording sound in front of Cape Town city hall during lockdown"
-                                            }
-                                        )
-                                    ]
-                                ]
+                            , whatIDo model
                             , column [ spacingMedium, width fill ]
                                 [ el [ centerX, Font.bold, fontHeading ] (text "Achievements")
                                 , row [ centerX, spacingMedium ]
@@ -731,6 +673,80 @@ aboutMe { device } =
                             [ width fill, height fill ]
                             { src = "images/hadza.webp"
                             , description = "Sebastian recording members of the Hadza community in Tanzania"
+                            }
+                        )
+                    ]
+                ]
+
+        Tablet ->
+            none
+
+        BigDesktop ->
+            none
+
+
+whatIDo : { model | device : { device | class : DeviceClass } } -> Element Msg
+whatIDo { device } =
+    case device.class of
+        Phone ->
+            column [ width fill, spacingSmall, Font.center ]
+                [ el [ centerX, Font.bold, fontLarge ] (text "What I Do Now")
+                , paragraph [ spacingParagraph ] [ text "I spend a lot of my time on documentary productions, although I still work in other arenas. This has taken me all over the world, working for the major broadcasting channels in over 30 countries and exploring a diverse range of subjects." ]
+                , paragraph [ spacingParagraph ] [ text "I also now specialise in recording ‘The sounds of Africa’ having been commissioned by several top international production companies to record animals and general ambiences of Africa." ]
+                , el [ width fill ]
+                    (image
+                        [ width fill, height fill ]
+                        { src = "images/ambisonic-gorongosa.webp"
+                        , description = "Sebastian recording ambisonic sound on top of a car in Gorongosa National Park in Mozambique"
+                        }
+                    )
+                , el [ width fill ]
+                    (image
+                        [ width fill, height fill ]
+                        { src = "images/wauja-palin.webp"
+                        , description = "Sebastian standing with a member of the Wauja community in the Amazon"
+                        }
+                    )
+                , paragraph [ spacingParagraph ] [ text "My favourite ‘go-to’ is an Ambisonic Microphone that captures immersive surround sounds of the environments I’m recording in - an important tool in the sound design process of most productions." ]
+                , el [ width fill ]
+                    (image
+                        [ width fill, height fill ]
+                        { src = "images/cape-town.webp"
+                        , description = "Sebastian recording sound in front of Cape Town city hall during lockdown"
+                        }
+                    )
+                ]
+
+        Desktop ->
+            column [ spacingMedium, width fill ]
+                [ row [ spacingSmall, width fill ]
+                    [ el [ width (fillPortion 2), height fill, clip ]
+                        (image
+                            [ width fill, height fill ]
+                            { src = "images/ambisonic-gorongosa.webp"
+                            , description = "Sebastian recording ambisonic sound on top of a car in Gorongosa National Park in Mozambique"
+                            }
+                        )
+                    , column [ spacingMedium, width (fillPortion 5), Font.center ]
+                        [ el [ centerX, Font.bold, fontHeading ] (text "What I Do Now")
+                        , paragraph [ spacingParagraph ] [ text "I spend a lot of my time on documentary productions, although I still work in other arenas. This has taken me all over the world, working for the major broadcasting channels in over 30 countries and exploring a diverse range of subjects." ]
+                        , paragraph [ spacingParagraph ] [ text "I also now specialise in recording ‘The sounds of Africa’ having been commissioned by several top international production companies to record animals and general ambiences of Africa." ]
+                        , paragraph [ spacingParagraph ] [ text "My favourite ‘go-to’ is an Ambisonic Microphone that captures immersive surround sounds of the environments I’m recording in - an important tool in the sound design process of most productions." ]
+                        ]
+                    ]
+                , row [ spacingSmall, width fill ]
+                    [ el [ alignTop, width (fillPortion 1), height (px 340), clip ]
+                        (image
+                            [ width fill, height fill ]
+                            { src = "images/wauja-palin.webp"
+                            , description = "Sebastian standing with a member of the Wauja community in the Amazon"
+                            }
+                        )
+                    , el [ alignTop, width (fillPortion 1), height (px 340), clip ]
+                        (image
+                            [ width fill, height fill ]
+                            { src = "images/cape-town.webp"
+                            , description = "Sebastian recording sound in front of Cape Town city hall during lockdown"
                             }
                         )
                     ]
