@@ -133,18 +133,7 @@ view model =
                             , letschat model
                             , socials model
                             ]
-                        , column [ width fill, padding 30, spacing 10, Background.color black, Font.center, fontSmall, Font.light, Font.color white ]
-                            [ paragraph []
-                                [ text "Copyright © 2023 Dunn Audio" ]
-                            , paragraph []
-                                [ text "Powered by ❤️  and "
-                                , link []
-                                    { url =
-                                        "https://elm-lang.org"
-                                    , label = el [ Font.underline ] (text "Elm")
-                                    }
-                                ]
-                            ]
+                        , footer model
                         ]
 
                     Desktop ->
@@ -159,18 +148,7 @@ view model =
                             , letschat model
                             , socials model
                             ]
-                        , column [ width fill, padding 30, spacing 10, Background.color black, Font.center, fontNormal, Font.light, Font.color white ]
-                            [ paragraph []
-                                [ text "Copyright © 2023 Dunn Audio" ]
-                            , paragraph []
-                                [ text "Powered by ❤️  and "
-                                , link []
-                                    { url =
-                                        "https://elm-lang.org"
-                                    , label = el [ Font.underline ] (text "Elm")
-                                    }
-                                ]
-                            ]
+                        , footer model
                         ]
 
                     Tablet ->
@@ -800,6 +778,44 @@ socials { device } =
                 [ el [ centerX ]
                     (text "Follow me on my socials!")
                 , row [ width fill, paddingXY 50 0, spacing 150 ] socialLinks
+                ]
+
+        Tablet ->
+            none
+
+        BigDesktop ->
+            none
+
+
+footer : { a | device : Device } -> Element msg
+footer { device } =
+    case device.class of
+        Phone ->
+            column [ width fill, padding 30, spacing 10, Background.color black, Font.center, fontSmall, Font.light, Font.color white ]
+                [ paragraph []
+                    [ text "Copyright © 2023 Dunn Audio" ]
+                , paragraph []
+                    [ text "Powered by ❤️  and "
+                    , link []
+                        { url =
+                            "https://elm-lang.org"
+                        , label = el [ Font.underline ] (text "Elm")
+                        }
+                    ]
+                ]
+
+        Desktop ->
+            column [ width fill, padding 30, spacing 10, Background.color black, Font.center, fontNormal, Font.light, Font.color white ]
+                [ paragraph []
+                    [ text "Copyright © 2023 Dunn Audio" ]
+                , paragraph []
+                    [ text "Powered by ❤️  and "
+                    , link []
+                        { url =
+                            "https://elm-lang.org"
+                        , label = el [ Font.underline ] (text "Elm")
+                        }
+                    ]
                 ]
 
         Tablet ->
