@@ -131,42 +131,7 @@ view model =
                             , portfolio model
                             , testimonials model
                             , letschat model
-                            , column [ width fill, spacingSmall, Font.center ]
-                                [ el [ centerX ]
-                                    (text "Follow me on my socials!")
-                                , wrappedRow [ width fill, paddingXY 30 0, spacing 30 ]
-                                    [ link [ width fill ]
-                                        { url =
-                                            "https://www.facebook.com/dunnaudio"
-                                        , label = el [ width (px 45), height (px 45), centerX ] (html (Icon.view IconBrands.facebook))
-                                        }
-                                    , link [ width fill ]
-                                        { url =
-                                            "https://www.instagram.com/sebdunnaudio"
-                                        , label = el [ width (px 45), height (px 45), centerX ] (html (Icon.view IconBrands.instagram))
-                                        }
-                                    , link [ width fill ]
-                                        { url =
-                                            "https://twitter.com/sebdunnaudio"
-                                        , label = el [ width (px 45), height (px 45), centerX ] (html (Icon.view IconBrands.twitter))
-                                        }
-                                    , link [ width fill ]
-                                        { url =
-                                            "https://www.linkedin.com/in/dunnaudio"
-                                        , label = el [ width (px 45), height (px 45), centerX ] (html (Icon.view IconBrands.linkedin))
-                                        }
-                                    , link [ width fill ]
-                                        { url =
-                                            "https://www.imdb.com/name/nm2271521"
-                                        , label = el [ width (px 45), height (px 45), centerX ] (html (Icon.view IconBrands.imdb))
-                                        }
-                                    , link [ width fill ]
-                                        { url =
-                                            "https://soundcloud.com/user-716251106"
-                                        , label = el [ width (px 45), height (px 45), centerX ] (html (Icon.view IconBrands.soundcloud))
-                                        }
-                                    ]
-                                ]
+                            , socials model
                             ]
                         , column [ width fill, padding 30, spacing 10, Background.color black, Font.center, fontSmall, Font.light, Font.color white ]
                             [ paragraph []
@@ -192,42 +157,7 @@ view model =
                             , portfolio model
                             , testimonials model
                             , letschat model
-                            , column [ spacingMedium, width fill ]
-                                [ el [ centerX ]
-                                    (text "Follow me on my socials!")
-                                , row [ width fill, paddingXY 50 0, spacing 150 ]
-                                    [ link [ width fill ]
-                                        { url =
-                                            "https://www.facebook.com/dunnaudio"
-                                        , label = el [ width (px 45), height (px 45), centerX ] (html (Icon.view IconBrands.facebook))
-                                        }
-                                    , link [ width fill ]
-                                        { url =
-                                            "https://www.instagram.com/sebdunnaudio"
-                                        , label = el [ width (px 45), height (px 45), centerX ] (html (Icon.view IconBrands.instagram))
-                                        }
-                                    , link [ width fill ]
-                                        { url =
-                                            "https://twitter.com/sebdunnaudio"
-                                        , label = el [ width (px 45), height (px 45), centerX ] (html (Icon.view IconBrands.twitter))
-                                        }
-                                    , link [ width fill ]
-                                        { url =
-                                            "https://www.linkedin.com/in/dunnaudio"
-                                        , label = el [ width (px 45), height (px 45), centerX ] (html (Icon.view IconBrands.linkedin))
-                                        }
-                                    , link [ width fill ]
-                                        { url =
-                                            "https://www.imdb.com/name/nm2271521"
-                                        , label = el [ width (px 45), height (px 45), centerX ] (html (Icon.view IconBrands.imdb))
-                                        }
-                                    , link [ width fill ]
-                                        { url =
-                                            "https://soundcloud.com/user-716251106"
-                                        , label = el [ width (px 45), height (px 45), centerX ] (html (Icon.view IconBrands.soundcloud))
-                                        }
-                                    ]
-                                ]
+                            , socials model
                             ]
                         , column [ width fill, padding 30, spacing 10, Background.color black, Font.center, fontNormal, Font.light, Font.color white ]
                             [ paragraph []
@@ -816,6 +746,64 @@ letschat { device } =
                 }
             ]
         ]
+
+
+socials : { a | device : Device } -> Element msg
+socials { device } =
+    let
+        socialLinks =
+            [ link [ width fill ]
+                { url =
+                    "https://www.facebook.com/dunnaudio"
+                , label = el [ width (px 45), height (px 45), centerX ] (html (Icon.view IconBrands.facebook))
+                }
+            , link [ width fill ]
+                { url =
+                    "https://www.instagram.com/sebdunnaudio"
+                , label = el [ width (px 45), height (px 45), centerX ] (html (Icon.view IconBrands.instagram))
+                }
+            , link [ width fill ]
+                { url =
+                    "https://twitter.com/sebdunnaudio"
+                , label = el [ width (px 45), height (px 45), centerX ] (html (Icon.view IconBrands.twitter))
+                }
+            , link [ width fill ]
+                { url =
+                    "https://www.linkedin.com/in/dunnaudio"
+                , label = el [ width (px 45), height (px 45), centerX ] (html (Icon.view IconBrands.linkedin))
+                }
+            , link [ width fill ]
+                { url =
+                    "https://www.imdb.com/name/nm2271521"
+                , label = el [ width (px 45), height (px 45), centerX ] (html (Icon.view IconBrands.imdb))
+                }
+            , link [ width fill ]
+                { url =
+                    "https://soundcloud.com/user-716251106"
+                , label = el [ width (px 45), height (px 45), centerX ] (html (Icon.view IconBrands.soundcloud))
+                }
+            ]
+    in
+    case device.class of
+        Phone ->
+            column [ width fill, spacingSmall, Font.center ]
+                [ el [ centerX ]
+                    (text "Follow me on my socials!")
+                , wrappedRow [ width fill, paddingXY 30 0, spacing 30 ] socialLinks
+                ]
+
+        Desktop ->
+            column [ spacingMedium, width fill ]
+                [ el [ centerX ]
+                    (text "Follow me on my socials!")
+                , row [ width fill, paddingXY 50 0, spacing 150 ] socialLinks
+                ]
+
+        Tablet ->
+            none
+
+        BigDesktop ->
+            none
 
 
 clientLogo : { src : String, description : String, logoWidth : Int } -> Element msg
