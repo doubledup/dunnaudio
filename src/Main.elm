@@ -118,30 +118,46 @@ view : Model -> Browser.Document Msg
 view model =
     { title = "Dunn Audio"
     , body =
+        let
+            modelDevice =
+                model.device
+
+            phoneModel =
+                { model | device = { modelDevice | class = Phone } }
+
+            phoneLayout =
+                [ navbar phoneModel
+                , banner { bannerHeight = px 250 }
+                , column [ width fill, height fill, paddingXY 20 40, spacingMedium ]
+                    (List.map (\section -> section phoneModel) sections)
+                , footer phoneModel
+                ]
+
+            desktopModel =
+                { model | device = { modelDevice | class = Desktop } }
+
+            desktopLayout =
+                [ navbar desktopModel
+                , banner { bannerHeight = px 800 }
+                , column [ width (px 1200), height fill, centerX, paddingXY 20 50, spacingLarge ]
+                    (List.map (\section -> section desktopModel) sections)
+                , footer desktopModel
+                ]
+        in
         [ layout []
             (column [ width fill, height fill, fontRaleway, fontNormal, Font.color black, Font.letterSpacing 0.5 ]
                 (case model.device.class of
                     Phone ->
-                        [ navbar model
-                        , banner { bannerHeight = px 250 }
-                        , column [ width fill, height fill, paddingXY 20 40, spacingMedium ]
-                            (List.map (\section -> section model) sections)
-                        , footer model
-                        ]
-
-                    Desktop ->
-                        [ navbar model
-                        , banner { bannerHeight = px 800 }
-                        , column [ width (px 1200), height fill, centerX, paddingXY 20 50, spacingLarge ]
-                            (List.map (\section -> section model) sections)
-                        , footer model
-                        ]
+                        phoneLayout
 
                     Tablet ->
-                        [ text "tablet" ]
+                        phoneLayout
+
+                    Desktop ->
+                        desktopLayout
 
                     BigDesktop ->
-                        [ text "big desktop" ]
+                        desktopLayout
                 )
             )
         ]
