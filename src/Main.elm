@@ -238,8 +238,8 @@ orangeRule =
 
 logo : Element msg
 logo =
-    image [ width (px 200), alignLeft, paddingEach { bottom = 20, top = 0, left = 0, right = 0 } ]
-        { src = "images/logo.webp", description = "Dunn 🎙 Audio" }
+    image [ width (px 200), alignLeft ]
+        { src = "images/logo2.webp", description = "Dunn 🎙 Audio" }
 
 
 dropdown : MenuState -> List (Attribute msg)
