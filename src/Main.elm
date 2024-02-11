@@ -41,7 +41,7 @@ type alias Model =
     { device : Device
     , menuState : MenuState
     , bannerPictures : ZipList Picture
-    , bannerRotationInterval : Float
+    , bannerChangeInterval : Float
     , windowWidth : Int
     }
 
@@ -121,7 +121,7 @@ init flags _ _ =
                   }
                 ]
             }
-      , bannerRotationInterval = 5000.0
+      , bannerChangeInterval = 5000.0
       , windowWidth = flags.window.innerWidth
       }
     , Cmd.none
@@ -162,7 +162,7 @@ update msg model =
 
 
 subscriptions : Model -> Sub Msg
-subscriptions { bannerRotationInterval } =
+subscriptions { bannerChangeInterval } =
     Sub.batch
         [ Events.onResize
             (\w h ->
@@ -171,7 +171,7 @@ subscriptions { bannerRotationInterval } =
                     , height = h
                     }
             )
-        , Time.every bannerRotationInterval (\_ -> RotateBanner)
+        , Time.every bannerChangeInterval (\_ -> RotateBanner)
         ]
 
 
