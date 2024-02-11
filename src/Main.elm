@@ -13,8 +13,8 @@ import FontAwesome.Brands as IconBrands
 import FontAwesome.Solid as IconSolid
 import Html
 import Html.Attributes
-import Url
 import Time
+import Url
 
 
 main : Program Flags Model Msg
@@ -278,9 +278,8 @@ navbar { menuState, device } =
                 ]
 
         desktop =
-            row [ width fill, paddingXY 20 30 ]
-                [ el [ width (fillPortion 1) ] none
-                , row [ width (fillPortion 4), spacingMedium ]
+            row [ width fill, paddingXY 0 30, spacingMedium ]
+                [ row [ width (px 1200), paddingXY 20 0, centerX ]
                     [ logo
                     , row [ alignRight, spacingMedium, fontNormal, Font.light ]
                         [ text "Home"
@@ -291,7 +290,6 @@ navbar { menuState, device } =
                         , text "My CV"
                         ]
                     ]
-                , el [ width (fillPortion 1) ] none
                 ]
     in
     case device.class of
