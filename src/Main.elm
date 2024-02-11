@@ -42,6 +42,7 @@ type alias Model =
     , menuState : MenuState
     , bannerPictures : ZipList Picture
     , bannerRotationInterval : Float
+    , windowWidth : Int
     }
 
 
@@ -121,6 +122,7 @@ init flags _ _ =
                 ]
             }
       , bannerRotationInterval = 5000.0
+      , windowWidth = flags.window.innerWidth
       }
     , Cmd.none
     )
@@ -137,7 +139,7 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         UpdateDevice window ->
-            ( { model | device = classifyDevice window }, Cmd.none )
+            ( { model | device = classifyDevice window, windowWidth = window.width }, Cmd.none )
 
         ToggleMenuState ->
             ( { model
@@ -200,7 +202,7 @@ view model =
 
             phoneLayout =
                 [ navbar phoneModel
-                , banner { bannerHeight = px 250 } model.bannerPictures.current
+                , banner model model.bannerPictures.current
                 , column [ width fill, height fill, paddingXY 20 40, spacingMedium ]
                     (List.map (\section -> section phoneModel) sections)
                 , footer phoneModel
@@ -211,7 +213,7 @@ view model =
 
             desktopLayout =
                 [ navbar desktopModel
-                , banner { bannerHeight = px 800 } model.bannerPictures.current
+                , banner model model.bannerPictures.current
                 , column [ width (px 1200), height fill, centerX, paddingXY 20 50, spacingLarge ]
                     (List.map (\section -> section desktopModel) sections)
                 , footer desktopModel
@@ -225,7 +227,7 @@ view model =
 
                     Tablet ->
                         [ navbar model
-                        , banner { bannerHeight = px 400 } model.bannerPictures.current
+                        , banner model model.bannerPictures.current
                         , column [ width (px 600), height fill, centerX, paddingXY 20 50, spacingLarge ]
                             -- TODO: rework each section for tablets
                             (List.map (\section -> section desktopModel) sections)
@@ -306,10 +308,21 @@ navbar { menuState, device } =
             desktop
 
 
-banner : { a | bannerHeight : Length } -> Picture -> Element msg
-banner { bannerHeight } picture =
+banner : { a | windowWidth : Int } -> Picture -> Element msg
+banner { windowWidth } picture =
     el [ width fill ]
-        (image [ width fill, height bannerHeight ] picture)
+        (image
+            [ width fill
+            , height
+                (windowWidth
+                    |> toFloat
+                    |> (\x -> x * 8 / 16)
+                    |> round
+                    |> px
+                )
+            ]
+            picture
+        )
 
 
 orangeRule : Element msg
