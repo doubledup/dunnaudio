@@ -40,9 +40,9 @@ type alias Flags =
 type alias Model =
     { device : Device
     , menuState : MenuState
+    , windowWidth : Int
     , bannerPictures : ZipList Picture
     , bannerChangeInterval : Float
-    , windowWidth : Int
     }
 
 
@@ -94,6 +94,7 @@ init flags _ _ =
                 , height = flags.window.innerHeight
                 }
       , menuState = Closed
+      , windowWidth = flags.window.innerWidth
       , bannerPictures =
             { before = []
             , current =
@@ -122,7 +123,6 @@ init flags _ _ =
                 ]
             }
       , bannerChangeInterval = 5000.0
-      , windowWidth = flags.window.innerWidth
       }
     , Cmd.none
     )
