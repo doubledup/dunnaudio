@@ -14,6 +14,7 @@ import FontAwesome.Solid as IconSolid
 import Html
 import Html.Attributes
 import Url
+import Time
 
 
 main : Program Flags Model Msg
@@ -39,12 +40,49 @@ type alias Flags =
 type alias Model =
     { device : Device
     , menuState : MenuState
+    , bannerPictures : ZipList Picture
+    , bannerRotationInterval : Float
     }
 
 
 type MenuState
     = Closed
     | Open
+
+
+type alias ZipList a =
+    { before : List a
+    , current : a
+    , after : List a
+    }
+
+
+selectNext : ZipList a -> ZipList a
+selectNext { before, current, after } =
+    case ( before, current, after ) of
+        ( beforeList, selected, afterHead :: afterRest ) ->
+            { before = beforeList ++ [ selected ]
+            , current = afterHead
+            , after = afterRest
+            }
+
+        ( beforeHead :: beforeRest, selected, [] ) ->
+            { before = []
+            , current = beforeHead
+            , after = beforeRest ++ [ selected ]
+            }
+
+        ( [], selected, [] ) ->
+            { before = []
+            , current = selected
+            , after = []
+            }
+
+
+type alias Picture =
+    { src : String
+    , description : String
+    }
 
 
 init : Flags -> Url.Url -> Key -> ( Model, Cmd Msg )
@@ -55,6 +93,34 @@ init flags _ _ =
                 , height = flags.window.innerHeight
                 }
       , menuState = Closed
+      , bannerPictures =
+            { before = []
+            , current =
+                { src = "images/elephants.webp"
+                , description = "Sebastian recording elephants"
+                }
+            , after =
+                [ { src = "images/cape-town-prep.webp"
+                  , description = "Sebastian preparing to record ambisonic audio in the Cape Town city square"
+                  }
+                , { src = "images/desert.webp"
+                  , description = ""
+                  }
+                , { src = "images/elephant-watering-hole.webp"
+                  , description = ""
+                  }
+                , { src = "images/lion-fence.webp"
+                  , description = ""
+                  }
+                , { src = "images/shark.webp"
+                  , description = ""
+                  }
+                , { src = "images/tribal-council.webp"
+                  , description = ""
+                  }
+                ]
+            }
+      , bannerRotationInterval = 5000.0
       }
     , Cmd.none
     )
@@ -63,6 +129,7 @@ init flags _ _ =
 type Msg
     = UpdateDevice { width : Int, height : Int }
     | ToggleMenuState
+    | RotateBanner
     | Noop
 
 
@@ -85,19 +152,25 @@ update msg model =
             , Cmd.none
             )
 
+        RotateBanner ->
+            ( { model | bannerPictures = selectNext model.bannerPictures }, Cmd.none )
+
         Noop ->
             ( model, Cmd.none )
 
 
 subscriptions : Model -> Sub Msg
-subscriptions _ =
-    Events.onResize
-        (\w h ->
-            UpdateDevice
-                { width = w
-                , height = h
-                }
-        )
+subscriptions { bannerRotationInterval } =
+    Sub.batch
+        [ Events.onResize
+            (\w h ->
+                UpdateDevice
+                    { width = w
+                    , height = h
+                    }
+            )
+        , Time.every bannerRotationInterval (\_ -> RotateBanner)
+        ]
 
 
 onUrlRequest : Browser.UrlRequest -> Msg
@@ -127,7 +200,7 @@ view model =
 
             phoneLayout =
                 [ navbar phoneModel
-                , banner { bannerHeight = px 250 }
+                , banner { bannerHeight = px 250 } model.bannerPictures.current
                 , column [ width fill, height fill, paddingXY 20 40, spacingMedium ]
                     (List.map (\section -> section phoneModel) sections)
                 , footer phoneModel
@@ -138,7 +211,7 @@ view model =
 
             desktopLayout =
                 [ navbar desktopModel
-                , banner { bannerHeight = px 800 }
+                , banner { bannerHeight = px 800 } model.bannerPictures.current
                 , column [ width (px 1200), height fill, centerX, paddingXY 20 50, spacingLarge ]
                     (List.map (\section -> section desktopModel) sections)
                 , footer desktopModel
@@ -152,7 +225,7 @@ view model =
 
                     Tablet ->
                         [ navbar model
-                        , banner { bannerHeight = px 400 }
+                        , banner { bannerHeight = px 400 } model.bannerPictures.current
                         , column [ width (px 600), height fill, centerX, paddingXY 20 50, spacingLarge ]
                             -- TODO: rework each section for tablets
                             (List.map (\section -> section desktopModel) sections)
@@ -235,15 +308,10 @@ navbar { menuState, device } =
             desktop
 
 
-banner : { a | bannerHeight : Length } -> Element msg
-banner { bannerHeight } =
+banner : { a | bannerHeight : Length } -> Picture -> Element msg
+banner { bannerHeight } picture =
     el [ width fill ]
-        (image [ width fill, height bannerHeight ]
-            { src =
-                "images/elephants.webp"
-            , description = "Sebastian recording elephants"
-            }
-        )
+        (image [ width fill, height bannerHeight ] picture)
 
 
 orangeRule : Element msg
