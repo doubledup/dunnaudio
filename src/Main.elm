@@ -157,8 +157,7 @@ type Msg
     = UpdateDevice { width : Int, height : Int }
     | ToggleMenuState
     | ChangeBanner
-    | AnimateBannerCurrent Animation.Msg
-    | AnimateBannerPrevious Animation.Msg
+    | Animate Animation.Msg
     | Noop
 
 
@@ -198,16 +197,10 @@ update msg model =
             , Cmd.none
             )
 
-        AnimateBannerCurrent animationMsg ->
+        Animate animationMsg ->
             ( { model
                 | bannerAnimationCurrent = Animation.update animationMsg model.bannerAnimationCurrent
-              }
-            , Cmd.none
-            )
-
-        AnimateBannerPrevious animationMsg ->
-            ( { model
-                | bannerAnimationPrevious = Animation.update animationMsg model.bannerAnimationPrevious
+                , bannerAnimationPrevious = Animation.update animationMsg model.bannerAnimationPrevious
               }
             , Cmd.none
             )
@@ -227,8 +220,7 @@ subscriptions { bannerChangeInterval, bannerAnimationCurrent, bannerAnimationPre
                     }
             )
         , Time.every bannerChangeInterval (\_ -> ChangeBanner)
-        , Animation.subscription AnimateBannerCurrent [ bannerAnimationCurrent ]
-        , Animation.subscription AnimateBannerPrevious [ bannerAnimationPrevious ]
+        , Animation.subscription Animate [ bannerAnimationCurrent, bannerAnimationPrevious ]
         ]
 
 
