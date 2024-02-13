@@ -1,8 +1,10 @@
 module Main exposing (main)
 
+import Animation
 import Browser
 import Browser.Events as Events
 import Browser.Navigation exposing (Key)
+import Ease
 import Element exposing (..)
 import Element.Background as Background
 import Element.Border as Border
@@ -43,6 +45,8 @@ type alias Model =
     , windowWidth : Int
     , bannerPictures : ZipList Picture
     , bannerChangeInterval : Float
+    , bannerAnimationCurrent : Animation.State
+    , bannerAnimationPrevious : Animation.State
     }
 
 
@@ -78,6 +82,25 @@ selectNext { beforeReversed, current, after } =
             , current = selected
             , after = []
             }
+
+
+getPrevious : ZipList a -> a
+getPrevious { beforeReversed, current, after } =
+    case beforeReversed of
+        beforeHead :: _ ->
+            beforeHead
+
+        [] ->
+            let
+                afterLast =
+                    after |> List.reverse |> List.head
+            in
+            case afterLast of
+                Just last ->
+                    last
+
+                Nothing ->
+                    current
 
 
 type alias Picture =
@@ -123,6 +146,8 @@ init flags _ _ =
                 ]
             }
       , bannerChangeInterval = 5000.0
+      , bannerAnimationCurrent = Animation.style [ Animation.opacity 1.0 ]
+      , bannerAnimationPrevious = Animation.style [ Animation.opacity 0.0 ]
       }
     , Cmd.none
     )
@@ -132,6 +157,8 @@ type Msg
     = UpdateDevice { width : Int, height : Int }
     | ToggleMenuState
     | ChangeBanner
+    | AnimateBannerCurrent Animation.Msg
+    | AnimateBannerPrevious Animation.Msg
     | Noop
 
 
@@ -155,14 +182,42 @@ update msg model =
             )
 
         ChangeBanner ->
-            ( { model | bannerPictures = selectNext model.bannerPictures }, Cmd.none )
+            ( { model
+                | bannerPictures = selectNext model.bannerPictures
+                , bannerAnimationCurrent =
+                    Animation.interrupt
+                        [ Animation.toWith customInterpolation [ Animation.opacity 1.0 ]
+                        ]
+                        (Animation.style [ Animation.opacity 0.0 ])
+                , bannerAnimationPrevious =
+                    Animation.interrupt
+                        [ Animation.toWith customInterpolation [ Animation.opacity 0.0 ]
+                        ]
+                        (Animation.style [ Animation.opacity 1.0 ])
+              }
+            , Cmd.none
+            )
+
+        AnimateBannerCurrent animationMsg ->
+            ( { model
+                | bannerAnimationCurrent = Animation.update animationMsg model.bannerAnimationCurrent
+              }
+            , Cmd.none
+            )
+
+        AnimateBannerPrevious animationMsg ->
+            ( { model
+                | bannerAnimationPrevious = Animation.update animationMsg model.bannerAnimationPrevious
+              }
+            , Cmd.none
+            )
 
         Noop ->
             ( model, Cmd.none )
 
 
 subscriptions : Model -> Sub Msg
-subscriptions { bannerChangeInterval } =
+subscriptions { bannerChangeInterval, bannerAnimationCurrent, bannerAnimationPrevious } =
     Sub.batch
         [ Events.onResize
             (\w h ->
@@ -172,6 +227,8 @@ subscriptions { bannerChangeInterval } =
                     }
             )
         , Time.every bannerChangeInterval (\_ -> ChangeBanner)
+        , Animation.subscription AnimateBannerCurrent [ bannerAnimationCurrent ]
+        , Animation.subscription AnimateBannerPrevious [ bannerAnimationPrevious ]
         ]
 
 
@@ -202,7 +259,7 @@ view model =
 
             phoneLayout =
                 [ navbar phoneModel
-                , banner model model.bannerPictures.current
+                , banner model
                 , column [ width fill, height fill, paddingXY 20 40, spacingMedium ]
                     (List.map (\section -> section phoneModel) sections)
                 , footer phoneModel
@@ -213,7 +270,7 @@ view model =
 
             desktopLayout =
                 [ navbar desktopModel
-                , banner model model.bannerPictures.current
+                , banner model
                 , column [ width (px 1200), height fill, centerX, paddingXY 20 50, spacingLarge ]
                     (List.map (\section -> section desktopModel) sections)
                 , footer desktopModel
@@ -227,7 +284,7 @@ view model =
 
                     Tablet ->
                         [ navbar model
-                        , banner model model.bannerPictures.current
+                        , banner model
                         , column [ width (px 600), height fill, centerX, paddingXY 20 50, spacingLarge ]
                             -- TODO: rework each section for tablets
                             (List.map (\section -> section desktopModel) sections)
@@ -308,21 +365,48 @@ navbar { menuState, device } =
             desktop
 
 
-banner : { a | windowWidth : Int } -> Picture -> Element msg
-banner { windowWidth } picture =
-    el [ width fill ]
-        (image
-            [ width fill
-            , height
-                (windowWidth
-                    |> toFloat
-                    |> (\x -> x * 8 / 16)
-                    |> round
-                    |> px
+banner :
+    { a
+        | windowWidth : Int
+        , bannerPictures : ZipList Picture
+        , bannerAnimationCurrent :
+            Animation.State
+        , bannerAnimationPrevious :
+            Animation.State
+    }
+    -> Element msg
+banner { windowWidth, bannerPictures, bannerAnimationCurrent, bannerAnimationPrevious } =
+    let
+        bannerHeight =
+            windowWidth
+                |> toFloat
+                |> (\x -> x * 8 / 16)
+
+        bannerHeightPx =
+            bannerHeight
+                |> round
+                |> px
+
+        previousImage =
+            image
+                ([ width fill
+                 , height bannerHeightPx
+                 , moveUp bannerHeight
+                 ]
+                    ++ List.map htmlAttribute (Animation.render bannerAnimationPrevious)
                 )
-            ]
-            picture
-        )
+                (getPrevious bannerPictures)
+    in
+    column [ width fill, height bannerHeightPx ]
+        [ image
+            ([ width fill
+             , height bannerHeightPx
+             ]
+                ++ List.map htmlAttribute (Animation.render bannerAnimationCurrent)
+            )
+            bannerPictures.current
+        , previousImage
+        ]
 
 
 orangeRule : Element msg
@@ -1004,6 +1088,14 @@ awardStyle =
     , Font.bold
     , Font.center
     ]
+
+
+customInterpolation : Animation.Interpolation
+customInterpolation =
+    Animation.easing
+        { duration = 1000.0
+        , ease = Ease.inOutQuart
+        }
 
 
 

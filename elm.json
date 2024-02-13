@@ -11,7 +11,9 @@
             "elm/html": "1.0.0",
             "elm/time": "1.0.0",
             "elm/url": "1.0.0",
+            "elm-community/easing-functions": "2.0.0",
             "lattyware/elm-fontawesome": "6.0.0",
+            "mdgriffith/elm-style-animation": "4.0.0",
             "mdgriffith/elm-ui": "1.1.8"
         },
         "indirect": {
