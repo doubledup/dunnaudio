@@ -47,6 +47,7 @@ type alias Model =
     , bannerChangeInterval : Float
     , bannerAnimationCurrent : Animation.State
     , bannerAnimationPrevious : Animation.State
+    , testimonials : ZipList Testimonial
     }
 
 
@@ -109,6 +110,13 @@ type alias Picture =
     }
 
 
+type alias Testimonial =
+    { quote : List String
+    , name : String
+    , company : String
+    }
+
+
 init : Flags -> Url.Url -> Key -> ( Model, Cmd Msg )
 init flags _ _ =
     ( { device =
@@ -148,6 +156,52 @@ init flags _ _ =
       , bannerChangeInterval = 5000.0
       , bannerAnimationCurrent = Animation.style [ Animation.opacity 1.0 ]
       , bannerAnimationPrevious = Animation.style [ Animation.opacity 0.0 ]
+      , testimonials =
+            { beforeReversed = []
+            , current =
+                { quote =
+                    [ "“Just so you know the Swedes were extremely impressed with your work, your attitude and everything else about you. Thanks for flying our flag high!”"
+                    ]
+                , name = "Robin Matthews"
+                , company = "Big Banana Productions - Haaj Med Doreen"
+                }
+            , after =
+                [ { quote =
+                        [ "“Seb is always my first choice as a sound recordist in Southern Africa. He will always perform in the toughest of situations. He’s just as happy to work in the bush, in the desert or in the City. Seb is a great team player and presenters love him. I will be working with Seb again and again.”" ]
+                  , name = "Dale Templar"
+                  , company = "Series Producer, BBC and BBC Natural History Unit , Human Planet"
+                  }
+                , { quote =
+                        [ "“It was a delight to work with you. I felt totally confident that you were getting the best sound we could hope for (given the limitations of the shoot). You were calm and collected at all times – and your advice and suggestions were invaluable. On top of that, you were a great guy to hang out with.”" ]
+                  , name = "Ashok Prasad"
+                  , company = "Director- Danger Men - Firefly Productions"
+                  }
+                , { quote =
+                        [ "“Sebastian is a dedicated and enthusiastic soundman who is capable of handling any sound eventuality.”" ]
+                  , name = "Andre Du Plessis"
+                  , company = "Abacus Productions"
+                  }
+                , { quote =
+                        [ "“The best soundman, fellow traveller & all round good guy you could wish to meet! Thanks for fantastic work and terrific support.”" ]
+                  , name = "Michael Palin"
+                  , company = "Brazil with Michael Palin"
+                  }
+                , { quote =
+                        [ "“Sebastian is a huge asset on our shoots. He is such a pleasure to have around and knows a lot about a lot, was super valuable and willing to help in every way – above and beyond the call of duty. I will always REALLY hope for Seb’s availability on every location shoot I have as he was a real professional, a lot of fun and has a really big heart. Thank you Seb!”" ]
+                  , name = "Rita Mbanga"
+                  , company = "Producer at Sunrise Productions"
+                  }
+                , { quote =
+                        [ "“… Despite the incredibly difficult working conditions in Mali and Egypt your sound recording was brilliant."
+                        , "We so appreciate having someone with your enthusiasm, energy and experience."
+                        , "Your stereo recordings of the big ceremonies have created a sound that makes the viewer feel so present…"
+                        , "“Cosmic Africa“ has really benefited in a big way through your dedication to the sound…”"
+                        ]
+                  , name = "Craig Foster"
+                  , company = "Earthrise Productions"
+                  }
+                ]
+            }
       }
     , Cmd.none
     )
@@ -157,6 +211,8 @@ type Msg
     = UpdateDevice { width : Int, height : Int }
     | ToggleMenuState
     | ChangeBanner
+    | NextTestimonial
+    | PreviousTestimonial
     | Animate Animation.Msg
     | Noop
 
@@ -196,6 +252,12 @@ update msg model =
               }
             , Cmd.none
             )
+
+        NextTestimonial ->
+            ( { model | testimonials = selectNext model.testimonials }, Cmd.none )
+
+        PreviousTestimonial ->
+            ( { model | testimonials = selectPrevious model.testimonials }, Cmd.none )
 
         Animate animationMsg ->
             ( { model
@@ -298,13 +360,13 @@ view model =
 -- ELEMENTS
 
 
-sections : List ({ a | device : Device } -> Element Msg)
+sections : List ({ a | device : Device, testimonials : ZipList Testimonial } -> Element Msg)
 sections =
     [ aboutMe
     , whatIDo
     , achievements
     , portfolio
-    , testimonials
+    , viewTestimonials
     , letschat
     , socials
     ]
@@ -804,29 +866,55 @@ portfolio { device } =
             none
 
 
-testimonials : { a | device : Device } -> Element msg
-testimonials { device } =
+viewTestimonials : { a | device : Device, testimonials : ZipList Testimonial } -> Element Msg
+viewTestimonials { device, testimonials } =
+    let
+        current =
+            testimonials.current
+    in
     case device.class of
         Phone ->
             column [ width fill, spacingSmall, Font.center ]
                 [ el [ centerX, Font.bold, fontLarge ] (text "Testimonials")
                 , row [ width fill ]
                     [ el [ width (fillPortion 1), height fill ]
-                        (el [ centerX, centerY, width (px 20), height (px 20), Font.color orange ]
+                        (el
+                            [ centerX
+                            , centerY
+                            , width (px 20)
+                            , height (px 20)
+                            , Font.color orange
+                            , ElementEvents.onClick PreviousTestimonial
+                            ]
                             (html (Icon.view IconSolid.angleLeft))
                         )
-                    , column [ width (fillPortion 10), height fill, Font.center, fontNormal, Font.light, Font.letterSpacing 0.3 ]
+                    , column
+                        [ width (fillPortion 10)
+                        , height fill
+                        , Font.center
+                        , fontNormal
+                        , Font.light
+                        , Font.letterSpacing 0.3
+                        ]
                         [ column [ centerX, spacing 10 ]
-                            [ paragraph [] [ text "“… Despite the incredibly difficult working conditions in Mali and Egypt your sound recording was brilliant." ]
-                            , paragraph [] [ text "We so appreciate having someone with your enthusiasm, energy and experience." ]
-                            , paragraph [] [ text "Your stereo recordings of the big ceremonies have created a sound that makes the viewer feel so present…" ]
-                            , paragraph [] [ text "“Cosmic Africa“ has really benefited in a big way through your dedication to the sound…”" ]
+                            (current.quote |> List.map (\q -> paragraph [] [ text q ]))
+                        , paragraph
+                            [ paddingEach { top = 30, left = 0, right = 0, bottom = 0 }
+                            , Font.bold
                             ]
-                        , paragraph [ paddingEach { top = 30, left = 0, right = 0, bottom = 0 }, Font.bold ] [ text "Craig Foster" ]
-                        , paragraph [ paddingEach { top = 15, left = 0, right = 0, bottom = 0 } ] [ text "Earthrise Productions" ]
+                            [ text current.name ]
+                        , paragraph [ paddingEach { top = 15, left = 0, right = 0, bottom = 0 } ]
+                            [ text current.company ]
                         ]
                     , el [ width (fillPortion 1), height fill ]
-                        (el [ centerX, centerY, width (px 20), height (px 20), Font.color orange ]
+                        (el
+                            [ centerX
+                            , centerY
+                            , width (px 20)
+                            , height (px 20)
+                            , Font.color orange
+                            , ElementEvents.onClick NextTestimonial
+                            ]
                             (html (Icon.view IconSolid.angleRight))
                         )
                     ]
@@ -844,23 +932,46 @@ testimonials { device } =
         Desktop ->
             column [ spacingSmall, width fill ]
                 [ el [ centerX, Font.bold, fontHeading ] (text "Testimonials")
-                , row [ width fill ]
+                , row [ width fill, height (px 300) ]
                     [ el [ width (fillPortion 1), height fill ]
-                        (el [ centerX, centerY, width (px 20), height (px 20), Font.color orange ]
+                        (el
+                            [ centerX
+                            , centerY
+                            , width (px 20)
+                            , height (px 20)
+                            , Font.color orange
+                            , ElementEvents.onClick PreviousTestimonial
+                            ]
                             (html (Icon.view IconSolid.angleLeft))
                         )
-                    , column [ width (fillPortion 10), height fill, Font.center, fontNormal, Font.light, Font.letterSpacing 0.3 ]
-                        [ column [ centerX, spacing 10 ]
-                            [ paragraph [] [ text "“… Despite the incredibly difficult working conditions in Mali and Egypt your sound recording was brilliant." ]
-                            , paragraph [] [ text "We so appreciate having someone with your enthusiasm, energy and experience." ]
-                            , paragraph [] [ text "Your stereo recordings of the big ceremonies have created a sound that makes the viewer feel so present…" ]
-                            , paragraph [] [ text "“Cosmic Africa“ has really benefited in a big way through your dedication to the sound…”" ]
+                    , el [ width (fillPortion 10), centerY ]
+                        (column
+                            [ height fill
+                            , Font.center
+                            , fontNormal
+                            , Font.light
+                            , Font.letterSpacing 0.3
                             ]
-                        , paragraph [ paddingEach { top = 30, left = 0, right = 0, bottom = 0 }, Font.bold ] [ text "Craig Foster" ]
-                        , paragraph [ paddingEach { top = 15, left = 0, right = 0, bottom = 0 } ] [ text "Earthrise Productions" ]
-                        ]
+                            [ column [ centerX, spacing 10 ]
+                                (current.quote |> List.map (\q -> paragraph [] [ text q ]))
+                            , paragraph
+                                [ paddingEach { top = 30, left = 0, right = 0, bottom = 0 }
+                                , Font.bold
+                                ]
+                                [ text current.name ]
+                            , paragraph [ paddingEach { top = 15, left = 0, right = 0, bottom = 0 } ]
+                                [ text current.company ]
+                            ]
+                        )
                     , el [ width (fillPortion 1), height fill ]
-                        (el [ centerX, centerY, width (px 20), height (px 20), Font.color orange ]
+                        (el
+                            [ centerX
+                            , centerY
+                            , width (px 20)
+                            , height (px 20)
+                            , Font.color orange
+                            , ElementEvents.onClick NextTestimonial
+                            ]
                             (html (Icon.view IconSolid.angleRight))
                         )
                     ]
