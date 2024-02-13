@@ -52,29 +52,29 @@ type MenuState
 
 
 type alias ZipList a =
-    { before : List a
+    { beforeReversed : List a
     , current : a
     , after : List a
     }
 
 
 selectNext : ZipList a -> ZipList a
-selectNext { before, current, after } =
-    case ( before, current, after ) of
+selectNext { beforeReversed, current, after } =
+    case ( beforeReversed, current, after ) of
         ( beforeList, selected, afterHead :: afterRest ) ->
-            { before = beforeList ++ [ selected ]
+            { beforeReversed = selected :: beforeList
             , current = afterHead
             , after = afterRest
             }
 
         ( beforeHead :: beforeRest, selected, [] ) ->
-            { before = []
+            { beforeReversed = []
             , current = beforeHead
             , after = beforeRest ++ [ selected ]
             }
 
         ( [], selected, [] ) ->
-            { before = []
+            { beforeReversed = []
             , current = selected
             , after = []
             }
@@ -96,7 +96,7 @@ init flags _ _ =
       , menuState = Closed
       , windowWidth = flags.window.innerWidth
       , bannerPictures =
-            { before = []
+            { beforeReversed = []
             , current =
                 { src = "images/elephants.webp"
                 , description = "Sebastian recording elephants"
