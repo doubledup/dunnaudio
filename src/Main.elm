@@ -131,7 +131,7 @@ init flags _ _ =
 type Msg
     = UpdateDevice { width : Int, height : Int }
     | ToggleMenuState
-    | RotateBanner
+    | ChangeBanner
     | Noop
 
 
@@ -154,7 +154,7 @@ update msg model =
             , Cmd.none
             )
 
-        RotateBanner ->
+        ChangeBanner ->
             ( { model | bannerPictures = selectNext model.bannerPictures }, Cmd.none )
 
         Noop ->
@@ -171,7 +171,7 @@ subscriptions { bannerChangeInterval } =
                     , height = h
                     }
             )
-        , Time.every bannerChangeInterval (\_ -> RotateBanner)
+        , Time.every bannerChangeInterval (\_ -> ChangeBanner)
         ]
 
 
