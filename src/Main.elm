@@ -48,6 +48,7 @@ type alias Model =
     , bannerAnimationCurrent : Animation.State
     , bannerAnimationPrevious : Animation.State
     , testimonials : ZipList Testimonial
+    , testimonialChangeInterval : Float
     }
 
 
@@ -236,6 +237,7 @@ init flags _ _ =
                   }
                 ]
             }
+      , testimonialChangeInterval = 8000.0
       }
     , Cmd.none
     )
@@ -306,7 +308,7 @@ update msg model =
 
 
 subscriptions : Model -> Sub Msg
-subscriptions { bannerChangeInterval, bannerAnimationCurrent, bannerAnimationPrevious } =
+subscriptions { bannerChangeInterval, bannerAnimationCurrent, bannerAnimationPrevious, testimonialChangeInterval } =
     Sub.batch
         [ Events.onResize
             (\w h ->
@@ -317,6 +319,7 @@ subscriptions { bannerChangeInterval, bannerAnimationCurrent, bannerAnimationPre
             )
         , Time.every bannerChangeInterval (\_ -> ChangeBanner)
         , Animation.subscription Animate [ bannerAnimationCurrent, bannerAnimationPrevious ]
+        , Time.every testimonialChangeInterval (\_ -> NextTestimonial)
         ]
 
 
