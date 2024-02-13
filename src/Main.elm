@@ -72,17 +72,51 @@ selectNext { beforeReversed, current, after } =
             , after = afterRest
             }
 
-        ( beforeHead :: beforeRest, selected, [] ) ->
-            { beforeReversed = []
+        ( beforeList, selected, [] ) ->
+            let
+                beforeListInOrder =
+                    List.reverse beforeList
+            in
+            case beforeListInOrder of
+                beforeFirst :: beforeRest ->
+                    { beforeReversed = []
+                    , current = beforeFirst
+                    , after = beforeRest ++ [ selected ]
+                    }
+
+                [] ->
+                    { beforeReversed = []
+                    , current = selected
+                    , after = []
+                    }
+
+
+selectPrevious : ZipList a -> ZipList a
+selectPrevious { beforeReversed, current, after } =
+    case ( beforeReversed, current, after ) of
+        ( beforeHead :: beforeRest, selected, afterList ) ->
+            { beforeReversed = beforeRest
             , current = beforeHead
-            , after = beforeRest ++ [ selected ]
+            , after = selected :: afterList
             }
 
-        ( [], selected, [] ) ->
-            { beforeReversed = []
-            , current = selected
-            , after = []
-            }
+        ( [], selected, afterList ) ->
+            let
+                afterListReversed =
+                    List.reverse afterList
+            in
+            case afterListReversed of
+                lastItem :: afterRestReversed ->
+                    { beforeReversed = afterRestReversed ++ [ selected ]
+                    , current = lastItem
+                    , after = []
+                    }
+
+                [] ->
+                    { beforeReversed = []
+                    , current = selected
+                    , after = []
+                    }
 
 
 getPrevious : ZipList a -> a
