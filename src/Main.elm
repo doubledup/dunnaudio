@@ -956,14 +956,12 @@ viewTestimonials { device, testimonials } =
                         )
                     ]
                 , row [ centerX, spacing 5 ]
-                    [ dot orange
-                    , dot grey
-                    , dot grey
-                    , dot grey
-                    , dot grey
-                    , dot grey
-                    , dot grey
-                    ]
+                    (List.concat
+                        [ testimonials.beforeReversed |> List.map (\_ -> dot grey)
+                        , [ dot orange ]
+                        , testimonials.after |> List.map (\_ -> dot grey)
+                        ]
+                    )
                 ]
 
         Desktop ->
@@ -1013,14 +1011,12 @@ viewTestimonials { device, testimonials } =
                         )
                     ]
                 , row [ centerX, spacing 5 ]
-                    [ dot orange
-                    , dot grey
-                    , dot grey
-                    , dot grey
-                    , dot grey
-                    , dot grey
-                    , dot grey
-                    ]
+                    (List.concat
+                        [ testimonials.beforeReversed |> List.map (\_ -> dot grey)
+                        , [ dot orange ]
+                        , testimonials.after |> List.map (\_ -> dot grey)
+                        ]
+                    )
                 ]
 
         Tablet ->
