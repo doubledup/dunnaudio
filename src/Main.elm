@@ -15,7 +15,8 @@ import FontAwesome.Brands as IconBrands
 import FontAwesome.Solid as IconSolid
 import Html
 import Html.Attributes
-import Time
+import Process
+import Task
 import Url
 
 
@@ -45,10 +46,12 @@ type alias Model =
     , windowWidth : Int
     , bannerPictures : ZipList Picture
     , bannerChangeInterval : Float
+    , bannerNonce : Int
     , bannerAnimationCurrent : Animation.State
     , bannerAnimationPrevious : Animation.State
     , testimonials : ZipList Testimonial
     , testimonialChangeInterval : Float
+    , testimonialNonce : Int
     }
 
 
@@ -139,6 +142,10 @@ getPrevious { beforeReversed, current, after } =
                     current
 
 
+type alias Nonce =
+    Int
+
+
 type alias Picture =
     { src : String
     , description : String
@@ -189,6 +196,7 @@ init flags _ _ =
                 ]
             }
       , bannerChangeInterval = 5000.0
+      , bannerNonce = 0
       , bannerAnimationCurrent = Animation.style [ Animation.opacity 1.0 ]
       , bannerAnimationPrevious = Animation.style [ Animation.opacity 0.0 ]
       , testimonials =
@@ -238,17 +246,21 @@ init flags _ _ =
                 ]
             }
       , testimonialChangeInterval = 8000.0
+      , testimonialNonce = 0
       }
-    , Cmd.none
+    , Cmd.batch
+        [ Task.perform (\_ -> ChangeBanner 0) (Process.sleep 5000.0)
+        , Task.perform (\_ -> NextTestimonial 0) (Process.sleep 8000.0)
+        ]
     )
 
 
 type Msg
     = UpdateDevice { width : Int, height : Int }
     | ToggleMenuState
-    | ChangeBanner
-    | NextTestimonial
-    | PreviousTestimonial
+    | ChangeBanner Nonce
+    | NextTestimonial Nonce
+    | PreviousTestimonial Nonce
     | Animate Animation.Msg
     | Noop
 
@@ -272,28 +284,63 @@ update msg model =
             , Cmd.none
             )
 
-        ChangeBanner ->
-            ( { model
-                | bannerPictures = selectNext model.bannerPictures
-                , bannerAnimationCurrent =
-                    Animation.interrupt
-                        [ Animation.toWith customInterpolation [ Animation.opacity 1.0 ]
-                        ]
-                        (Animation.style [ Animation.opacity 0.0 ])
-                , bannerAnimationPrevious =
-                    Animation.interrupt
-                        [ Animation.toWith customInterpolation [ Animation.opacity 0.0 ]
-                        ]
-                        (Animation.style [ Animation.opacity 1.0 ])
-              }
-            , Cmd.none
-            )
+        ChangeBanner nonce ->
+            if nonce < model.bannerNonce then
+                ( model, Cmd.none )
 
-        NextTestimonial ->
-            ( { model | testimonials = selectNext model.testimonials }, Cmd.none )
+            else
+                let
+                    newNonce =
+                        nonce + 1
+                in
+                ( { model
+                    | bannerPictures = selectNext model.bannerPictures
+                    , bannerAnimationCurrent =
+                        Animation.interrupt
+                            [ Animation.toWith customInterpolation [ Animation.opacity 1.0 ]
+                            ]
+                            (Animation.style [ Animation.opacity 0.0 ])
+                    , bannerAnimationPrevious =
+                        Animation.interrupt
+                            [ Animation.toWith customInterpolation [ Animation.opacity 0.0 ]
+                            ]
+                            (Animation.style [ Animation.opacity 1.0 ])
+                    , bannerNonce = newNonce
+                  }
+                , Task.perform (\_ -> ChangeBanner newNonce) (Process.sleep model.bannerChangeInterval)
+                )
 
-        PreviousTestimonial ->
-            ( { model | testimonials = selectPrevious model.testimonials }, Cmd.none )
+        NextTestimonial nonce ->
+            if nonce < model.testimonialNonce then
+                ( model, Cmd.none )
+
+            else
+                let
+                    newNonce =
+                        nonce + 1
+                in
+                ( { model
+                    | testimonials = selectNext model.testimonials
+                    , testimonialNonce = newNonce
+                  }
+                , Task.perform (\_ -> NextTestimonial newNonce) (Process.sleep model.testimonialChangeInterval)
+                )
+
+        PreviousTestimonial nonce ->
+            if nonce < model.testimonialNonce then
+                ( model, Cmd.none )
+
+            else
+                let
+                    newNonce =
+                        nonce + 1
+                in
+                ( { model
+                    | testimonials = selectPrevious model.testimonials
+                    , testimonialNonce = newNonce
+                  }
+                , Task.perform (\_ -> NextTestimonial newNonce) (Process.sleep model.testimonialChangeInterval)
+                )
 
         Animate animationMsg ->
             ( { model
@@ -308,7 +355,7 @@ update msg model =
 
 
 subscriptions : Model -> Sub Msg
-subscriptions { bannerChangeInterval, bannerAnimationCurrent, bannerAnimationPrevious, testimonialChangeInterval } =
+subscriptions { bannerAnimationCurrent, bannerAnimationPrevious } =
     Sub.batch
         [ Events.onResize
             (\w h ->
@@ -317,9 +364,7 @@ subscriptions { bannerChangeInterval, bannerAnimationCurrent, bannerAnimationPre
                     , height = h
                     }
             )
-        , Time.every bannerChangeInterval (\_ -> ChangeBanner)
         , Animation.subscription Animate [ bannerAnimationCurrent, bannerAnimationPrevious ]
-        , Time.every testimonialChangeInterval (\_ -> NextTestimonial)
         ]
 
 
@@ -397,7 +442,7 @@ view model =
 -- ELEMENTS
 
 
-sections : List ({ a | device : Device, testimonials : ZipList Testimonial } -> Element Msg)
+sections : List ({ b | device : Device, testimonials : ZipList Testimonial, testimonialNonce : Int } -> Element Msg)
 sections =
     [ aboutMe
     , whatIDo
@@ -903,8 +948,8 @@ portfolio { device } =
             none
 
 
-viewTestimonials : { a | device : Device, testimonials : ZipList Testimonial } -> Element Msg
-viewTestimonials { device, testimonials } =
+viewTestimonials : { b | device : Device, testimonials : ZipList Testimonial, testimonialNonce : Int } -> Element Msg
+viewTestimonials { device, testimonials, testimonialNonce } =
     let
         current =
             testimonials.current
@@ -921,7 +966,7 @@ viewTestimonials { device, testimonials } =
                             , width (px 20)
                             , height (px 20)
                             , Font.color orange
-                            , ElementEvents.onClick PreviousTestimonial
+                            , ElementEvents.onClick (PreviousTestimonial testimonialNonce)
                             ]
                             (html (Icon.view IconSolid.angleLeft))
                         )
@@ -950,7 +995,7 @@ viewTestimonials { device, testimonials } =
                             , width (px 20)
                             , height (px 20)
                             , Font.color orange
-                            , ElementEvents.onClick NextTestimonial
+                            , ElementEvents.onClick (NextTestimonial testimonialNonce)
                             ]
                             (html (Icon.view IconSolid.angleRight))
                         )
@@ -975,7 +1020,7 @@ viewTestimonials { device, testimonials } =
                             , width (px 20)
                             , height (px 20)
                             , Font.color orange
-                            , ElementEvents.onClick PreviousTestimonial
+                            , ElementEvents.onClick (PreviousTestimonial testimonialNonce)
                             ]
                             (html (Icon.view IconSolid.angleLeft))
                         )
@@ -1005,7 +1050,7 @@ viewTestimonials { device, testimonials } =
                             , width (px 20)
                             , height (px 20)
                             , Font.color orange
-                            , ElementEvents.onClick NextTestimonial
+                            , ElementEvents.onClick (NextTestimonial testimonialNonce)
                             ]
                             (html (Icon.view IconSolid.angleRight))
                         )
