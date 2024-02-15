@@ -43,7 +43,7 @@ type alias Flags =
 type alias Model =
     { device : Device
     , menuState : MenuState
-    , windowWidth : Int
+    , window : Window
     , bannerPictures : ZipList Picture
     , bannerChangeInterval : Float
     , bannerNonce : Int
@@ -60,6 +60,10 @@ type alias Model =
 type MenuState
     = Closed
     | Open
+
+
+type alias Window =
+    { width : Int, height : Int }
 
 
 type alias ZipList a =
@@ -194,7 +198,10 @@ init flags _ _ =
                 , height = flags.window.innerHeight
                 }
       , menuState = Closed
-      , windowWidth = flags.window.innerWidth
+      , window =
+            { width = flags.window.innerWidth
+            , height = flags.window.innerHeight
+            }
       , bannerPictures =
             { beforeReversed = []
             , current =
@@ -299,7 +306,7 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         UpdateDevice window ->
-            ( { model | device = classifyDevice window, windowWidth = window.width }, Cmd.none )
+            ( { model | device = classifyDevice window, window = window }, Cmd.none )
 
         ToggleMenuState ->
             ( { model
@@ -354,7 +361,7 @@ update msg model =
                         Animation.queue
                             [ Animation.toWith testimonialInterpolation
                                 [ Animation.translate
-                                    (Animation.px (toFloat -testimonialWidthDesktop))
+                                    (Animation.px (toFloat -(testimonialWidth model.window)))
                                     (Animation.px 0)
                                 ]
                             ]
@@ -391,7 +398,7 @@ update msg model =
                             ]
                             (Animation.style
                                 [ Animation.translate
-                                    (Animation.px (toFloat -testimonialWidthDesktop))
+                                    (Animation.px (toFloat -(testimonialWidth model.window)))
                                     (Animation.px 0)
                                 ]
                             )
@@ -513,7 +520,7 @@ sections :
     List
         ({ b
             | device : Device
-            , windowWidth : Int
+            , window : Window
             , testimonials : ZipList Testimonial
             , testimonialNonce : Int
             , testimonialAnimation : Animation.State
@@ -581,7 +588,7 @@ navbar { menuState, device } =
 
 banner :
     { a
-        | windowWidth : Int
+        | window : Window
         , bannerPictures : ZipList Picture
         , bannerAnimationCurrent :
             Animation.State
@@ -589,10 +596,10 @@ banner :
             Animation.State
     }
     -> Element msg
-banner { windowWidth, bannerPictures, bannerAnimationCurrent, bannerAnimationPrevious } =
+banner { window, bannerPictures, bannerAnimationCurrent, bannerAnimationPrevious } =
     let
         bannerHeight =
-            windowWidth
+            window.width
                 |> toFloat
                 |> (\x -> x * 8 / 16)
 
@@ -1029,14 +1036,14 @@ portfolio { device } =
 viewTestimonials :
     { b
         | device : Device
-        , windowWidth : Int
+        , window : Window
         , testimonials : ZipList Testimonial
         , testimonialNonce : Int
         , testimonialAnimation : Animation.State
         , testimonialTransition : TestimonialTransition
     }
     -> Element Msg
-viewTestimonials { device, windowWidth, testimonials, testimonialNonce, testimonialAnimation, testimonialTransition } =
+viewTestimonials { device, window, testimonials, testimonialNonce, testimonialAnimation, testimonialTransition } =
     let
         previous =
             testimonialContent testimonialAnimation (getPrevious testimonials)
@@ -1063,27 +1070,17 @@ viewTestimonials { device, windowWidth, testimonials, testimonialNonce, testimon
                             ]
                             (html (Icon.view IconSolid.angleLeft))
                         )
-                    , column
-                        [ -- less 20 for padding and 32 for scroll buttons each side = (20+32)*2 = 104
-                          width (px (windowWidth - 104))
-                        , centerY
-                        , Font.center
-                        , fontNormal
-                        , Font.light
-                        , Font.letterSpacing 0.3
-                        ]
-                        [ column [ centerX, spacing 10 ]
-                            (testimonials.current.quote
-                                |> List.map (\q -> paragraph [] [ text q ])
-                            )
-                        , paragraph
-                            [ paddingEach { top = 30, left = 0, right = 0, bottom = 0 }
-                            , Font.bold
-                            ]
-                            [ text testimonials.current.name ]
-                        , paragraph [ paddingEach { top = 15, left = 0, right = 0, bottom = 0 } ]
-                            [ text testimonials.current.company ]
-                        ]
+                    , row [ width (px (testimonialWidth window)), height fill, clip ]
+                        (case testimonialTransition of
+                            None ->
+                                [ current (testimonialWidth window) ]
+
+                            Next ->
+                                [ previous (testimonialWidth window), current (testimonialWidth window) ]
+
+                            Previous ->
+                                [ current (testimonialWidth window), next (testimonialWidth window) ]
+                        )
                     , el [ width (px testimonialButtonWidthPhone), height fill ]
                         (el
                             [ width (px 20)
@@ -1120,16 +1117,16 @@ viewTestimonials { device, windowWidth, testimonials, testimonialNonce, testimon
                             ]
                             (html (Icon.view IconSolid.angleLeft))
                         )
-                    , row [ width (px testimonialWidthDesktop), height fill, clip ]
+                    , row [ width (px (testimonialWidth window)), height fill, clip ]
                         (case testimonialTransition of
                             None ->
-                                [ current ]
+                                [ current (testimonialWidth window) ]
 
                             Next ->
-                                [ previous, current ]
+                                [ previous (testimonialWidth window), current (testimonialWidth window) ]
 
                             Previous ->
-                                [ current, next ]
+                                [ current (testimonialWidth window), next (testimonialWidth window) ]
                         )
                     , el [ width (px testimonialButtonWidthDesktop), height fill ]
                         (el
@@ -1159,10 +1156,10 @@ viewTestimonials { device, windowWidth, testimonials, testimonialNonce, testimon
             none
 
 
-testimonialContent : Animation.State -> Testimonial -> Element msg
-testimonialContent animation testimonial =
+testimonialContent : Animation.State -> Testimonial -> Int -> Element msg
+testimonialContent animation testimonial contentWidth =
     column
-        ([ width (px testimonialWidthDesktop)
+        ([ width (px contentWidth)
          , height fill
          , centerY
          , Font.center
@@ -1185,9 +1182,15 @@ testimonialContent animation testimonial =
         ]
 
 
-testimonialWidthDesktop : Int
-testimonialWidthDesktop =
-    968
+testimonialWidth : Window -> Int
+testimonialWidth { width } =
+    -- 600 == width cutoff for Phone
+    if width < 600 then
+        -- less 20 for padding and 32 for scroll buttons each side = (20+32)*2 = 104
+        width - 104
+
+    else
+        968
 
 
 testimonialButtonWidthDesktop : Int
