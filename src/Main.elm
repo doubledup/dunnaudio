@@ -52,6 +52,8 @@ type alias Model =
     , testimonials : ZipList Testimonial
     , testimonialChangeInterval : Float
     , testimonialNonce : Int
+    , testimonialAnimation : Animation.State
+    , testimonialTransition : TestimonialTransition
     }
 
 
@@ -142,6 +144,25 @@ getPrevious { beforeReversed, current, after } =
                     current
 
 
+getNext : ZipList a -> a
+getNext { beforeReversed, current, after } =
+    case after of
+        afterHead :: _ ->
+            afterHead
+
+        [] ->
+            let
+                beforeFirst =
+                    beforeReversed |> List.reverse |> List.head
+            in
+            case beforeFirst of
+                Just first ->
+                    first
+
+                Nothing ->
+                    current
+
+
 type alias Nonce =
     Int
 
@@ -157,6 +178,12 @@ type alias Testimonial =
     , name : String
     , company : String
     }
+
+
+type TestimonialTransition
+    = None
+    | Next
+    | Previous
 
 
 init : Flags -> Url.Url -> Key -> ( Model, Cmd Msg )
@@ -247,6 +274,9 @@ init flags _ _ =
             }
       , testimonialChangeInterval = 8000.0
       , testimonialNonce = 0
+      , testimonialAnimation =
+            Animation.style [ Animation.translate (Animation.px 0) (Animation.px 0) ]
+      , testimonialTransition = None
       }
     , Cmd.batch
         [ Task.perform (\_ -> ChangeBanner 0) (Process.sleep 5000.0)
@@ -297,13 +327,11 @@ update msg model =
                     | bannerPictures = selectNext model.bannerPictures
                     , bannerAnimationCurrent =
                         Animation.interrupt
-                            [ Animation.toWith customInterpolation [ Animation.opacity 1.0 ]
-                            ]
+                            [ Animation.toWith bannerInterpolation [ Animation.opacity 1.0 ] ]
                             (Animation.style [ Animation.opacity 0.0 ])
                     , bannerAnimationPrevious =
                         Animation.interrupt
-                            [ Animation.toWith customInterpolation [ Animation.opacity 0.0 ]
-                            ]
+                            [ Animation.toWith bannerInterpolation [ Animation.opacity 0.0 ] ]
                             (Animation.style [ Animation.opacity 1.0 ])
                     , bannerNonce = newNonce
                   }
@@ -322,6 +350,21 @@ update msg model =
                 ( { model
                     | testimonials = selectNext model.testimonials
                     , testimonialNonce = newNonce
+                    , testimonialAnimation =
+                        Animation.queue
+                            [ Animation.toWith testimonialInterpolation
+                                [ Animation.translate
+                                    (Animation.px (toFloat -testimonialWidth))
+                                    (Animation.px 0)
+                                ]
+                            ]
+                            (Animation.style
+                                [ Animation.translate
+                                    (Animation.px 0)
+                                    (Animation.px 0)
+                                ]
+                            )
+                    , testimonialTransition = Next
                   }
                 , Task.perform (\_ -> NextTestimonial newNonce) (Process.sleep model.testimonialChangeInterval)
                 )
@@ -338,14 +381,34 @@ update msg model =
                 ( { model
                     | testimonials = selectPrevious model.testimonials
                     , testimonialNonce = newNonce
+                    , testimonialAnimation =
+                        Animation.queue
+                            [ Animation.toWith testimonialInterpolation
+                                [ Animation.translate
+                                    (Animation.px 0)
+                                    (Animation.px 0)
+                                ]
+                            ]
+                            (Animation.style
+                                [ Animation.translate
+                                    (Animation.px (toFloat -testimonialWidth))
+                                    (Animation.px 0)
+                                ]
+                            )
+                    , testimonialTransition = Previous
                   }
                 , Task.perform (\_ -> NextTestimonial newNonce) (Process.sleep model.testimonialChangeInterval)
                 )
 
         Animate animationMsg ->
+            let
+                updateAnimation =
+                    Animation.update animationMsg
+            in
             ( { model
-                | bannerAnimationCurrent = Animation.update animationMsg model.bannerAnimationCurrent
-                , bannerAnimationPrevious = Animation.update animationMsg model.bannerAnimationPrevious
+                | bannerAnimationCurrent = updateAnimation model.bannerAnimationCurrent
+                , bannerAnimationPrevious = updateAnimation model.bannerAnimationPrevious
+                , testimonialAnimation = updateAnimation model.testimonialAnimation
               }
             , Cmd.none
             )
@@ -355,7 +418,7 @@ update msg model =
 
 
 subscriptions : Model -> Sub Msg
-subscriptions { bannerAnimationCurrent, bannerAnimationPrevious } =
+subscriptions { bannerAnimationCurrent, bannerAnimationPrevious, testimonialAnimation } =
     Sub.batch
         [ Events.onResize
             (\w h ->
@@ -364,7 +427,11 @@ subscriptions { bannerAnimationCurrent, bannerAnimationPrevious } =
                     , height = h
                     }
             )
-        , Animation.subscription Animate [ bannerAnimationCurrent, bannerAnimationPrevious ]
+        , Animation.subscription Animate
+            [ bannerAnimationCurrent
+            , bannerAnimationPrevious
+            , testimonialAnimation
+            ]
         ]
 
 
@@ -442,7 +509,17 @@ view model =
 -- ELEMENTS
 
 
-sections : List ({ b | device : Device, testimonials : ZipList Testimonial, testimonialNonce : Int } -> Element Msg)
+sections :
+    List
+        ({ b
+            | device : Device
+            , testimonials : ZipList Testimonial
+            , testimonialNonce : Int
+            , testimonialAnimation : Animation.State
+            , testimonialTransition : TestimonialTransition
+         }
+         -> Element Msg
+        )
 sections =
     [ aboutMe
     , whatIDo
@@ -948,11 +1025,25 @@ portfolio { device } =
             none
 
 
-viewTestimonials : { b | device : Device, testimonials : ZipList Testimonial, testimonialNonce : Int } -> Element Msg
-viewTestimonials { device, testimonials, testimonialNonce } =
+viewTestimonials :
+    { b
+        | device : Device
+        , testimonials : ZipList Testimonial
+        , testimonialNonce : Int
+        , testimonialAnimation : Animation.State
+        , testimonialTransition : TestimonialTransition
+    }
+    -> Element Msg
+viewTestimonials { device, testimonials, testimonialNonce, testimonialAnimation, testimonialTransition } =
     let
+        previous =
+            testimonialContent testimonialAnimation (getPrevious testimonials)
+
         current =
-            testimonials.current
+            testimonialContent testimonialAnimation testimonials.current
+
+        next =
+            testimonialContent testimonialAnimation (getNext testimonials)
     in
     case device.class of
         Phone ->
@@ -979,14 +1070,16 @@ viewTestimonials { device, testimonials, testimonialNonce } =
                         , Font.letterSpacing 0.3
                         ]
                         [ column [ centerX, spacing 10 ]
-                            (current.quote |> List.map (\q -> paragraph [] [ text q ]))
+                            (testimonials.current.quote
+                                |> List.map (\q -> paragraph [] [ text q ])
+                            )
                         , paragraph
                             [ paddingEach { top = 30, left = 0, right = 0, bottom = 0 }
                             , Font.bold
                             ]
-                            [ text current.name ]
+                            [ text testimonials.current.name ]
                         , paragraph [ paddingEach { top = 15, left = 0, right = 0, bottom = 0 } ]
-                            [ text current.company ]
+                            [ text testimonials.current.company ]
                         ]
                     , el [ width (fillPortion 1), height fill ]
                         (el
@@ -1013,42 +1106,34 @@ viewTestimonials { device, testimonials, testimonialNonce } =
             column [ spacingSmall, width fill ]
                 [ el [ centerX, Font.bold, fontHeading ] (text "Testimonials")
                 , row [ width fill, height (px 300) ]
-                    [ el [ width (fillPortion 1), height fill ]
+                    [ el [ width (px testimonialButtonWidth), height fill ]
                         (el
-                            [ centerX
-                            , centerY
-                            , width (px 20)
+                            [ width (px 20)
                             , height (px 20)
+                            , centerX
+                            , centerY
                             , Font.color orange
                             , ElementEvents.onClick (PreviousTestimonial testimonialNonce)
                             ]
                             (html (Icon.view IconSolid.angleLeft))
                         )
-                    , el [ width (fillPortion 10), centerY ]
-                        (column
-                            [ height fill
-                            , Font.center
-                            , fontNormal
-                            , Font.light
-                            , Font.letterSpacing 0.3
-                            ]
-                            [ column [ centerX, spacing 10 ]
-                                (current.quote |> List.map (\q -> paragraph [] [ text q ]))
-                            , paragraph
-                                [ paddingEach { top = 30, left = 0, right = 0, bottom = 0 }
-                                , Font.bold
-                                ]
-                                [ text current.name ]
-                            , paragraph [ paddingEach { top = 15, left = 0, right = 0, bottom = 0 } ]
-                                [ text current.company ]
-                            ]
+                    , row [ width (px testimonialWidth), height fill, clip ]
+                        (case testimonialTransition of
+                            None ->
+                                [ current ]
+
+                            Next ->
+                                [ previous, current ]
+
+                            Previous ->
+                                [ current, next ]
                         )
-                    , el [ width (fillPortion 1), height fill ]
+                    , el [ width (px testimonialButtonWidth), height fill ]
                         (el
-                            [ centerX
-                            , centerY
-                            , width (px 20)
+                            [ width (px 20)
                             , height (px 20)
+                            , centerX
+                            , centerY
                             , Font.color orange
                             , ElementEvents.onClick (NextTestimonial testimonialNonce)
                             ]
@@ -1069,6 +1154,42 @@ viewTestimonials { device, testimonials, testimonialNonce } =
 
         BigDesktop ->
             none
+
+
+testimonialContent : Animation.State -> Testimonial -> Element msg
+testimonialContent animation testimonial =
+    column
+        ([ width (px testimonialWidth)
+         , height fill
+         , centerY
+         , Font.center
+         , fontNormal
+         , Font.light
+         , Font.letterSpacing 0.3
+         ]
+            ++ List.map Element.htmlAttribute (Animation.render animation)
+        )
+        [ column [ centerX, centerY, spacing 10 ]
+            (testimonial.quote |> List.map (\q -> paragraph [] [ text q ]))
+        , paragraph
+            [ centerY
+            , paddingEach { top = 30, left = 0, right = 0, bottom = 0 }
+            , Font.bold
+            ]
+            [ text testimonial.name ]
+        , paragraph [ centerY, paddingEach { top = 15, left = 0, right = 0, bottom = 0 } ]
+            [ text testimonial.company ]
+        ]
+
+
+testimonialWidth : Int
+testimonialWidth =
+    968
+
+
+testimonialButtonWidth : Int
+testimonialButtonWidth =
+    96
 
 
 letschat : { a | device : Device } -> Element msg
@@ -1271,12 +1392,17 @@ awardStyle =
     ]
 
 
-customInterpolation : Animation.Interpolation
-customInterpolation =
+bannerInterpolation : Animation.Interpolation
+bannerInterpolation =
     Animation.easing
         { duration = 1000.0
         , ease = Ease.inOutQuart
         }
+
+
+testimonialInterpolation : Animation.Interpolation
+testimonialInterpolation =
+    Animation.spring { stiffness = 250.0, damping = 18.0 }
 
 
 
