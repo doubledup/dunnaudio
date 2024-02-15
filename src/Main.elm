@@ -47,7 +47,8 @@ type alias Model =
     , bannerPictures : ZipList Picture
     , bannerChangeInterval : Float
     , bannerNonce : Int
-    , bannerTransition : BannerTransition
+    , bannerAnimationCurrent : Animation.State
+    , bannerAnimationPrevious : Animation.State
     , testimonials : ZipList Testimonial
     , testimonialChangeInterval : Float
     , testimonialNonce : Int
@@ -172,11 +173,6 @@ type alias Picture =
     }
 
 
-type BannerTransition
-    = AtoB Animation.State Animation.State
-    | BtoA Animation.State Animation.State
-
-
 type alias Testimonial =
     { quote : List String
     , name : String
@@ -226,9 +222,10 @@ init flags _ _ =
                   }
                 ]
             }
-      , bannerChangeInterval = 2000.0
+      , bannerChangeInterval = 5000.0
       , bannerNonce = 0
-      , bannerTransition = AtoB (Animation.style [ Animation.opacity 0 ]) (Animation.style [ Animation.opacity 1 ])
+      , bannerAnimationCurrent = Animation.style [ Animation.opacity 1.0 ]
+      , bannerAnimationPrevious = Animation.style [ Animation.opacity 0.0 ]
       , testimonials =
             { beforeReversed = []
             , current =
@@ -282,7 +279,7 @@ init flags _ _ =
       , testimonialTransition = None
       }
     , Cmd.batch
-        [ Task.perform (\_ -> ChangeBanner 0) (Process.sleep 2000.0)
+        [ Task.perform (\_ -> ChangeBanner 0) (Process.sleep 5000.0)
         , Task.perform (\_ -> NextTestimonial 0) (Process.sleep 8000.0)
         ]
     )
@@ -328,29 +325,14 @@ update msg model =
                 in
                 ( { model
                     | bannerPictures = selectNext model.bannerPictures
-                    , bannerTransition =
-                        case model.bannerTransition of
-                            AtoB astate bstate ->
-                                BtoA
-                                    (Animation.interrupt
-                                        [ Animation.toWith bannerInterpolation [ Animation.opacity 1.0 ] ]
-                                        astate
-                                    )
-                                    (Animation.interrupt
-                                        [ Animation.toWith bannerInterpolation [ Animation.opacity 0.0 ] ]
-                                        bstate
-                                    )
-
-                            BtoA astate bstate ->
-                                AtoB
-                                    (Animation.interrupt
-                                        [ Animation.toWith bannerInterpolation [ Animation.opacity 0.0 ] ]
-                                        astate
-                                    )
-                                    (Animation.interrupt
-                                        [ Animation.toWith bannerInterpolation [ Animation.opacity 1.0 ] ]
-                                        bstate
-                                    )
+                    , bannerAnimationCurrent =
+                        Animation.interrupt
+                            [ Animation.toWith bannerInterpolation [ Animation.opacity 1.0 ] ]
+                            (Animation.style [ Animation.opacity 0.0 ])
+                    , bannerAnimationPrevious =
+                        Animation.interrupt
+                            [ Animation.toWith bannerInterpolation [ Animation.opacity 0.0 ] ]
+                            (Animation.style [ Animation.opacity 1.0 ])
                     , bannerNonce = newNonce
                   }
                 , Task.perform (\_ -> ChangeBanner newNonce) (Process.sleep model.bannerChangeInterval)
@@ -424,13 +406,8 @@ update msg model =
                     Animation.update animationMsg
             in
             ( { model
-                | bannerTransition =
-                    case model.bannerTransition of
-                        AtoB astate bstate ->
-                            AtoB (updateAnimation astate) (updateAnimation bstate)
-
-                        BtoA astate bstate ->
-                            BtoA (updateAnimation astate) (updateAnimation bstate)
+                | bannerAnimationCurrent = updateAnimation model.bannerAnimationCurrent
+                , bannerAnimationPrevious = updateAnimation model.bannerAnimationPrevious
                 , testimonialAnimation = updateAnimation model.testimonialAnimation
               }
             , Cmd.none
@@ -441,16 +418,7 @@ update msg model =
 
 
 subscriptions : Model -> Sub Msg
-subscriptions { bannerTransition, testimonialAnimation } =
-    let
-        ( astate, bstate ) =
-            case bannerTransition of
-                AtoB a b ->
-                    ( a, b )
-
-                BtoA a b ->
-                    ( a, b )
-    in
+subscriptions { bannerAnimationCurrent, bannerAnimationPrevious, testimonialAnimation } =
     Sub.batch
         [ Events.onResize
             (\w h ->
@@ -460,8 +428,8 @@ subscriptions { bannerTransition, testimonialAnimation } =
                     }
             )
         , Animation.subscription Animate
-            [ astate
-            , bstate
+            [ bannerAnimationCurrent
+            , bannerAnimationPrevious
             , testimonialAnimation
             ]
         ]
@@ -614,64 +582,44 @@ banner :
     { a
         | windowWidth : Int
         , bannerPictures : ZipList Picture
-        , bannerTransition : BannerTransition
+        , bannerAnimationCurrent :
+            Animation.State
+        , bannerAnimationPrevious :
+            Animation.State
     }
     -> Element msg
-banner { windowWidth, bannerPictures, bannerTransition } =
+banner { windowWidth, bannerPictures, bannerAnimationCurrent, bannerAnimationPrevious } =
     let
-        bannerHeightPx =
+        bannerHeight =
             windowWidth
-                |> bannerHeight
+                |> toFloat
+                |> (\x -> x * 8 / 16)
+
+        bannerHeightPx =
+            bannerHeight
                 |> round
                 |> px
+
+        previousImage =
+            image
+                ([ width fill
+                 , height bannerHeightPx
+                 , moveUp bannerHeight
+                 ]
+                    ++ List.map htmlAttribute (Animation.render bannerAnimationPrevious)
+                )
+                (getPrevious bannerPictures)
     in
     column [ width fill, height bannerHeightPx ]
-        (case bannerTransition of
-            AtoB astate bstate ->
-                -- [ el [ width fill, height bannerHeightPx ] none ]
-                [ image
-                    ([ width fill
-                     , height bannerHeightPx
-                     ]
-                        ++ List.map htmlAttribute (Animation.render bstate)
-                    )
-                    bannerPictures.current
-                , image
-                    ([ width fill
-                     , height bannerHeightPx
-                     , moveUp (bannerHeight windowWidth)
-                     ]
-                        ++ List.map htmlAttribute (Animation.render astate)
-                    )
-                    (getPrevious bannerPictures)
-                ]
-
-            BtoA astate bstate ->
-                -- [ el [ width fill, height bannerHeightPx ] none ]
-                [ image
-                    ([ width fill
-                     , height bannerHeightPx
-                     ]
-                        ++ List.map htmlAttribute (Animation.render astate)
-                    )
-                    bannerPictures.current
-                , image
-                    ([ width fill
-                     , height bannerHeightPx
-                     , moveUp (bannerHeight windowWidth)
-                     ]
-                        ++ List.map htmlAttribute (Animation.render bstate)
-                    )
-                    (getPrevious bannerPictures)
-                ]
-        )
-
-
-bannerHeight : Int -> Float
-bannerHeight windowWidth =
-    windowWidth
-        |> toFloat
-        |> (\x -> x * 8 / 16)
+        [ image
+            ([ width fill
+             , height bannerHeightPx
+             ]
+                ++ List.map htmlAttribute (Animation.render bannerAnimationCurrent)
+            )
+            bannerPictures.current
+        , previousImage
+        ]
 
 
 orangeRule : Element msg
