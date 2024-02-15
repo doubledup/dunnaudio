@@ -354,7 +354,7 @@ update msg model =
                         Animation.queue
                             [ Animation.toWith testimonialInterpolation
                                 [ Animation.translate
-                                    (Animation.px (toFloat -testimonialWidth))
+                                    (Animation.px (toFloat -testimonialWidthDesktop))
                                     (Animation.px 0)
                                 ]
                             ]
@@ -391,7 +391,7 @@ update msg model =
                             ]
                             (Animation.style
                                 [ Animation.translate
-                                    (Animation.px (toFloat -testimonialWidth))
+                                    (Animation.px (toFloat -testimonialWidthDesktop))
                                     (Animation.px 0)
                                 ]
                             )
@@ -513,6 +513,7 @@ sections :
     List
         ({ b
             | device : Device
+            , windowWidth : Int
             , testimonials : ZipList Testimonial
             , testimonialNonce : Int
             , testimonialAnimation : Animation.State
@@ -1028,13 +1029,14 @@ portfolio { device } =
 viewTestimonials :
     { b
         | device : Device
+        , windowWidth : Int
         , testimonials : ZipList Testimonial
         , testimonialNonce : Int
         , testimonialAnimation : Animation.State
         , testimonialTransition : TestimonialTransition
     }
     -> Element Msg
-viewTestimonials { device, testimonials, testimonialNonce, testimonialAnimation, testimonialTransition } =
+viewTestimonials { device, windowWidth, testimonials, testimonialNonce, testimonialAnimation, testimonialTransition } =
     let
         previous =
             testimonialContent testimonialAnimation (getPrevious testimonials)
@@ -1049,21 +1051,22 @@ viewTestimonials { device, testimonials, testimonialNonce, testimonialAnimation,
         Phone ->
             column [ width fill, spacingSmall, Font.center ]
                 [ el [ centerX, Font.bold, fontLarge ] (text "Testimonials")
-                , row [ width fill ]
-                    [ el [ width (fillPortion 1), height fill ]
+                , row [ width fill, height (px 650) ]
+                    [ el [ width (px testimonialButtonWidthPhone), height fill ]
                         (el
-                            [ centerX
-                            , centerY
-                            , width (px 20)
+                            [ width (px 20)
                             , height (px 20)
+                            , centerX
+                            , centerY
                             , Font.color orange
                             , ElementEvents.onClick (PreviousTestimonial testimonialNonce)
                             ]
                             (html (Icon.view IconSolid.angleLeft))
                         )
                     , column
-                        [ width (fillPortion 10)
-                        , height fill
+                        [ -- less 20 for padding and 32 for scroll buttons each side = (20+32)*2 = 104
+                          width (px (windowWidth - 104))
+                        , centerY
                         , Font.center
                         , fontNormal
                         , Font.light
@@ -1081,12 +1084,12 @@ viewTestimonials { device, testimonials, testimonialNonce, testimonialAnimation,
                         , paragraph [ paddingEach { top = 15, left = 0, right = 0, bottom = 0 } ]
                             [ text testimonials.current.company ]
                         ]
-                    , el [ width (fillPortion 1), height fill ]
+                    , el [ width (px testimonialButtonWidthPhone), height fill ]
                         (el
-                            [ centerX
-                            , centerY
-                            , width (px 20)
+                            [ width (px 20)
                             , height (px 20)
+                            , centerX
+                            , centerY
                             , Font.color orange
                             , ElementEvents.onClick (NextTestimonial testimonialNonce)
                             ]
@@ -1103,10 +1106,10 @@ viewTestimonials { device, testimonials, testimonialNonce, testimonialAnimation,
                 ]
 
         Desktop ->
-            column [ spacingSmall, width fill ]
+            column [ width fill, spacingSmall ]
                 [ el [ centerX, Font.bold, fontHeading ] (text "Testimonials")
                 , row [ width fill, height (px 300) ]
-                    [ el [ width (px testimonialButtonWidth), height fill ]
+                    [ el [ width (px testimonialButtonWidthDesktop), height fill ]
                         (el
                             [ width (px 20)
                             , height (px 20)
@@ -1117,7 +1120,7 @@ viewTestimonials { device, testimonials, testimonialNonce, testimonialAnimation,
                             ]
                             (html (Icon.view IconSolid.angleLeft))
                         )
-                    , row [ width (px testimonialWidth), height fill, clip ]
+                    , row [ width (px testimonialWidthDesktop), height fill, clip ]
                         (case testimonialTransition of
                             None ->
                                 [ current ]
@@ -1128,7 +1131,7 @@ viewTestimonials { device, testimonials, testimonialNonce, testimonialAnimation,
                             Previous ->
                                 [ current, next ]
                         )
-                    , el [ width (px testimonialButtonWidth), height fill ]
+                    , el [ width (px testimonialButtonWidthDesktop), height fill ]
                         (el
                             [ width (px 20)
                             , height (px 20)
@@ -1159,7 +1162,7 @@ viewTestimonials { device, testimonials, testimonialNonce, testimonialAnimation,
 testimonialContent : Animation.State -> Testimonial -> Element msg
 testimonialContent animation testimonial =
     column
-        ([ width (px testimonialWidth)
+        ([ width (px testimonialWidthDesktop)
          , height fill
          , centerY
          , Font.center
@@ -1182,14 +1185,19 @@ testimonialContent animation testimonial =
         ]
 
 
-testimonialWidth : Int
-testimonialWidth =
+testimonialWidthDesktop : Int
+testimonialWidthDesktop =
     968
 
 
-testimonialButtonWidth : Int
-testimonialButtonWidth =
+testimonialButtonWidthDesktop : Int
+testimonialButtonWidthDesktop =
     96
+
+
+testimonialButtonWidthPhone : Int
+testimonialButtonWidthPhone =
+    32
 
 
 letschat : { a | device : Device } -> Element msg
