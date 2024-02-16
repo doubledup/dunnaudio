@@ -631,11 +631,11 @@ navbar { menuState, device } =
                 [ row [ width (px 1200), height (px navbarHeight), paddingXY 20 30, centerX ]
                     [ logo
                     , row [ alignRight, spacingMedium, fontNormal, Font.light ]
-                        [ renderSectionLink Home
-                        , renderSectionLink AboutMe
-                        , renderSectionLink Portfolio
-                        , renderSectionLink Testimonials
-                        , renderSectionLink Contact
+                        [ renderSectionLink [] Home
+                        , renderSectionLink [] AboutMe
+                        , renderSectionLink [] Portfolio
+                        , renderSectionLink [] Testimonials
+                        , renderSectionLink [] Contact
                         , newTabLink linkAttributes
                             { url = "https://drive.google.com/file/d/1D1gBuv_USqMETY4iYZa9QUp_OW1QwVM3/view"
                             , label = text "My CV"
@@ -731,7 +731,7 @@ logo =
         { src = "images/logo2.webp", description = "Dunn Audio" }
 
 
-dropdown : MenuState -> List (Attribute msg)
+dropdown : MenuState -> List (Attribute Msg)
 dropdown menuState =
     if menuState == Closed then
         []
@@ -742,8 +742,8 @@ dropdown menuState =
                 [ el [ width (fillPortion 1) ] none
                 , column [ width (fillPortion 8), padding 20, spacingSmall, Font.light ]
                     (List.intersperse orangeRule
-                        (List.map renderSectionLink allSections
-                            ++ [ el [ width fill, Font.center ] (text "My CV") ]
+                        (List.map (renderSectionLink [ ElementEvents.onClick ToggleMenuState ]) allSections
+                            ++ [ el [ width fill, Font.center, ElementEvents.onClick ToggleMenuState ] (text "My CV") ]
                         )
                     )
                 , el [ width (fillPortion 1) ] none
@@ -792,9 +792,9 @@ linkAttributes =
     [ width fill, Font.center ]
 
 
-renderSectionLink : Section -> Element msg
-renderSectionLink section =
-    link linkAttributes
+renderSectionLink : List (Attribute msg) -> Section -> Element msg
+renderSectionLink extraAttributes section =
+    link (linkAttributes ++ extraAttributes)
         { url = UrlBuilder.custom UrlBuilder.Relative [] [] (Just (toID section))
         , label = text (toString section)
         }
