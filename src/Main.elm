@@ -1194,7 +1194,7 @@ viewTestimonials { device, window, testimonials, testimonialNonce, testimonialAn
                 , htmlAttribute (Html.Attributes.id (toID Testimonials))
                 ]
                 [ el [ centerX, Font.bold, fontLarge ] (text (toString Testimonials))
-                , row [ width fill, height (px 650) ]
+                , row [ width fill, height (px 550) ]
                     [ el [ width (px testimonialButtonWidthPhone), height fill ]
                         (el
                             [ width (px 20)
