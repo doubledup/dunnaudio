@@ -152,30 +152,6 @@ view : Model -> Browser.Document Msg
 view model =
     { title = "Dunn Audio"
     , body =
-        let
-            modelDevice =
-                model.device
-
-            phoneModel =
-                { model | device = { modelDevice | class = Phone } }
-
-            phoneLayout =
-                [ banner model
-                , column [ width fill, height fill, paddingXY 20 40, spacingMedium ]
-                    (List.map (\section -> section phoneModel) sections)
-                , footer phoneModel
-                ]
-
-            desktopModel =
-                { model | device = { modelDevice | class = Desktop } }
-
-            desktopLayout =
-                [ banner model
-                , column [ width (px 1200), height fill, centerX, paddingXY 20 50, spacingLarge ]
-                    (List.map (\section -> section desktopModel) sections)
-                , footer desktopModel
-                ]
-        in
         [ layout [ inFront (navbar model), htmlAttribute (Html.Attributes.id (toID Home)) ]
             (column
                 [ width fill
@@ -188,21 +164,33 @@ view model =
                 ]
                 (case model.device.class of
                     Phone ->
-                        phoneLayout
+                        [ banner model
+                        , column [ width fill, height fill, paddingXY 20 40, spacingMedium ]
+                            (List.map (\section -> section model) sections)
+                        , footer model
+                        ]
 
                     Tablet ->
                         [ banner model
                         , column [ width (px 600), height fill, centerX, paddingXY 20 50, spacingLarge ]
                             -- TODO: rework each section for tablets
-                            (List.map (\section -> section desktopModel) sections)
-                        , footer desktopModel
+                            (List.map (\section -> section model) sections)
+                        , footer model
                         ]
 
                     Desktop ->
-                        desktopLayout
+                        [ banner model
+                        , column [ width (px 1200), height fill, centerX, paddingXY 20 50, spacingLarge ]
+                            (List.map (\section -> section model) sections)
+                        , footer model
+                        ]
 
                     BigDesktop ->
-                        desktopLayout
+                        [ banner model
+                        , column [ width (px 1200), height fill, centerX, paddingXY 20 50, spacingLarge ]
+                            (List.map (\section -> section model) sections)
+                        , footer model
+                        ]
                 )
             )
         ]
