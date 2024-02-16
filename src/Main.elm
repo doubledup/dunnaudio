@@ -2,6 +2,7 @@ module Main exposing (main)
 
 import Animation
 import Browser
+import Browser.Dom as Dom
 import Browser.Events as Events
 import Browser.Navigation as Navigation
 import Ease
@@ -18,6 +19,8 @@ import Html.Attributes
 import Process
 import Task
 import Url
+import Url.Builder as UrlBuilder
+import Url.Parser as UrlParser
 
 
 main : Program Flags Model Msg
@@ -429,7 +432,36 @@ update msg model =
         OnUrlRequest urlRequest ->
             case urlRequest of
                 Browser.Internal url ->
-                    ( model, Navigation.pushUrl model.navKey (Url.toString url) )
+                    ( model
+                    , let
+                        maybeSection =
+                            UrlParser.parse
+                                (UrlParser.fragment
+                                    (\maybeFragment ->
+                                        maybeFragment
+                                            |> Maybe.withDefault ""
+                                            |> fromID
+                                    )
+                                )
+                                url
+                                |> Maybe.withDefault Nothing
+
+                        goToSection =
+                            \section ->
+                                Dom.getElement (toID section)
+                                    |> Task.andThen
+                                        (\element ->
+                                            Dom.setViewport 0 element.element.y
+                                        )
+                                    |> Task.attempt (\_ -> Noop)
+                      in
+                      Cmd.batch
+                        [ Navigation.pushUrl model.navKey (Url.toString url)
+                        , maybeSection
+                            |> Maybe.map goToSection
+                            |> Maybe.withDefault Cmd.none
+                        ]
+                    )
 
                 Browser.External href ->
                     ( model, Navigation.load href )
@@ -732,7 +764,10 @@ nextSection lst =
 
 renderSectionLink : Section -> Element msg
 renderSectionLink section =
-    link [ width fill, Font.center ] { url = toID section, label = text (toString section) }
+    link [ width fill, Font.center ]
+        { url = UrlBuilder.custom UrlBuilder.Relative [] [] (Just (toID section))
+        , label = text (toString section)
+        }
 
 
 toString : Section -> String
@@ -756,23 +791,30 @@ toString section =
 
 toID : Section -> String
 toID section =
-    String.append "#"
-        (case section of
-            Home ->
-                "home"
+    case section of
+        Home ->
+            "home"
 
-            AboutMe ->
-                "about-me"
+        AboutMe ->
+            "about-me"
 
-            Portfolio ->
-                "portfolio"
+        Portfolio ->
+            "portfolio"
 
-            Testimonials ->
-                "testimonials"
+        Testimonials ->
+            "testimonials"
 
-            Contact ->
-                "contact"
-        )
+        Contact ->
+            "contact"
+
+
+fromID : String -> Maybe Section
+fromID str =
+    allSections
+        |> List.map (\section -> ( section, toID section ))
+        |> List.filter (\( _, id ) -> id == str)
+        |> List.head
+        |> Maybe.map Tuple.first
 
 
 aboutMe : { a | device : Device } -> Element Msg
