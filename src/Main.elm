@@ -453,7 +453,8 @@ update msg model =
                                 Dom.getElement (toID section)
                                     |> Task.andThen
                                         (\element ->
-                                            Dom.setViewport 0 element.element.y
+                                            Dom.setViewport 0
+                                                (max 0 (element.element.y - toFloat navbarHeight))
                                         )
                                     |> Task.attempt (\_ -> Noop)
 
@@ -520,8 +521,7 @@ view model =
                 { model | device = { modelDevice | class = Phone } }
 
             phoneLayout =
-                [ navbar phoneModel
-                , banner model
+                [ banner model
                 , column [ width fill, height fill, paddingXY 20 40, spacingMedium ]
                     (List.map (\section -> section phoneModel) sections)
                 , footer phoneModel
@@ -531,22 +531,28 @@ view model =
                 { model | device = { modelDevice | class = Desktop } }
 
             desktopLayout =
-                [ navbar desktopModel
-                , banner model
+                [ banner model
                 , column [ width (px 1200), height fill, centerX, paddingXY 20 50, spacingLarge ]
                     (List.map (\section -> section desktopModel) sections)
                 , footer desktopModel
                 ]
         in
-        [ layout []
-            (column [ width fill, height fill, fontRaleway, fontNormal, Font.color black, Font.letterSpacing 0.5 ]
+        [ layout [ inFront (navbar model), htmlAttribute (Html.Attributes.id (toID Home)) ]
+            (column
+                [ width fill
+                , height fill
+                , moveDown (toFloat navbarHeight)
+                , fontRaleway
+                , fontNormal
+                , Font.color black
+                , Font.letterSpacing 0.5
+                ]
                 (case model.device.class of
                     Phone ->
                         phoneLayout
 
                     Tablet ->
-                        [ navbar model
-                        , banner model
+                        [ banner model
                         , column [ width (px 600), height fill, centerX, paddingXY 20 50, spacingLarge ]
                             -- TODO: rework each section for tablets
                             (List.map (\section -> section desktopModel) sections)
@@ -606,10 +612,10 @@ navbar { menuState, device } =
         mobile =
             row
                 ([ width fill
-                 , height (px 150)
+                 , height (px navbarHeight)
                  , padding 20
                  , spacing 10
-                 , htmlAttribute (Html.Attributes.id (toID Home))
+                 , Background.color white
                  ]
                     ++ dropdown menuState
                 )
@@ -620,11 +626,9 @@ navbar { menuState, device } =
         desktop =
             row
                 [ width fill
-                , paddingXY 0 30
-                , spacingMedium
-                , htmlAttribute (Html.Attributes.id (toID Home))
+                , Background.color white
                 ]
-                [ row [ width (px 1200), paddingXY 20 0, centerX ]
+                [ row [ width (px 1200), height (px navbarHeight), paddingXY 20 30, centerX ]
                     [ logo
                     , row [ alignRight, spacingMedium, fontNormal, Font.light ]
                         [ renderSectionLink Home
@@ -652,6 +656,11 @@ navbar { menuState, device } =
 
         BigDesktop ->
             desktop
+
+
+navbarHeight : Int
+navbarHeight =
+    133
 
 
 banner :
@@ -1639,4 +1648,4 @@ black =
 
 white : Color
 white =
-    rgb255 250 250 250
+    rgb255 255 255 255
