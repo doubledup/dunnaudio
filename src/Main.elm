@@ -453,185 +453,7 @@ subscriptions { bannerAnimationCurrent, bannerAnimationPrevious, testimonialAnim
 
 
 
--- ELEMENTS
-
-
-sections :
-    List
-        ({ b
-            | device : Device
-            , window : Window
-            , testimonials : ZipList Testimonial
-            , testimonialNonce : Int
-            , testimonialAnimation : Animation.State
-            , testimonialTransition : TestimonialTransition
-         }
-         -> Element Msg
-        )
-sections =
-    [ aboutMe
-    , whatIDo
-    , achievements
-    , portfolio
-    , viewTestimonials
-    , contact
-    , socials
-    ]
-
-
-navbar : { a | menuState : MenuState, device : Device } -> Element Msg
-navbar { menuState, device } =
-    let
-        menuButton =
-            el
-                [ width (px 30)
-                , centerY
-                , alignRight
-                , ElementEvents.onClick ToggleMenuState
-                ]
-                (html (Icon.view IconSolid.bars))
-
-        mobile =
-            row
-                ([ width fill
-                 , height (px navbarHeight)
-                 , padding 20
-                 , spacing 10
-                 , Background.color white
-                 ]
-                    ++ dropdown menuState
-                )
-                [ logo
-                , menuButton
-                ]
-
-        desktop =
-            row
-                [ width fill
-                , Background.color white
-                ]
-                [ row [ width (px 1200), height (px navbarHeight), paddingXY 20 30, centerX ]
-                    [ logo
-                    , row [ alignRight, spacingMedium, fontNormal, Font.light ]
-                        [ renderSectionLink [] Home
-                        , renderSectionLink [] AboutMe
-                        , renderSectionLink [] Portfolio
-                        , renderSectionLink [] Testimonials
-                        , renderSectionLink [] Contact
-                        , newTabLink linkAttributes
-                            { url = "https://drive.google.com/file/d/1D1gBuv_USqMETY4iYZa9QUp_OW1QwVM3/view"
-                            , label = text "My CV"
-                            }
-                        ]
-                    ]
-                ]
-    in
-    case device.class of
-        Phone ->
-            mobile
-
-        Tablet ->
-            mobile
-
-        Desktop ->
-            desktop
-
-        BigDesktop ->
-            desktop
-
-
-navbarHeight : Int
-navbarHeight =
-    133
-
-
-banner :
-    { a
-        | window : Window
-        , bannerPictures : ZipList Picture
-        , bannerAnimationCurrent :
-            Animation.State
-        , bannerAnimationPrevious :
-            Animation.State
-    }
-    -> Element msg
-banner { window, bannerPictures, bannerAnimationCurrent, bannerAnimationPrevious } =
-    let
-        bannerHeight =
-            window.width
-                |> toFloat
-                |> (\x -> x * 8 / 16)
-
-        bannerHeightPx =
-            bannerHeight
-                |> round
-                |> px
-
-        previousImage =
-            image
-                ([ width fill
-                 , height bannerHeightPx
-                 , moveUp bannerHeight
-                 ]
-                    ++ List.map htmlAttribute (Animation.render bannerAnimationPrevious)
-                )
-                (getPrevious bannerPictures)
-    in
-    column [ width fill, height bannerHeightPx ]
-        [ image
-            ([ width fill
-             , height bannerHeightPx
-             ]
-                ++ List.map htmlAttribute (Animation.render bannerAnimationCurrent)
-            )
-            bannerPictures.current
-        , previousImage
-        ]
-
-
-orangeRule : Element msg
-orangeRule =
-    row [ width fill ]
-        [ el
-            [ width fill
-            , height (px 0)
-            , Border.widthEach
-                { top = 1
-                , bottom = 0
-                , left = 0
-                , right = 0
-                }
-            , Border.color orange
-            ]
-            none
-        ]
-
-
-logo : Element msg
-logo =
-    image [ width (px 240), alignLeft ]
-        { src = "images/logo2.webp", description = "Dunn Audio" }
-
-
-dropdown : MenuState -> List (Attribute Msg)
-dropdown menuState =
-    if menuState == Closed then
-        []
-
-    else
-        [ below
-            (row [ width fill, Background.color white ]
-                [ el [ width (fillPortion 1) ] none
-                , column [ width (fillPortion 8), padding 20, spacingSmall, Font.light ]
-                    (List.intersperse orangeRule
-                        (List.map (renderSectionLink [ ElementEvents.onClick ToggleMenuState ]) allSections
-                            ++ [ el [ width fill, Font.center, ElementEvents.onClick ToggleMenuState ] (text "My CV") ]
-                        )
-                    )
-                , el [ width (fillPortion 1) ] none
-                ]
-            )
-        ]
+-- SECTIONS
 
 
 type Section
@@ -669,17 +491,17 @@ nextSection lst =
             lst
 
 
-linkAttributes : List (Attribute msg)
-linkAttributes =
-    [ width fill, Font.center ]
-
-
 renderSectionLink : List (Attribute msg) -> Section -> Element msg
 renderSectionLink extraAttributes section =
     link (linkAttributes ++ extraAttributes)
         { url = UrlBuilder.custom UrlBuilder.Relative [] [] (Just (toID section))
         , label = text (toString section)
         }
+
+
+linkAttributes : List (Attribute msg)
+linkAttributes =
+    [ width fill, Font.center ]
 
 
 toString : Section -> String
@@ -727,6 +549,29 @@ fromID str =
         |> List.filter (\( _, id ) -> id == str)
         |> List.head
         |> Maybe.map Tuple.first
+
+
+sections :
+    List
+        ({ b
+            | device : Device
+            , window : Window
+            , testimonials : ZipList Testimonial
+            , testimonialNonce : Int
+            , testimonialAnimation : Animation.State
+            , testimonialTransition : TestimonialTransition
+         }
+         -> Element Msg
+        )
+sections =
+    [ aboutMe
+    , whatIDo
+    , achievements
+    , portfolio
+    , viewTestimonials
+    , contact
+    , socials
+    ]
 
 
 aboutMe : { a | device : Device } -> Element Msg
@@ -1046,6 +891,56 @@ portfolio { device } =
             none
 
 
+clientLogo : { src : String, description : String, logoWidth : Int } -> Element msg
+clientLogo logoParams =
+    el
+        [ centerX
+        , width (px logoParams.logoWidth)
+        , Border.color (rgb 1 1 1)
+        , Border.rounded 5
+        , Border.width 1
+        , clip
+        ]
+        (image
+            [ width (px logoParams.logoWidth)
+            ]
+            { src = logoParams.src, description = logoParams.description }
+        )
+
+
+youtubeVideo : { a | width : Int, height : Int, src : String } -> Element msg
+youtubeVideo { width, height, src } =
+    el []
+        (html
+            (Html.iframe
+                [ Html.Attributes.width width
+                , Html.Attributes.height height
+                , Html.Attributes.src src
+                , Html.Attributes.attribute "allow" "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                , Html.Attributes.attribute "allowfullscreen" "1"
+                , Html.Attributes.attribute "frameborder" "0"
+                ]
+                []
+            )
+        )
+
+
+vimeoVideo : { a | width : Int, height : Int, src : String } -> Element msg
+vimeoVideo { width, height, src } =
+    el [ Background.color black ]
+        (html
+            (Html.iframe
+                [ Html.Attributes.width width
+                , Html.Attributes.height height
+                , Html.Attributes.src src
+                , Html.Attributes.attribute "frameBorder" "0"
+                , Html.Attributes.attribute "allowfullscreen" ""
+                ]
+                []
+            )
+        )
+
+
 viewTestimonials :
     { b
         | device : Device
@@ -1215,6 +1110,11 @@ testimonialWidth { width } =
         968
 
 
+dot : Color -> Element msg
+dot color =
+    el [ width (px 16), height (px 16), Border.rounded 8, Background.color color ] none
+
+
 testimonialButtonWidthDesktop : Int
 testimonialButtonWidthDesktop =
     96
@@ -1326,6 +1226,174 @@ socials { device } =
             none
 
 
+
+-- ELEMENTS
+-- NAVBAR
+
+
+navbar : { a | menuState : MenuState, device : Device } -> Element Msg
+navbar { menuState, device } =
+    let
+        menuButton =
+            el
+                [ width (px 30)
+                , centerY
+                , alignRight
+                , ElementEvents.onClick ToggleMenuState
+                ]
+                (html (Icon.view IconSolid.bars))
+
+        mobile =
+            row
+                ([ width fill
+                 , height (px navbarHeight)
+                 , padding 20
+                 , spacing 10
+                 , Background.color white
+                 ]
+                    ++ dropdown menuState
+                )
+                [ logo
+                , menuButton
+                ]
+
+        desktop =
+            row
+                [ width fill
+                , Background.color white
+                ]
+                [ row [ width (px 1200), height (px navbarHeight), paddingXY 20 30, centerX ]
+                    [ logo
+                    , row [ alignRight, spacingMedium, fontNormal, Font.light ]
+                        [ renderSectionLink [] Home
+                        , renderSectionLink [] AboutMe
+                        , renderSectionLink [] Portfolio
+                        , renderSectionLink [] Testimonials
+                        , renderSectionLink [] Contact
+                        , newTabLink linkAttributes
+                            { url = "https://drive.google.com/file/d/1D1gBuv_USqMETY4iYZa9QUp_OW1QwVM3/view"
+                            , label = text "My CV"
+                            }
+                        ]
+                    ]
+                ]
+    in
+    case device.class of
+        Phone ->
+            mobile
+
+        Tablet ->
+            mobile
+
+        Desktop ->
+            desktop
+
+        BigDesktop ->
+            desktop
+
+
+navbarHeight : Int
+navbarHeight =
+    133
+
+
+logo : Element msg
+logo =
+    image [ width (px 240), alignLeft ]
+        { src = "images/logo2.webp", description = "Dunn Audio" }
+
+
+dropdown : MenuState -> List (Attribute Msg)
+dropdown menuState =
+    if menuState == Closed then
+        []
+
+    else
+        [ below
+            (row [ width fill, Background.color white ]
+                [ el [ width (fillPortion 1) ] none
+                , column [ width (fillPortion 8), padding 20, spacingSmall, Font.light ]
+                    (List.intersperse orangeRule
+                        (List.map (renderSectionLink [ ElementEvents.onClick ToggleMenuState ]) allSections
+                            ++ [ el [ width fill, Font.center, ElementEvents.onClick ToggleMenuState ] (text "My CV") ]
+                        )
+                    )
+                , el [ width (fillPortion 1) ] none
+                ]
+            )
+        ]
+
+
+orangeRule : Element msg
+orangeRule =
+    row [ width fill ]
+        [ el
+            [ width fill
+            , height (px 0)
+            , Border.widthEach
+                { top = 1
+                , bottom = 0
+                , left = 0
+                , right = 0
+                }
+            , Border.color orange
+            ]
+            none
+        ]
+
+
+
+-- BANNER
+
+
+banner :
+    { a
+        | window : Window
+        , bannerPictures : ZipList Picture
+        , bannerAnimationCurrent :
+            Animation.State
+        , bannerAnimationPrevious :
+            Animation.State
+    }
+    -> Element msg
+banner { window, bannerPictures, bannerAnimationCurrent, bannerAnimationPrevious } =
+    let
+        bannerHeight =
+            window.width
+                |> toFloat
+                |> (\x -> x * 8 / 16)
+
+        bannerHeightPx =
+            bannerHeight
+                |> round
+                |> px
+
+        previousImage =
+            image
+                ([ width fill
+                 , height bannerHeightPx
+                 , moveUp bannerHeight
+                 ]
+                    ++ List.map htmlAttribute (Animation.render bannerAnimationPrevious)
+                )
+                (getPrevious bannerPictures)
+    in
+    column [ width fill, height bannerHeightPx ]
+        [ image
+            ([ width fill
+             , height bannerHeightPx
+             ]
+                ++ List.map htmlAttribute (Animation.render bannerAnimationCurrent)
+            )
+            bannerPictures.current
+        , previousImage
+        ]
+
+
+
+-- FOOTER
+
+
 footer : { a | device : Device } -> Element msg
 footer { device } =
     case device.class of
@@ -1362,61 +1430,6 @@ footer { device } =
 
         BigDesktop ->
             none
-
-
-clientLogo : { src : String, description : String, logoWidth : Int } -> Element msg
-clientLogo logoParams =
-    el
-        [ centerX
-        , width (px logoParams.logoWidth)
-        , Border.color (rgb 1 1 1)
-        , Border.rounded 5
-        , Border.width 1
-        , clip
-        ]
-        (image
-            [ width (px logoParams.logoWidth)
-            ]
-            { src = logoParams.src, description = logoParams.description }
-        )
-
-
-youtubeVideo : { a | width : Int, height : Int, src : String } -> Element msg
-youtubeVideo { width, height, src } =
-    el []
-        (html
-            (Html.iframe
-                [ Html.Attributes.width width
-                , Html.Attributes.height height
-                , Html.Attributes.src src
-                , Html.Attributes.attribute "allow" "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                , Html.Attributes.attribute "allowfullscreen" "1"
-                , Html.Attributes.attribute "frameborder" "0"
-                ]
-                []
-            )
-        )
-
-
-vimeoVideo : { a | width : Int, height : Int, src : String } -> Element msg
-vimeoVideo { width, height, src } =
-    el [ Background.color black ]
-        (html
-            (Html.iframe
-                [ Html.Attributes.width width
-                , Html.Attributes.height height
-                , Html.Attributes.src src
-                , Html.Attributes.attribute "frameBorder" "0"
-                , Html.Attributes.attribute "allowfullscreen" ""
-                ]
-                []
-            )
-        )
-
-
-dot : Color -> Element msg
-dot color =
-    el [ width (px 16), height (px 16), Border.rounded 8, Background.color color ] none
 
 
 
