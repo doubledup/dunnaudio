@@ -434,15 +434,17 @@ update msg model =
                 Browser.Internal url ->
                     ( model
                     , let
+                        sectionFragmentParser =
+                            UrlParser.fragment
+                                (\maybeFragment ->
+                                    maybeFragment
+                                        |> Maybe.withDefault ""
+                                        |> fromID
+                                )
+
                         maybeSection =
                             UrlParser.parse
-                                (UrlParser.fragment
-                                    (\maybeFragment ->
-                                        maybeFragment
-                                            |> Maybe.withDefault ""
-                                            |> fromID
-                                    )
-                                )
+                                sectionFragmentParser
                                 url
                                 |> Maybe.withDefault Nothing
 
@@ -454,9 +456,20 @@ update msg model =
                                             Dom.setViewport 0 element.element.y
                                         )
                                     |> Task.attempt (\_ -> Noop)
+
+                        newUrl =
+                            case maybeSection of
+                                Just Home ->
+                                    { url | fragment = Nothing }
+
+                                Just _ ->
+                                    url
+
+                                Nothing ->
+                                    url
                       in
                       Cmd.batch
-                        [ Navigation.pushUrl model.navKey (Url.toString url)
+                        [ Navigation.pushUrl model.navKey (Url.toString newUrl)
                         , maybeSection
                             |> Maybe.map goToSection
                             |> Maybe.withDefault Cmd.none
