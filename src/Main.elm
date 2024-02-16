@@ -1368,32 +1368,32 @@ socials : { a | device : Device } -> Element msg
 socials { device } =
     let
         socialLinks =
-            [ link [ width fill ]
+            [ newTabLink [ width fill ]
                 { url =
                     "https://www.facebook.com/dunnaudio"
                 , label = el [ width (px 45), height (px 45), centerX ] (html (Icon.view IconBrands.facebook))
                 }
-            , link [ width fill ]
+            , newTabLink [ width fill ]
                 { url =
                     "https://www.instagram.com/sebdunnaudio"
                 , label = el [ width (px 45), height (px 45), centerX ] (html (Icon.view IconBrands.instagram))
                 }
-            , link [ width fill ]
+            , newTabLink [ width fill ]
                 { url =
                     "https://twitter.com/sebdunnaudio"
                 , label = el [ width (px 45), height (px 45), centerX ] (html (Icon.view IconBrands.twitter))
                 }
-            , link [ width fill ]
+            , newTabLink [ width fill ]
                 { url =
                     "https://www.linkedin.com/in/dunnaudio"
                 , label = el [ width (px 45), height (px 45), centerX ] (html (Icon.view IconBrands.linkedin))
                 }
-            , link [ width fill ]
+            , newTabLink [ width fill ]
                 { url =
                     "https://www.imdb.com/name/nm2271521"
                 , label = el [ width (px 45), height (px 45), centerX ] (html (Icon.view IconBrands.imdb))
                 }
-            , link [ width fill ]
+            , newTabLink [ width fill ]
                 { url =
                     "https://soundcloud.com/user-716251106"
                 , label = el [ width (px 45), height (px 45), centerX ] (html (Icon.view IconBrands.soundcloud))
