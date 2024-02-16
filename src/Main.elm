@@ -562,11 +562,11 @@ navbar { menuState, device } =
                 [ row [ width (px 1200), paddingXY 20 0, centerX ]
                     [ logo
                     , row [ alignRight, spacingMedium, fontNormal, Font.light ]
-                        [ text "Home"
-                        , text "About Me"
-                        , text "Portfolio"
-                        , text "Testimonials"
-                        , text "Contact"
+                        [ renderSectionLink Home
+                        , renderSectionLink AboutMe
+                        , renderSectionLink Portfolio
+                        , renderSectionLink Testimonials
+                        , renderSectionLink Contact
                         , text "My CV"
                         ]
                     ]
@@ -665,7 +665,7 @@ dropdown menuState =
                 [ el [ width (fillPortion 1) ] none
                 , column [ width (fillPortion 8), padding 20, spacingSmall, Font.light ]
                     (List.intersperse orangeRule
-                        (List.map renderPage allPages
+                        (List.map renderSectionLink allSections
                             ++ [ el [ width fill, Font.center ] (text "My CV") ]
                         )
                     )
@@ -675,7 +675,7 @@ dropdown menuState =
         ]
 
 
-type Page
+type Section
     = Home
     | AboutMe
     | Portfolio
@@ -683,41 +683,41 @@ type Page
     | Contact
 
 
-allPages : List Page
-allPages =
-    nextPage [] |> List.reverse
+allSections : List Section
+allSections =
+    nextSection [] |> List.reverse
 
 
-nextPage : List Page -> List Page
-nextPage lst =
+nextSection : List Section -> List Section
+nextSection lst =
     case lst of
         [] ->
-            nextPage (Home :: lst)
+            nextSection (Home :: lst)
 
         Home :: _ ->
-            nextPage (AboutMe :: lst)
+            nextSection (AboutMe :: lst)
 
         AboutMe :: _ ->
-            nextPage (Portfolio :: lst)
+            nextSection (Portfolio :: lst)
 
         Portfolio :: _ ->
-            nextPage (Testimonials :: lst)
+            nextSection (Testimonials :: lst)
 
         Testimonials :: _ ->
-            nextPage (Contact :: lst)
+            nextSection (Contact :: lst)
 
         Contact :: _ ->
             lst
 
 
-renderPage : Page -> Element msg
-renderPage page =
-    el [ width fill, Font.center ] (text (toString page))
+renderSectionLink : Section -> Element msg
+renderSectionLink section =
+    link [ width fill, Font.center ] { url = toID section, label = text (toString section) }
 
 
-toString : Page -> String
-toString page =
-    case page of
+toString : Section -> String
+toString section =
+    case section of
         Home ->
             "Home"
 
@@ -732,6 +732,27 @@ toString page =
 
         Contact ->
             "Contact"
+
+
+toID : Section -> String
+toID section =
+    String.append "#"
+        (case section of
+            Home ->
+                "home"
+
+            AboutMe ->
+                "about-me"
+
+            Portfolio ->
+                "portfolio"
+
+            Testimonials ->
+                "testimonials"
+
+            Contact ->
+                "contact"
+        )
 
 
 aboutMe : { a | device : Device } -> Element Msg
