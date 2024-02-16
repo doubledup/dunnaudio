@@ -40,11 +40,11 @@ main =
 
 
 type alias Model =
-    { device : Device
-    , menuState : MenuState
+    { window : Window
+    , device : Device
     , navKey : Navigation.Key
     , url : Url.Url
-    , window : Window
+    , menuState : MenuState
     , bannerPictures : ZipList Picture
     , bannerChangeInterval : Float
     , bannerNonce : Int
@@ -68,18 +68,18 @@ type alias Flags =
 
 init : Flags -> Url.Url -> Navigation.Key -> ( Model, Cmd Msg )
 init flags url navKey =
-    ( { device =
+    ( { window =
+            { width = flags.window.innerWidth
+            , height = flags.window.innerHeight
+            }
+      , device =
             classifyDevice
                 { width = flags.window.innerWidth
                 , height = flags.window.innerHeight
                 }
-      , menuState = Closed
       , navKey = navKey
       , url = url
-      , window =
-            { width = flags.window.innerWidth
-            , height = flags.window.innerHeight
-            }
+      , menuState = Closed
       , bannerPictures =
             { beforeReversed = []
             , current =
