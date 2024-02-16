@@ -205,7 +205,7 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         UpdateDevice window ->
-            ( { model | device = classifyDevice window, window = window }, Cmd.none )
+            ( { model | window = window, device = classifyDevice window }, Cmd.none )
 
         ToggleMenuState ->
             ( { model
@@ -231,6 +231,7 @@ update msg model =
                 in
                 ( { model
                     | bannerPictures = selectNext model.bannerPictures
+                    , bannerNonce = newNonce
                     , bannerAnimationCurrent =
                         Animation.interrupt
                             [ Animation.toWith bannerInterpolation [ Animation.opacity 1.0 ] ]
@@ -239,7 +240,6 @@ update msg model =
                         Animation.interrupt
                             [ Animation.toWith bannerInterpolation [ Animation.opacity 0.0 ] ]
                             (Animation.style [ Animation.opacity 1.0 ])
-                    , bannerNonce = newNonce
                   }
                 , Task.perform (\_ -> ChangeBanner newNonce) (Process.sleep bannerChangeInterval)
                 )
@@ -272,7 +272,9 @@ update msg model =
                             )
                     , testimonialTransition = Next
                   }
-                , Task.perform (\_ -> NextTestimonial newNonce) (Process.sleep testimonialChangeInterval)
+                , Task.perform
+                    (\_ -> NextTestimonial newNonce)
+                    (Process.sleep testimonialChangeInterval)
                 )
 
         PreviousTestimonial nonce ->
@@ -303,18 +305,19 @@ update msg model =
                             )
                     , testimonialTransition = Previous
                   }
-                , Task.perform (\_ -> NextTestimonial newNonce) (Process.sleep testimonialChangeInterval)
+                , Task.perform
+                    (\_ -> NextTestimonial newNonce)
+                    (Process.sleep testimonialChangeInterval)
                 )
 
         Animate animationMsg ->
-            let
-                updateAnimation =
-                    Animation.update animationMsg
-            in
             ( { model
-                | bannerAnimationCurrent = updateAnimation model.bannerAnimationCurrent
-                , bannerAnimationPrevious = updateAnimation model.bannerAnimationPrevious
-                , testimonialAnimation = updateAnimation model.testimonialAnimation
+                | bannerAnimationCurrent =
+                    Animation.update animationMsg model.bannerAnimationCurrent
+                , bannerAnimationPrevious =
+                    Animation.update animationMsg model.bannerAnimationPrevious
+                , testimonialAnimation =
+                    Animation.update animationMsg model.testimonialAnimation
               }
             , Cmd.none
             )
@@ -327,9 +330,7 @@ update msg model =
                         sectionFragmentParser =
                             UrlParser.fragment
                                 (\maybeFragment ->
-                                    maybeFragment
-                                        |> Maybe.withDefault ""
-                                        |> fromID
+                                    maybeFragment |> Maybe.withDefault "" |> fromID
                                 )
 
                         maybeSection =
@@ -343,7 +344,8 @@ update msg model =
                                 Dom.getElement (toID section)
                                     |> Task.andThen
                                         (\element ->
-                                            Dom.setViewport 0
+                                            Dom.setViewport
+                                                0
                                                 (max 0 (element.element.y - toFloat navbarHeight))
                                         )
                                     |> Task.attempt (\_ -> Noop)
