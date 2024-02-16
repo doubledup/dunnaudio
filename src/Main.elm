@@ -619,7 +619,10 @@ navbar { menuState, device } =
                         , renderSectionLink Portfolio
                         , renderSectionLink Testimonials
                         , renderSectionLink Contact
-                        , text "My CV"
+                        , newTabLink linkAttributes
+                            { url = "https://drive.google.com/file/d/1D1gBuv_USqMETY4iYZa9QUp_OW1QwVM3/view"
+                            , label = text "My CV"
+                            }
                         ]
                     ]
                 ]
@@ -762,9 +765,14 @@ nextSection lst =
             lst
 
 
+linkAttributes : List (Attribute msg)
+linkAttributes =
+    [ width fill, Font.center ]
+
+
 renderSectionLink : Section -> Element msg
 renderSectionLink section =
-    link [ width fill, Font.center ]
+    link linkAttributes
         { url = UrlBuilder.custom UrlBuilder.Relative [] [] (Just (toID section))
         , label = text (toString section)
         }
