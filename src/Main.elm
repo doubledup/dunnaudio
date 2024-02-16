@@ -35,12 +35,8 @@ main =
         }
 
 
-type alias Flags =
-    { window :
-        { innerWidth : Int
-        , innerHeight : Int
-        }
-    }
+
+-- MODEL
 
 
 type alias Model =
@@ -62,137 +58,12 @@ type alias Model =
     }
 
 
-type MenuState
-    = Closed
-    | Open
-
-
-type alias Window =
-    { width : Int, height : Int }
-
-
-type alias ZipList a =
-    { beforeReversed : List a
-    , current : a
-    , after : List a
+type alias Flags =
+    { window :
+        { innerWidth : Int
+        , innerHeight : Int
+        }
     }
-
-
-selectNext : ZipList a -> ZipList a
-selectNext { beforeReversed, current, after } =
-    case ( beforeReversed, current, after ) of
-        ( beforeList, selected, afterHead :: afterRest ) ->
-            { beforeReversed = selected :: beforeList
-            , current = afterHead
-            , after = afterRest
-            }
-
-        ( beforeList, selected, [] ) ->
-            let
-                beforeListInOrder =
-                    List.reverse beforeList
-            in
-            case beforeListInOrder of
-                beforeFirst :: beforeRest ->
-                    { beforeReversed = []
-                    , current = beforeFirst
-                    , after = beforeRest ++ [ selected ]
-                    }
-
-                [] ->
-                    { beforeReversed = []
-                    , current = selected
-                    , after = []
-                    }
-
-
-selectPrevious : ZipList a -> ZipList a
-selectPrevious { beforeReversed, current, after } =
-    case ( beforeReversed, current, after ) of
-        ( beforeHead :: beforeRest, selected, afterList ) ->
-            { beforeReversed = beforeRest
-            , current = beforeHead
-            , after = selected :: afterList
-            }
-
-        ( [], selected, afterList ) ->
-            let
-                afterListReversed =
-                    List.reverse afterList
-            in
-            case afterListReversed of
-                lastItem :: afterRestReversed ->
-                    { beforeReversed = afterRestReversed ++ [ selected ]
-                    , current = lastItem
-                    , after = []
-                    }
-
-                [] ->
-                    { beforeReversed = []
-                    , current = selected
-                    , after = []
-                    }
-
-
-getPrevious : ZipList a -> a
-getPrevious { beforeReversed, current, after } =
-    case beforeReversed of
-        beforeHead :: _ ->
-            beforeHead
-
-        [] ->
-            let
-                afterLast =
-                    after |> List.reverse |> List.head
-            in
-            case afterLast of
-                Just last ->
-                    last
-
-                Nothing ->
-                    current
-
-
-getNext : ZipList a -> a
-getNext { beforeReversed, current, after } =
-    case after of
-        afterHead :: _ ->
-            afterHead
-
-        [] ->
-            let
-                beforeFirst =
-                    beforeReversed |> List.reverse |> List.head
-            in
-            case beforeFirst of
-                Just first ->
-                    first
-
-                Nothing ->
-                    current
-
-
-type alias Nonce =
-    Int
-
-
-type alias Picture =
-    { src : String
-    , description : String
-    }
-
-
-type alias Testimonial =
-    { quote : List String
-    , name : String
-    , company : String
-    }
-
-
-type TestimonialTransition
-    = None
-    | Next
-    | Previous
 
 
 init : Flags -> Url.Url -> Navigation.Key -> ( Model, Cmd Msg )
@@ -299,16 +170,74 @@ init flags url navKey =
     )
 
 
-type Msg
-    = UpdateDevice { width : Int, height : Int }
-    | ToggleMenuState
-    | ChangeBanner Nonce
-    | NextTestimonial Nonce
-    | PreviousTestimonial Nonce
-    | Animate Animation.Msg
-    | OnUrlRequest Browser.UrlRequest
-    | OnUrlChange Url.Url
-    | Noop
+
+-- VIEW
+-- attribute order: width, height, alignment, padding, spacing, background, font
+
+
+view : Model -> Browser.Document Msg
+view model =
+    { title = "Dunn Audio"
+    , body =
+        let
+            modelDevice =
+                model.device
+
+            phoneModel =
+                { model | device = { modelDevice | class = Phone } }
+
+            phoneLayout =
+                [ banner model
+                , column [ width fill, height fill, paddingXY 20 40, spacingMedium ]
+                    (List.map (\section -> section phoneModel) sections)
+                , footer phoneModel
+                ]
+
+            desktopModel =
+                { model | device = { modelDevice | class = Desktop } }
+
+            desktopLayout =
+                [ banner model
+                , column [ width (px 1200), height fill, centerX, paddingXY 20 50, spacingLarge ]
+                    (List.map (\section -> section desktopModel) sections)
+                , footer desktopModel
+                ]
+        in
+        [ layout [ inFront (navbar model), htmlAttribute (Html.Attributes.id (toID Home)) ]
+            (column
+                [ width fill
+                , height fill
+                , moveDown (toFloat navbarHeight)
+                , fontRaleway
+                , fontNormal
+                , Font.color black
+                , Font.letterSpacing 0.5
+                ]
+                (case model.device.class of
+                    Phone ->
+                        phoneLayout
+
+                    Tablet ->
+                        [ banner model
+                        , column [ width (px 600), height fill, centerX, paddingXY 20 50, spacingLarge ]
+                            -- TODO: rework each section for tablets
+                            (List.map (\section -> section desktopModel) sections)
+                        , footer desktopModel
+                        ]
+
+                    Desktop ->
+                        desktopLayout
+
+                    BigDesktop ->
+                        desktopLayout
+                )
+            )
+        ]
+    }
+
+
+
+-- UPDATE
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -487,6 +416,151 @@ update msg model =
             ( model, Cmd.none )
 
 
+type MenuState
+    = Closed
+    | Open
+
+
+type alias Window =
+    { width : Int, height : Int }
+
+
+type alias ZipList a =
+    { beforeReversed : List a
+    , current : a
+    , after : List a
+    }
+
+
+selectNext : ZipList a -> ZipList a
+selectNext { beforeReversed, current, after } =
+    case ( beforeReversed, current, after ) of
+        ( beforeList, selected, afterHead :: afterRest ) ->
+            { beforeReversed = selected :: beforeList
+            , current = afterHead
+            , after = afterRest
+            }
+
+        ( beforeList, selected, [] ) ->
+            let
+                beforeListInOrder =
+                    List.reverse beforeList
+            in
+            case beforeListInOrder of
+                beforeFirst :: beforeRest ->
+                    { beforeReversed = []
+                    , current = beforeFirst
+                    , after = beforeRest ++ [ selected ]
+                    }
+
+                [] ->
+                    { beforeReversed = []
+                    , current = selected
+                    , after = []
+                    }
+
+
+selectPrevious : ZipList a -> ZipList a
+selectPrevious { beforeReversed, current, after } =
+    case ( beforeReversed, current, after ) of
+        ( beforeHead :: beforeRest, selected, afterList ) ->
+            { beforeReversed = beforeRest
+            , current = beforeHead
+            , after = selected :: afterList
+            }
+
+        ( [], selected, afterList ) ->
+            let
+                afterListReversed =
+                    List.reverse afterList
+            in
+            case afterListReversed of
+                lastItem :: afterRestReversed ->
+                    { beforeReversed = afterRestReversed ++ [ selected ]
+                    , current = lastItem
+                    , after = []
+                    }
+
+                [] ->
+                    { beforeReversed = []
+                    , current = selected
+                    , after = []
+                    }
+
+
+getPrevious : ZipList a -> a
+getPrevious { beforeReversed, current, after } =
+    case beforeReversed of
+        beforeHead :: _ ->
+            beforeHead
+
+        [] ->
+            let
+                afterLast =
+                    after |> List.reverse |> List.head
+            in
+            case afterLast of
+                Just last ->
+                    last
+
+                Nothing ->
+                    current
+
+
+getNext : ZipList a -> a
+getNext { beforeReversed, current, after } =
+    case after of
+        afterHead :: _ ->
+            afterHead
+
+        [] ->
+            let
+                beforeFirst =
+                    beforeReversed |> List.reverse |> List.head
+            in
+            case beforeFirst of
+                Just first ->
+                    first
+
+                Nothing ->
+                    current
+
+
+type alias Nonce =
+    Int
+
+
+type alias Picture =
+    { src : String
+    , description : String
+    }
+
+
+type alias Testimonial =
+    { quote : List String
+    , name : String
+    , company : String
+    }
+
+
+type TestimonialTransition
+    = None
+    | Next
+    | Previous
+
+
+type Msg
+    = UpdateDevice { width : Int, height : Int }
+    | ToggleMenuState
+    | ChangeBanner Nonce
+    | NextTestimonial Nonce
+    | PreviousTestimonial Nonce
+    | Animate Animation.Msg
+    | OnUrlRequest Browser.UrlRequest
+    | OnUrlChange Url.Url
+    | Noop
+
+
 subscriptions : Model -> Sub Msg
 subscriptions { bannerAnimationCurrent, bannerAnimationPrevious, testimonialAnimation } =
     Sub.batch
@@ -503,71 +577,6 @@ subscriptions { bannerAnimationCurrent, bannerAnimationPrevious, testimonialAnim
             , testimonialAnimation
             ]
         ]
-
-
-
--- attribute order: width, height, alignment, padding, spacing, background, font
-
-
-view : Model -> Browser.Document Msg
-view model =
-    { title = "Dunn Audio"
-    , body =
-        let
-            modelDevice =
-                model.device
-
-            phoneModel =
-                { model | device = { modelDevice | class = Phone } }
-
-            phoneLayout =
-                [ banner model
-                , column [ width fill, height fill, paddingXY 20 40, spacingMedium ]
-                    (List.map (\section -> section phoneModel) sections)
-                , footer phoneModel
-                ]
-
-            desktopModel =
-                { model | device = { modelDevice | class = Desktop } }
-
-            desktopLayout =
-                [ banner model
-                , column [ width (px 1200), height fill, centerX, paddingXY 20 50, spacingLarge ]
-                    (List.map (\section -> section desktopModel) sections)
-                , footer desktopModel
-                ]
-        in
-        [ layout [ inFront (navbar model), htmlAttribute (Html.Attributes.id (toID Home)) ]
-            (column
-                [ width fill
-                , height fill
-                , moveDown (toFloat navbarHeight)
-                , fontRaleway
-                , fontNormal
-                , Font.color black
-                , Font.letterSpacing 0.5
-                ]
-                (case model.device.class of
-                    Phone ->
-                        phoneLayout
-
-                    Tablet ->
-                        [ banner model
-                        , column [ width (px 600), height fill, centerX, paddingXY 20 50, spacingLarge ]
-                            -- TODO: rework each section for tablets
-                            (List.map (\section -> section desktopModel) sections)
-                        , footer desktopModel
-                        ]
-
-                    Desktop ->
-                        desktopLayout
-
-                    BigDesktop ->
-                        desktopLayout
-                )
-            )
-        ]
-    }
 
 
 
