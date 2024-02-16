@@ -534,7 +534,7 @@ sections =
     , achievements
     , portfolio
     , viewTestimonials
-    , letschat
+    , contact
     , socials
     ]
 
@@ -552,13 +552,26 @@ navbar { menuState, device } =
                 (html (Icon.view IconSolid.bars))
 
         mobile =
-            row ([ width fill, height (px 150), padding 20, spacing 10 ] ++ dropdown menuState)
+            row
+                ([ width fill
+                 , height (px 150)
+                 , padding 20
+                 , spacing 10
+                 , htmlAttribute (Html.Attributes.id (toID Home))
+                 ]
+                    ++ dropdown menuState
+                )
                 [ logo
                 , menuButton
                 ]
 
         desktop =
-            row [ width fill, paddingXY 0 30, spacingMedium ]
+            row
+                [ width fill
+                , paddingXY 0 30
+                , spacingMedium
+                , htmlAttribute (Html.Attributes.id (toID Home))
+                ]
                 [ row [ width (px 1200), paddingXY 20 0, centerX ]
                     [ logo
                     , row [ alignRight, spacingMedium, fontNormal, Font.light ]
@@ -772,8 +785,13 @@ aboutMe { device } =
     in
     case device.class of
         Phone ->
-            column [ width fill, spacingSmall, Font.center ]
-                [ el [ centerX, Font.bold, fontLarge ] (text "About Me")
+            column
+                [ width fill
+                , spacingSmall
+                , Font.center
+                , htmlAttribute (Html.Attributes.id (toID AboutMe))
+                ]
+                [ el [ centerX, Font.bold, fontLarge ] (text (toString AboutMe))
                 , paragraph1
                 , el [ width fill ]
                     (image
@@ -795,9 +813,13 @@ aboutMe { device } =
                 ]
 
         Desktop ->
-            row [ width fill, spacingSmall ]
+            row
+                [ width fill
+                , spacingSmall
+                , htmlAttribute (Html.Attributes.id (toID AboutMe))
+                ]
                 [ column [ spacingMedium, width (fillPortion 1), alignTop, Font.center ]
-                    [ el [ centerX, Font.bold, fontHeading ] (text "About Me")
+                    [ el [ centerX, Font.bold, fontHeading ] (text (toString AboutMe))
                     , paragraph1
                     , paragraph2
                     , paragraph3
@@ -972,8 +994,13 @@ portfolio : { a | device : Device } -> Element msg
 portfolio { device } =
     case device.class of
         Phone ->
-            column [ width fill, spacingSmall, Font.center ]
-                [ el [ centerX, Font.bold, fontLarge ] (text "Portfolio")
+            column
+                [ width fill
+                , spacingSmall
+                , Font.center
+                , htmlAttribute (Html.Attributes.id (toID Portfolio))
+                ]
+                [ el [ centerX, Font.bold, fontLarge ] (text (toString Portfolio))
                 , column [ centerX, spacingSmall ]
                     [ youtubeVideo { width = 320, height = 180, src = "https://www.youtube.com/embed/Q33TkQKlIMg?controls=1&rel=0&playsinline=0&modestbranding=0&autoplay=0&enablejsapi=1&origin=https%3A%2F%2Fdunnaudio.com&widgetid=1" }
                     , youtubeVideo { width = 320, height = 180, src = "https://www.youtube.com/embed/q1UcC7BsI1M?controls=1&rel=0&playsinline=0&modestbranding=0&autoplay=0&enablejsapi=1&origin=https%3A%2F%2Fdunnaudio.com&widgetid=3" }
@@ -1012,8 +1039,12 @@ portfolio { device } =
                 ]
 
         Desktop ->
-            column [ spacingMedium, width fill ]
-                [ el [ centerX, Font.bold, fontHeading ] (text "Portfolio")
+            column
+                [ spacingMedium
+                , width fill
+                , htmlAttribute (Html.Attributes.id (toID Portfolio))
+                ]
+                [ el [ centerX, Font.bold, fontHeading ] (text (toString Portfolio))
                 , column [ spacingSmall, width fill ]
                     [ row [ centerX, spacingSmall ]
                         [ youtubeVideo { width = 320, height = 180, src = "https://www.youtube.com/embed/Q33TkQKlIMg?controls=1&rel=0&playsinline=0&modestbranding=0&autoplay=0&enablejsapi=1&origin=https%3A%2F%2Fdunnaudio.com&widgetid=1" }
@@ -1077,8 +1108,13 @@ viewTestimonials { device, window, testimonials, testimonialNonce, testimonialAn
     in
     case device.class of
         Phone ->
-            column [ width fill, spacingSmall, Font.center ]
-                [ el [ centerX, Font.bold, fontLarge ] (text "Testimonials")
+            column
+                [ width fill
+                , spacingSmall
+                , Font.center
+                , htmlAttribute (Html.Attributes.id (toID Testimonials))
+                ]
+                [ el [ centerX, Font.bold, fontLarge ] (text (toString Testimonials))
                 , row [ width fill, height (px 650) ]
                     [ el [ width (px testimonialButtonWidthPhone), height fill ]
                         (el
@@ -1124,8 +1160,12 @@ viewTestimonials { device, window, testimonials, testimonialNonce, testimonialAn
                 ]
 
         Desktop ->
-            column [ width fill, spacingSmall ]
-                [ el [ centerX, Font.bold, fontHeading ] (text "Testimonials")
+            column
+                [ width fill
+                , spacingSmall
+                , htmlAttribute (Html.Attributes.id (toID Testimonials))
+                ]
+                [ el [ centerX, Font.bold, fontHeading ] (text (toString Testimonials))
                 , row [ width fill, height (px 300) ]
                     [ el [ width (px testimonialButtonWidthDesktop), height fill ]
                         (el
@@ -1224,8 +1264,8 @@ testimonialButtonWidthPhone =
     32
 
 
-letschat : { a | device : Device } -> Element msg
-letschat { device } =
+contact : { a | device : Device } -> Element msg
+contact { device } =
     let
         emailContact =
             paragraph [ Font.center ]
@@ -1235,17 +1275,28 @@ letschat { device } =
                     , label = el [ Font.underline ] (text "seb@dunnaudio.com")
                     }
                 ]
+
+        contactHeading =
+            "Let's Chat!"
     in
     case device.class of
         Phone ->
-            column [ width fill, spacingSmall ]
-                [ el [ centerX, Font.bold, fontLarge ] (text "Let's Chat!")
+            column
+                [ width fill
+                , spacingSmall
+                , htmlAttribute (Html.Attributes.id (toID Contact))
+                ]
+                [ el [ centerX, Font.bold, fontLarge ] (text contactHeading)
                 , emailContact
                 ]
 
         Desktop ->
-            column [ width fill, spacingSmall ]
-                [ el [ centerX, Font.bold, fontHeading ] (text "Let's Chat!")
+            column
+                [ width fill
+                , spacingSmall
+                , htmlAttribute (Html.Attributes.id (toID Contact))
+                ]
+                [ el [ centerX, Font.bold, fontHeading ] (text contactHeading)
                 , emailContact
                 ]
 
