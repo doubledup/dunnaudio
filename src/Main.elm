@@ -3,7 +3,7 @@ module Main exposing (main)
 import Animation
 import Browser
 import Browser.Events as Events
-import Browser.Navigation exposing (Key)
+import Browser.Navigation as Navigation
 import Ease
 import Element exposing (..)
 import Element.Background as Background
@@ -27,8 +27,8 @@ main =
         , view = view
         , update = update
         , subscriptions = subscriptions
-        , onUrlChange = onUrlChange
-        , onUrlRequest = onUrlRequest
+        , onUrlChange = OnUrlChange
+        , onUrlRequest = OnUrlRequest
         }
 
 
@@ -43,6 +43,8 @@ type alias Flags =
 type alias Model =
     { device : Device
     , menuState : MenuState
+    , navKey : Navigation.Key
+    , url : Url.Url
     , window : Window
     , bannerPictures : ZipList Picture
     , bannerChangeInterval : Float
@@ -190,14 +192,16 @@ type TestimonialTransition
     | Previous
 
 
-init : Flags -> Url.Url -> Key -> ( Model, Cmd Msg )
-init flags _ _ =
+init : Flags -> Url.Url -> Navigation.Key -> ( Model, Cmd Msg )
+init flags url navKey =
     ( { device =
             classifyDevice
                 { width = flags.window.innerWidth
                 , height = flags.window.innerHeight
                 }
       , menuState = Closed
+      , navKey = navKey
+      , url = url
       , window =
             { width = flags.window.innerWidth
             , height = flags.window.innerHeight
@@ -299,6 +303,8 @@ type Msg
     | NextTestimonial Nonce
     | PreviousTestimonial Nonce
     | Animate Animation.Msg
+    | OnUrlRequest Browser.UrlRequest
+    | OnUrlChange Url.Url
     | Noop
 
 
@@ -420,6 +426,17 @@ update msg model =
             , Cmd.none
             )
 
+        OnUrlRequest urlRequest ->
+            case urlRequest of
+                Browser.Internal url ->
+                    ( model, Navigation.pushUrl model.navKey (Url.toString url) )
+
+                Browser.External href ->
+                    ( model, Navigation.load href )
+
+        OnUrlChange url ->
+            ( { model | url = url }, Cmd.none )
+
         Noop ->
             ( model, Cmd.none )
 
@@ -440,16 +457,6 @@ subscriptions { bannerAnimationCurrent, bannerAnimationPrevious, testimonialAnim
             , testimonialAnimation
             ]
         ]
-
-
-onUrlRequest : Browser.UrlRequest -> Msg
-onUrlRequest _ =
-    Noop
-
-
-onUrlChange : Url.Url -> Msg
-onUrlChange _ =
-    Noop
 
 
 
