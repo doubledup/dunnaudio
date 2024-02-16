@@ -46,12 +46,10 @@ type alias Model =
     , url : Url.Url
     , menuState : MenuState
     , bannerPictures : ZipList Picture
-    , bannerChangeInterval : Float
     , bannerNonce : Int
     , bannerAnimationCurrent : Animation.State
     , bannerAnimationPrevious : Animation.State
     , testimonials : ZipList Testimonial
-    , testimonialChangeInterval : Float
     , testimonialNonce : Int
     , testimonialAnimation : Animation.State
     , testimonialTransition : TestimonialTransition
@@ -83,73 +81,49 @@ init flags url navKey =
       , bannerPictures =
             { beforeReversed = []
             , current =
-                { src = "images/elephants.webp"
-                , description = "Sebastian recording elephants"
-                }
+                { src = "images/elephants.webp", description = "Sebastian recording elephants" }
             , after =
-                [ { src = "images/cape-town-prep.webp"
-                  , description = "Sebastian preparing to record ambisonic audio in the Cape Town city square"
-                  }
-                , { src = "images/desert.webp"
-                  , description = ""
-                  }
-                , { src = "images/elephant-watering-hole.webp"
-                  , description = ""
-                  }
-                , { src = "images/lion-fence.webp"
-                  , description = ""
-                  }
-                , { src = "images/shark.webp"
-                  , description = ""
-                  }
-                , { src = "images/tribal-council.webp"
-                  , description = ""
-                  }
+                [ { src = "images/cape-town-prep.webp", description = "Sebastian preparing to record ambisonic audio in the Cape Town city square" }
+                , { src = "images/desert.webp", description = "" }
+                , { src = "images/elephant-watering-hole.webp", description = "" }
+                , { src = "images/lion-fence.webp", description = "" }
+                , { src = "images/shark.webp", description = "" }
+                , { src = "images/tribal-council.webp", description = "" }
                 ]
             }
-      , bannerChangeInterval = 5000.0
       , bannerNonce = 0
       , bannerAnimationCurrent = Animation.style [ Animation.opacity 1.0 ]
       , bannerAnimationPrevious = Animation.style [ Animation.opacity 0.0 ]
       , testimonials =
             { beforeReversed = []
             , current =
-                { quote =
-                    [ "“Just so you know the Swedes were extremely impressed with your work, your attitude and everything else about you. Thanks for flying our flag high!”"
-                    ]
+                { quote = [ "“Just so you know the Swedes were extremely impressed with your work, your attitude and everything else about you. Thanks for flying our flag high!”" ]
                 , name = "Robin Matthews"
                 , company = "Big Banana Productions - Haaj Med Doreen"
                 }
             , after =
-                [ { quote =
-                        [ "“Seb is always my first choice as a sound recordist in Southern Africa. He will always perform in the toughest of situations. He’s just as happy to work in the bush, in the desert or in the City. Seb is a great team player and presenters love him. I will be working with Seb again and again.”" ]
+                [ { quote = [ "“Seb is always my first choice as a sound recordist in Southern Africa. He will always perform in the toughest of situations. He’s just as happy to work in the bush, in the desert or in the City. Seb is a great team player and presenters love him. I will be working with Seb again and again.”" ]
                   , name = "Dale Templar"
                   , company = "Series Producer, BBC and BBC Natural History Unit , Human Planet"
                   }
-                , { quote =
-                        [ "“It was a delight to work with you. I felt totally confident that you were getting the best sound we could hope for (given the limitations of the shoot). You were calm and collected at all times – and your advice and suggestions were invaluable. On top of that, you were a great guy to hang out with.”" ]
+                , { quote = [ "“It was a delight to work with you. I felt totally confident that you were getting the best sound we could hope for (given the limitations of the shoot). You were calm and collected at all times – and your advice and suggestions were invaluable. On top of that, you were a great guy to hang out with.”" ]
                   , name = "Ashok Prasad"
                   , company = "Director- Danger Men - Firefly Productions"
                   }
-                , { quote =
-                        [ "“Sebastian is a dedicated and enthusiastic soundman who is capable of handling any sound eventuality.”" ]
+                , { quote = [ "“Sebastian is a dedicated and enthusiastic soundman who is capable of handling any sound eventuality.”" ]
                   , name = "Andre Du Plessis"
                   , company = "Abacus Productions"
                   }
-                , { quote =
-                        [ "“The best soundman, fellow traveller & all round good guy you could wish to meet! Thanks for fantastic work and terrific support.”" ]
+                , { quote = [ "“The best soundman, fellow traveller & all round good guy you could wish to meet! Thanks for fantastic work and terrific support.”" ]
                   , name = "Michael Palin"
                   , company = "Brazil with Michael Palin"
                   }
-                , { quote =
-                        [ "“Sebastian is a huge asset on our shoots. He is such a pleasure to have around and knows a lot about a lot, was super valuable and willing to help in every way – above and beyond the call of duty. I will always REALLY hope for Seb’s availability on every location shoot I have as he was a real professional, a lot of fun and has a really big heart. Thank you Seb!”" ]
+                , { quote = [ "“Sebastian is a huge asset on our shoots. He is such a pleasure to have around and knows a lot about a lot, was super valuable and willing to help in every way – above and beyond the call of duty. I will always REALLY hope for Seb’s availability on every location shoot I have as he was a real professional, a lot of fun and has a really big heart. Thank you Seb!”" ]
                   , name = "Rita Mbanga"
                   , company = "Producer at Sunrise Productions"
                   }
                 , { quote =
-                        [ "“… Despite the incredibly difficult working conditions in Mali and Egypt your sound recording was brilliant."
-                        , "We so appreciate having someone with your enthusiasm, energy and experience."
-                        , "Your stereo recordings of the big ceremonies have created a sound that makes the viewer feel so present…"
+                        [ "“… Despite the incredibly difficult working conditions in Mali and Egypt your sound recording was brilliant. We so appreciate having someone with your enthusiasm, energy and experience. Your stereo recordings of the big ceremonies have created a sound that makes the viewer feel so present…"
                         , "“Cosmic Africa“ has really benefited in a big way through your dedication to the sound…”"
                         ]
                   , name = "Craig Foster"
@@ -157,15 +131,14 @@ init flags url navKey =
                   }
                 ]
             }
-      , testimonialChangeInterval = 8000.0
       , testimonialNonce = 0
       , testimonialAnimation =
             Animation.style [ Animation.translate (Animation.px 0) (Animation.px 0) ]
       , testimonialTransition = None
       }
     , Cmd.batch
-        [ Task.perform (\_ -> ChangeBanner 0) (Process.sleep 5000.0)
-        , Task.perform (\_ -> NextTestimonial 0) (Process.sleep 8000.0)
+        [ Task.perform (\_ -> ChangeBanner 0) (Process.sleep bannerChangeInterval)
+        , Task.perform (\_ -> NextTestimonial 0) (Process.sleep testimonialChangeInterval)
         ]
     )
 
@@ -280,7 +253,7 @@ update msg model =
                             (Animation.style [ Animation.opacity 1.0 ])
                     , bannerNonce = newNonce
                   }
-                , Task.perform (\_ -> ChangeBanner newNonce) (Process.sleep model.bannerChangeInterval)
+                , Task.perform (\_ -> ChangeBanner newNonce) (Process.sleep bannerChangeInterval)
                 )
 
         NextTestimonial nonce ->
@@ -311,7 +284,7 @@ update msg model =
                             )
                     , testimonialTransition = Next
                   }
-                , Task.perform (\_ -> NextTestimonial newNonce) (Process.sleep model.testimonialChangeInterval)
+                , Task.perform (\_ -> NextTestimonial newNonce) (Process.sleep testimonialChangeInterval)
                 )
 
         PreviousTestimonial nonce ->
@@ -342,7 +315,7 @@ update msg model =
                             )
                     , testimonialTransition = Previous
                   }
-                , Task.perform (\_ -> NextTestimonial newNonce) (Process.sleep model.testimonialChangeInterval)
+                , Task.perform (\_ -> NextTestimonial newNonce) (Process.sleep testimonialChangeInterval)
                 )
 
         Animate animationMsg ->
@@ -414,6 +387,16 @@ update msg model =
 
         Noop ->
             ( model, Cmd.none )
+
+
+bannerChangeInterval : Float
+bannerChangeInterval =
+    5000.0
+
+
+testimonialChangeInterval : Float
+testimonialChangeInterval =
+    8000.0
 
 
 type MenuState
