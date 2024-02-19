@@ -30,14 +30,9 @@ Note: this fails when run on a clean repo because something elm-live does passes
 null errors!
 
 <!--
-TODO: switch to elm-pages
-TODO: add responsive layout for mobile
-TODO: resize & convert images to optimize loading time & quality
-
 TODO: add responsive layout for tablet
-TODO: add scrolling effect to carousel
-TODO: add scrolling effect to testimonials
-TODO: crop images slightly
+TODO: switch to elm-pages
+TODO: deploy
 -->
 
 <!--
