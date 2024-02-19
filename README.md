@@ -17,8 +17,8 @@ Place images in [`raw-images/`](./raw-images/). Run image conversion:
 ```
 bun run convertImages
 ```
-Output images will be in [`dist/images/`]( ./dist/images/ ). This will fail with exit code 1 if there are no images in
-`raw-images/`.
+Output images will be in [`dist/images/`]( ./dist/images/ ). This will fail with exit code 1 if
+there are no images in `raw-images/`.
 
 ## Local environment
 
@@ -26,8 +26,8 @@ Start the local server:
 ```
 bun start
 ```
-Note: this fails when run on a clean repo because something elm-live does passes undefined for a "path" argument. Yay,
-null errors!
+Note: this fails when run on a clean repo because elm-live passes undefined for a "path" argument
+somewhere.
 
 <!--
 TODO: add responsive layout for tablet
