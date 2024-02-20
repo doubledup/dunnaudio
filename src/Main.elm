@@ -953,14 +953,20 @@ viewTestimonials :
     -> Element Msg
 viewTestimonials { device, window, testimonials, testimonialNonce, testimonialAnimation, testimonialTransition } =
     let
+        contentWidth =
+            testimonialWidth window
+
+        contentTemplate =
+            testimonialContent contentWidth testimonialAnimation
+
         previous =
-            testimonialContent testimonialAnimation (getPrevious testimonials)
+            contentTemplate (getPrevious testimonials)
 
         current =
-            testimonialContent testimonialAnimation testimonials.current
+            contentTemplate testimonials.current
 
         next =
-            testimonialContent testimonialAnimation (getNext testimonials)
+            contentTemplate (getNext testimonials)
     in
     case device.class of
         Phone ->
@@ -986,13 +992,13 @@ viewTestimonials { device, window, testimonials, testimonialNonce, testimonialAn
                     , row [ width (px (testimonialWidth window)), height fill, clip ]
                         (case testimonialTransition of
                             None ->
-                                [ current (testimonialWidth window) ]
+                                [ current ]
 
                             Next ->
-                                [ previous (testimonialWidth window), current (testimonialWidth window) ]
+                                [ previous, current ]
 
                             Previous ->
-                                [ current (testimonialWidth window), next (testimonialWidth window) ]
+                                [ current, next ]
                         )
                     , el [ width (px testimonialButtonWidthPhone), height fill ]
                         (el
@@ -1037,13 +1043,13 @@ viewTestimonials { device, window, testimonials, testimonialNonce, testimonialAn
                     , row [ width (px (testimonialWidth window)), height fill, clip ]
                         (case testimonialTransition of
                             None ->
-                                [ current (testimonialWidth window) ]
+                                [ current ]
 
                             Next ->
-                                [ previous (testimonialWidth window), current (testimonialWidth window) ]
+                                [ previous, current ]
 
                             Previous ->
-                                [ current (testimonialWidth window), next (testimonialWidth window) ]
+                                [ current, next ]
                         )
                     , el [ width (px testimonialButtonWidthDesktop), height fill ]
                         (el
@@ -1073,8 +1079,8 @@ viewTestimonials { device, window, testimonials, testimonialNonce, testimonialAn
             none
 
 
-testimonialContent : Animation.State -> Testimonial -> Int -> Element msg
-testimonialContent animation testimonial contentWidth =
+testimonialContent : Int -> Animation.State -> Testimonial -> Element msg
+testimonialContent contentWidth animation testimonial =
     column
         ([ width (px contentWidth)
          , height fill
