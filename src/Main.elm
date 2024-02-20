@@ -236,11 +236,11 @@ update msg model =
                     , bannerAnimationCurrent =
                         Animation.interrupt
                             [ Animation.toWith bannerInterpolation [ Animation.opacity 1.0 ] ]
-                            (Animation.style [ Animation.opacity 0.0 ])
+                            model.bannerAnimationPrevious
                     , bannerAnimationPrevious =
                         Animation.interrupt
                             [ Animation.toWith bannerInterpolation [ Animation.opacity 0.0 ] ]
-                            (Animation.style [ Animation.opacity 1.0 ])
+                            model.bannerAnimationCurrent
                   }
                 , Task.perform (\_ -> ChangeBanner newNonce) (Process.sleep bannerChangeInterval)
                 )
