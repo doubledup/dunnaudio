@@ -1319,7 +1319,7 @@ dropdown menuState =
             (row [ width fill, Background.color white ]
                 [ el [ width (fillPortion 1) ] none
                 , column [ width (fillPortion 8), padding 20, spacingSmall, Font.light ]
-                    (List.intersperse orangeRule
+                    (List.intersperse dropdownSeparator
                         (List.map (renderSectionLink [ ElementEvents.onClick ToggleMenuState ]) allSections
                             ++ [ el [ width fill, Font.center, ElementEvents.onClick ToggleMenuState ] (text "My CV") ]
                         )
@@ -1330,22 +1330,21 @@ dropdown menuState =
         ]
 
 
-orangeRule : Element msg
-orangeRule =
-    row [ width fill ]
-        [ el
-            [ width fill
-            , height (px 0)
-            , Border.widthEach
-                { top = 1
-                , bottom = 0
-                , left = 0
-                , right = 0
-                }
-            , Border.color orange
-            ]
-            none
+dropdownSeparator : Element msg
+dropdownSeparator =
+    el
+        [ width (px 200)
+        , height (px 0)
+        , centerX
+        , Border.widthEach
+            { top = 1
+            , bottom = 0
+            , left = 0
+            , right = 0
+            }
+        , Border.color orange
         ]
+        none
 
 
 
