@@ -1135,7 +1135,7 @@ contact : { a | device : Device } -> Element msg
 contact { device } =
     let
         emailContact =
-            paragraph [ Font.center ]
+            paragraph []
                 [ text "Email: "
                 , link []
                     { url = "mailto:seb@dunnaudio.com"
@@ -1151,6 +1151,7 @@ contact { device } =
             column
                 [ width fill
                 , spacingSmall
+                , Font.center
                 , htmlAttribute (Html.Attributes.id (toID Contact))
                 ]
                 [ el [ centerX, Font.bold, fontLarge ] (text contactHeading)
@@ -1161,6 +1162,7 @@ contact { device } =
             column
                 [ width fill
                 , spacingSmall
+                , Font.center
                 , htmlAttribute (Html.Attributes.id (toID Contact))
                 ]
                 [ el [ centerX, Font.bold, fontHeading ] (text contactHeading)
@@ -1213,15 +1215,13 @@ socials { device } =
     case device.class of
         Phone ->
             column [ width fill, spacingSmall, Font.center ]
-                [ el [ centerX ]
-                    (text "Follow me on my socials!")
+                [ paragraph [] [ text "Follow me on my socials!" ]
                 , wrappedRow [ width fill, paddingXY 30 0, spacing 30 ] socialLinks
                 ]
 
         Desktop ->
-            column [ spacingMedium, width fill ]
-                [ el [ centerX ]
-                    (text "Follow me on my socials!")
+            column [ width fill, spacingMedium, Font.center ]
+                [ paragraph [] [ text "Follow me on my socials!" ]
                 , row [ width fill, paddingXY 50 0, spacing 150 ] socialLinks
                 ]
 
