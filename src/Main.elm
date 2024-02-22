@@ -146,7 +146,7 @@ init flags url navKey =
 
 
 -- VIEW
--- attribute order: width, height, alignment, padding, spacing, background, font
+-- attribute order: width, height, alignment, padding, spacing, background, border font
 
 
 view : Model -> Browser.Document Msg
@@ -173,7 +173,7 @@ view model =
 
                     Tablet ->
                         [ banner model
-                        , column [ width (px 600), height fill, centerX, paddingXY 20 50, spacingLarge ]
+                        , column [ width (px 600), height fill, centerX, paddingXY 30 50, spacingLarge ]
                             -- TODO: rework each section for tablets
                             (List.map (\section -> section model) sections)
                         , footer model
@@ -261,7 +261,7 @@ update msg model =
                         Animation.queue
                             [ Animation.toWith testimonialInterpolation
                                 [ Animation.translate
-                                    (Animation.px (toFloat -(testimonialWidth model.window)))
+                                    (Animation.px (toFloat -(testimonialWidth model.window model.device)))
                                     (Animation.px 0)
                                 ]
                             ]
@@ -300,7 +300,7 @@ update msg model =
                             ]
                             (Animation.style
                                 [ Animation.translate
-                                    (Animation.px (toFloat -(testimonialWidth model.window)))
+                                    (Animation.px (toFloat -(testimonialWidth model.window model.device)))
                                     (Animation.px 0)
                                 ]
                             )
@@ -618,6 +618,34 @@ aboutMe { device } =
                 , paragraph4
                 ]
 
+        Tablet ->
+            column
+                [ width fill
+                , spacingSmall
+                , Font.center
+                , htmlAttribute (Html.Attributes.id (toID AboutMe))
+                ]
+                [ el [ centerX, Font.bold, fontLarge ] (text (toString AboutMe))
+                , paragraph1
+                , el [ width fill ]
+                    (image
+                        [ width fill, height fill ]
+                        { src = "images/cheetah.webp"
+                        , description = "Sebastian wearing sound equipment and standing next to a cheetah"
+                        }
+                    )
+                , paragraph2
+                , paragraph3
+                , el [ width fill ]
+                    (image
+                        [ width fill, height fill ]
+                        { src = "images/hadza.webp"
+                        , description = "Sebastian recording members of the Hadza community in Tanzania"
+                        }
+                    )
+                , paragraph4
+                ]
+
         Desktop ->
             row
                 [ width fill
@@ -649,9 +677,6 @@ aboutMe { device } =
                     ]
                 ]
 
-        Tablet ->
-            none
-
         BigDesktop ->
             none
 
@@ -660,6 +685,35 @@ whatIDo : { model | device : Device } -> Element Msg
 whatIDo { device } =
     case device.class of
         Phone ->
+            column [ width fill, spacingSmall, Font.center ]
+                [ el [ centerX, Font.bold, fontLarge ] (text "What I Do Now")
+                , paragraph [ spacingParagraph ] [ text "I spend a lot of my time on documentary productions, although I still work in other arenas. This has taken me all over the world, working for the major broadcasting channels in over 30 countries and exploring a diverse range of subjects." ]
+                , paragraph [ spacingParagraph ] [ text "I also now specialise in recording ‘The sounds of Africa’ having been commissioned by several top international production companies to record animals and general ambiences of Africa." ]
+                , el [ width fill ]
+                    (image
+                        [ width fill, height fill ]
+                        { src = "images/ambisonic-gorongosa.webp"
+                        , description = "Sebastian recording ambisonic sound on top of a car in Gorongosa National Park in Mozambique"
+                        }
+                    )
+                , el [ width fill ]
+                    (image
+                        [ width fill, height fill ]
+                        { src = "images/wauja-palin.webp"
+                        , description = "Sebastian standing with a member of the Wauja community in the Amazon"
+                        }
+                    )
+                , paragraph [ spacingParagraph ] [ text "My favourite ‘go-to’ is an Ambisonic Microphone that captures immersive surround sounds of the environments I’m recording in - an important tool in the sound design process of most productions." ]
+                , el [ width fill ]
+                    (image
+                        [ width fill, height fill ]
+                        { src = "images/cape-town.webp"
+                        , description = "Sebastian recording sound in front of Cape Town city hall during lockdown"
+                        }
+                    )
+                ]
+
+        Tablet ->
             column [ width fill, spacingSmall, Font.center ]
                 [ el [ centerX, Font.bold, fontLarge ] (text "What I Do Now")
                 , paragraph [ spacingParagraph ] [ text "I spend a lot of my time on documentary productions, although I still work in other arenas. This has taken me all over the world, working for the major broadcasting channels in over 30 countries and exploring a diverse range of subjects." ]
@@ -723,9 +777,6 @@ whatIDo { device } =
                     ]
                 ]
 
-        Tablet ->
-            none
-
         BigDesktop ->
             none
 
@@ -734,6 +785,33 @@ achievements : { a | device : Device } -> Element msg
 achievements { device } =
     case device.class of
         Phone ->
+            column [ width fill, spacingSmall, Font.center ]
+                [ el [ centerX, Font.bold, fontLarge ] (text "Achievements")
+                , column [ centerX, spacingSmall ]
+                    [ column (awardStyle ++ [ fontNormal ])
+                        [ paragraph [] [ text "News and Documentary Emmy Awards nominee" ]
+                        , paragraph [] [ text "2023" ]
+                        , paragraph [] [ text "Outstanding Sound for 'Our Universe'" ]
+                        ]
+                    , column (awardStyle ++ [ fontNormal ])
+                        [ paragraph [] [ text "Innovation in Business Award Winner" ]
+                        , paragraph [] [ text "2023" ]
+                        , paragraph [] [ text "Most Trusted Sound Recordist" ]
+                        ]
+                    , column (awardStyle ++ [ fontNormal ])
+                        [ paragraph [] [ text "Jackson Wild Media Awards nominee" ]
+                        , paragraph [] [ text "2015" ]
+                        , paragraph [] [ text "Best Sound for 'Gorongosa Park: Rebirth of Paradise'" ]
+                        ]
+                    , column (awardStyle ++ [ fontNormal ])
+                        [ paragraph [] [ text "BAFTA Craft Awards nominee" ]
+                        , paragraph [] [ text "2013" ]
+                        , paragraph [] [ text "Best Sound for 'Brazil with Michael Palin'" ]
+                        ]
+                    ]
+                ]
+
+        Tablet ->
             column [ width fill, spacingSmall, Font.center ]
                 [ el [ centerX, Font.bold, fontLarge ] (text "Achievements")
                 , column [ centerX, spacingSmall ]
@@ -789,9 +867,6 @@ achievements { device } =
                     ]
                 ]
 
-        Tablet ->
-            none
-
         BigDesktop ->
             none
 
@@ -800,6 +875,51 @@ portfolio : { a | device : Device } -> Element msg
 portfolio { device } =
     case device.class of
         Phone ->
+            column
+                [ width fill
+                , spacingSmall
+                , Font.center
+                , htmlAttribute (Html.Attributes.id (toID Portfolio))
+                ]
+                [ el [ centerX, Font.bold, fontLarge ] (text (toString Portfolio))
+                , column [ centerX, spacingSmall ]
+                    [ youtubeVideo { width = 320, height = 180, src = "https://www.youtube.com/embed/Q33TkQKlIMg?controls=1&rel=0&playsinline=0&modestbranding=0&autoplay=0&enablejsapi=1&origin=https%3A%2F%2Fdunnaudio.com&widgetid=1" }
+                    , youtubeVideo { width = 320, height = 180, src = "https://www.youtube.com/embed/q1UcC7BsI1M?controls=1&rel=0&playsinline=0&modestbranding=0&autoplay=0&enablejsapi=1&origin=https%3A%2F%2Fdunnaudio.com&widgetid=3" }
+                    , youtubeVideo { width = 320, height = 180, src = "https://www.youtube.com/embed/Vg93ijoQeJ8?controls=1&rel=0&playsinline=0&modestbranding=0&autoplay=0&enablejsapi=1&origin=https%3A%2F%2Fdunnaudio.com&widgetid=5" }
+                    , youtubeVideo { width = 320, height = 180, src = "https://www.youtube.com/embed/vTA6EX-0Xr8?controls=1&rel=0&playsinline=0&modestbranding=0&autoplay=0&enablejsapi=1&origin=https%3A%2F%2Fdunnaudio.com&widgetid=7" }
+                    , youtubeVideo { width = 320, height = 180, src = "https://www.youtube.com/embed/X1_Y12auEgk?controls=1&rel=0&playsinline=0&modestbranding=0&autoplay=0&enablejsapi=1&origin=https%3A%2F%2Fdunnaudio.com&widgetid=9" }
+                    , vimeoVideo { width = 320, height = 180, src = "https://player.vimeo.com/video/168173513?color&autopause=0&loop=0&muted=0&title=1&portrait=1&byline=1#t=" }
+                    ]
+                , row [ width fill, spacingSmall ]
+                    [ clientLogo { description = "Survivor", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-45.png", logoWidth = 120 }
+                    , clientLogo { description = "HBO", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-22.jpg", logoWidth = 120 }
+                    ]
+                , row [ width fill, spacingSmall ]
+                    [ clientLogo { description = "Netflix", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-32.jpg", logoWidth = 120 }
+                    , clientLogo { description = "Apple TV", src = "https://dunnaudio.com/wp-content/uploads/2023/06/apple-tv__e7aqjl2rqzau_og.png", logoWidth = 120 }
+                    ]
+                , row [ width fill, spacingSmall ]
+                    [ clientLogo { description = "BBC", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-12.jpg", logoWidth = 120 }
+                    , clientLogo { description = "National Geographic", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-31.jpg", logoWidth = 120 }
+                    ]
+                , row [ width fill, spacingSmall ]
+                    [ clientLogo { description = "Animal Planet", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-4.jpg", logoWidth = 120 }
+                    , clientLogo { description = "Discovery Channel", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-19.jpg", logoWidth = 120 }
+                    ]
+                , row [ width fill, spacingSmall ]
+                    [ clientLogo { description = "PBS", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-34.jpg", logoWidth = 120 }
+                    , clientLogo { description = "History", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-25.jpg", logoWidth = 120 }
+                    ]
+                , row [ width fill, spacingSmall ]
+                    [ clientLogo { description = "CBS", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-14.jpg", logoWidth = 120 }
+                    , clientLogo { description = "abc primetime", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-2.jpg", logoWidth = 120 }
+                    ]
+                , row [ width fill, spacingSmall ]
+                    [ clientLogo { description = "Sky 1", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-41.gif", logoWidth = 120 }
+                    ]
+                ]
+
+        Tablet ->
             column
                 [ width fill
                 , spacingSmall
@@ -884,9 +1004,6 @@ portfolio { device } =
                     ]
                 ]
 
-        Tablet ->
-            none
-
         BigDesktop ->
             none
 
@@ -954,7 +1071,7 @@ viewTestimonials :
 viewTestimonials { device, window, testimonials, testimonialNonce, testimonialAnimation, testimonialTransition } =
     let
         contentWidth =
-            testimonialWidth window
+            testimonialWidth window device
 
         contentTemplate =
             testimonialContent contentWidth testimonialAnimation
@@ -989,7 +1106,7 @@ viewTestimonials { device, window, testimonials, testimonialNonce, testimonialAn
                             ]
                             (html (Icon.view IconSolid.angleLeft))
                         )
-                    , row [ width (px (testimonialWidth window)), height fill, clip ]
+                    , row [ width (px (testimonialWidth window device)), height fill, clip ]
                         (case testimonialTransition of
                             None ->
                                 [ current ]
@@ -1001,6 +1118,58 @@ viewTestimonials { device, window, testimonials, testimonialNonce, testimonialAn
                                 [ current, next ]
                         )
                     , el [ width (px testimonialButtonWidthPhone), height fill ]
+                        (el
+                            [ width (px 20)
+                            , height (px 20)
+                            , centerX
+                            , centerY
+                            , Font.color orange
+                            , ElementEvents.onClick (NextTestimonial testimonialNonce)
+                            ]
+                            (html (Icon.view IconSolid.angleRight))
+                        )
+                    ]
+                , row [ centerX, spacing 5 ]
+                    (List.concat
+                        [ testimonials.beforeReversed |> List.map (\_ -> dot grey)
+                        , [ dot orange ]
+                        , testimonials.after |> List.map (\_ -> dot grey)
+                        ]
+                    )
+                ]
+
+        Tablet ->
+            column
+                [ width fill
+                , spacingSmall
+                , Font.center
+                , htmlAttribute (Html.Attributes.id (toID Testimonials))
+                ]
+                [ el [ centerX, Font.bold, fontLarge ] (text (toString Testimonials))
+                , row [ width fill, height (px 350) ]
+                    [ el [ width (px testimonialButtonWidthTablet), height fill ]
+                        (el
+                            [ width (px 20)
+                            , height (px 20)
+                            , centerX
+                            , centerY
+                            , Font.color orange
+                            , ElementEvents.onClick (PreviousTestimonial testimonialNonce)
+                            ]
+                            (html (Icon.view IconSolid.angleLeft))
+                        )
+                    , row [ width (px (testimonialWidth window device)), height fill, clip ]
+                        (case testimonialTransition of
+                            None ->
+                                [ current ]
+
+                            Next ->
+                                [ previous, current ]
+
+                            Previous ->
+                                [ current, next ]
+                        )
+                    , el [ width (px testimonialButtonWidthTablet), height fill ]
                         (el
                             [ width (px 20)
                             , height (px 20)
@@ -1040,7 +1209,7 @@ viewTestimonials { device, window, testimonials, testimonialNonce, testimonialAn
                             ]
                             (html (Icon.view IconSolid.angleLeft))
                         )
-                    , row [ width (px (testimonialWidth window)), height fill, clip ]
+                    , row [ width (px (testimonialWidth window device)), height fill, clip ]
                         (case testimonialTransition of
                             None ->
                                 [ current ]
@@ -1072,9 +1241,6 @@ viewTestimonials { device, window, testimonials, testimonialNonce, testimonialAn
                     )
                 ]
 
-        Tablet ->
-            none
-
         BigDesktop ->
             none
 
@@ -1105,15 +1271,22 @@ testimonialContent contentWidth animation testimonial =
         ]
 
 
-testimonialWidth : Window -> Int
-testimonialWidth { width } =
-    -- 600 == width cutoff for Phone
-    if width < 600 then
-        -- less 20 for padding and 32 for scroll buttons each side = (20+32)*2 = 104
-        width - 104
+testimonialWidth : Window -> Device -> Int
+testimonialWidth { width } { class } =
+    case class of
+        Phone ->
+            -- less 20 for padding and 32 for scroll buttons each side = (20+32)*2 = 104
+            width - 104
 
-    else
-        968
+        Tablet ->
+            -- less 30 for padding and 64 for scroll buttons each side = (30+64)*2 = 188
+            412
+
+        Desktop ->
+            968
+
+        BigDesktop ->
+            968
 
 
 dot : Color -> Element msg
@@ -1124,6 +1297,11 @@ dot color =
 testimonialButtonWidthDesktop : Int
 testimonialButtonWidthDesktop =
     96
+
+
+testimonialButtonWidthTablet : Int
+testimonialButtonWidthTablet =
+    64
 
 
 testimonialButtonWidthPhone : Int
@@ -1158,6 +1336,17 @@ contact { device } =
                 , emailContact
                 ]
 
+        Tablet ->
+            column
+                [ width fill
+                , spacingSmall
+                , Font.center
+                , htmlAttribute (Html.Attributes.id (toID Contact))
+                ]
+                [ el [ centerX, Font.bold, fontLarge ] (text contactHeading)
+                , emailContact
+                ]
+
         Desktop ->
             column
                 [ width fill
@@ -1168,9 +1357,6 @@ contact { device } =
                 [ el [ centerX, Font.bold, fontHeading ] (text contactHeading)
                 , emailContact
                 ]
-
-        Tablet ->
-            none
 
         BigDesktop ->
             none
@@ -1219,14 +1405,17 @@ socials { device } =
                 , wrappedRow [ width fill, paddingXY 30 0, spacing 30 ] socialLinks
                 ]
 
+        Tablet ->
+            column [ width fill, spacingSmall, Font.center ]
+                [ paragraph [] [ text "Follow me on my socials!" ]
+                , wrappedRow [ width fill, paddingXY 30 0, spacing 30 ] socialLinks
+                ]
+
         Desktop ->
             column [ width fill, spacingMedium, Font.center ]
                 [ paragraph [] [ text "Follow me on my socials!" ]
                 , row [ width fill, paddingXY 50 0, spacing 150 ] socialLinks
                 ]
-
-        Tablet ->
-            none
 
         BigDesktop ->
             none
@@ -1248,20 +1437,6 @@ navbar { menuState, device } =
                 , ElementEvents.onClick ToggleMenuState
                 ]
                 (html (Icon.view IconSolid.bars))
-
-        mobile =
-            row
-                ([ width fill
-                 , height (px navbarHeight)
-                 , padding 20
-                 , spacing 10
-                 , Background.color white
-                 ]
-                    ++ dropdown menuState
-                )
-                [ logo
-                , menuButton
-                ]
 
         desktop =
             row
@@ -1286,10 +1461,30 @@ navbar { menuState, device } =
     in
     case device.class of
         Phone ->
-            mobile
+            row
+                ([ width fill
+                 , height (px navbarHeight)
+                 , padding 20
+                 , Background.color white
+                 ]
+                    ++ dropdown menuState
+                )
+                [ logo
+                , menuButton
+                ]
 
         Tablet ->
-            mobile
+            row
+                ([ width fill
+                 , height (px navbarHeight)
+                 , padding 30
+                 , Background.color white
+                 ]
+                    ++ dropdown menuState
+                )
+                [ logo
+                , menuButton
+                ]
 
         Desktop ->
             desktop
@@ -1403,6 +1598,20 @@ footer : { a | device : Device } -> Element msg
 footer { device } =
     case device.class of
         Phone ->
+            column [ width fill, padding 20, spacing 10, Background.color black, Font.center, fontSmall, Font.light, Font.color white ]
+                [ paragraph []
+                    [ text "Copyright © 2023 Dunn Audio" ]
+                , paragraph []
+                    [ text "Powered by ❤️  and "
+                    , link []
+                        { url =
+                            "https://elm-lang.org"
+                        , label = el [ Font.underline ] (text "Elm")
+                        }
+                    ]
+                ]
+
+        Tablet ->
             column [ width fill, padding 30, spacing 10, Background.color black, Font.center, fontSmall, Font.light, Font.color white ]
                 [ paragraph []
                     [ text "Copyright © 2023 Dunn Audio" ]
@@ -1429,9 +1638,6 @@ footer { device } =
                         }
                     ]
                 ]
-
-        Tablet ->
-            none
 
         BigDesktop ->
             none
