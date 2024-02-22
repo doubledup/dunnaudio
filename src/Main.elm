@@ -1042,7 +1042,7 @@ youtubeVideo { src } =
 
 vimeoVideo : { src : String } -> Element msg
 vimeoVideo { src } =
-    el [ width (fill |> maximum 300), Background.color black ]
+    el [ width (fill |> maximum 300), centerX, Background.color black ]
         (html
             (Html.iframe
                 [ Html.Attributes.src src
