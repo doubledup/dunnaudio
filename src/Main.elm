@@ -1055,7 +1055,7 @@ vimeoVideo { src } =
 
 
 viewTestimonials :
-    { b
+    { a
         | device : Device
         , window : Window
         , testimonials : ZipList Testimonial
@@ -1067,7 +1067,7 @@ viewTestimonials :
 viewTestimonials { device, window, testimonials, testimonialNonce, testimonialAnimation, testimonialTransition } =
     let
         contentWidth =
-            testimonialWidth window device
+            px (testimonialWidth window device)
 
         contentTemplate =
             testimonialContent contentWidth testimonialAnimation
@@ -1090,7 +1090,7 @@ viewTestimonials { device, window, testimonials, testimonialNonce, testimonialAn
                 , htmlAttribute (Html.Attributes.id (toID Testimonials))
                 ]
                 [ el [ centerX, Font.bold, fontLarge ] (text (toString Testimonials))
-                , row [ width fill, height (px 550) ]
+                , row [ width fill, height (px (600 * 220 // (window.width - 104))) ]
                     [ el [ width (px testimonialButtonWidthPhone), height fill ]
                         (el
                             [ width (px 20)
@@ -1102,7 +1102,7 @@ viewTestimonials { device, window, testimonials, testimonialNonce, testimonialAn
                             ]
                             (html (Icon.view IconSolid.angleLeft))
                         )
-                    , row [ width (px (testimonialWidth window device)), height fill, clip ]
+                    , row [ width contentWidth, height fill, clip ]
                         (case testimonialTransition of
                             None ->
                                 [ current ]
@@ -1154,7 +1154,7 @@ viewTestimonials { device, window, testimonials, testimonialNonce, testimonialAn
                             ]
                             (html (Icon.view IconSolid.angleLeft))
                         )
-                    , row [ width (px (testimonialWidth window device)), height fill, clip ]
+                    , row [ width contentWidth, height fill, clip ]
                         (case testimonialTransition of
                             None ->
                                 [ current ]
@@ -1205,7 +1205,7 @@ viewTestimonials { device, window, testimonials, testimonialNonce, testimonialAn
                             ]
                             (html (Icon.view IconSolid.angleLeft))
                         )
-                    , row [ width (px (testimonialWidth window device)), height fill, clip ]
+                    , row [ width contentWidth, height fill, clip ]
                         (case testimonialTransition of
                             None ->
                                 [ current ]
@@ -1241,10 +1241,10 @@ viewTestimonials { device, window, testimonials, testimonialNonce, testimonialAn
             none
 
 
-testimonialContent : Int -> Animation.State -> Testimonial -> Element msg
+testimonialContent : Length -> Animation.State -> Testimonial -> Element msg
 testimonialContent contentWidth animation testimonial =
     column
-        ([ width (px contentWidth)
+        ([ width contentWidth
          , height fill
          , centerY
          , Font.center
