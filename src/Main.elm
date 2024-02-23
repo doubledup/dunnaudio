@@ -990,9 +990,9 @@ clientLogo { src, description, logoWidth } =
         (el
             [ width (px logoWidth)
             , centerX
-            , Border.color (rgb 1 1 1)
+            , Border.color (rgba 1 1 1 0)
             , Border.rounded 5
-            , Border.width 1
+            , Border.width 0
             , clip
             ]
             (image
