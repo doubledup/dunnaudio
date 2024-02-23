@@ -625,7 +625,7 @@ aboutMe { device } =
                 , Font.center
                 , htmlAttribute (Html.Attributes.id (toID AboutMe))
                 ]
-                [ el [ centerX, Font.bold, fontLarge ] (text (toString AboutMe))
+                [ el [ centerX, Font.bold, fontHeading ] (text (toString AboutMe))
                 , paragraph1
                 , el [ width fill ]
                     (image
@@ -715,7 +715,7 @@ whatIDo { device } =
 
         Tablet ->
             column [ width fill, spacingSmall, Font.center ]
-                [ el [ centerX, Font.bold, fontLarge ] (text "What I Do Now")
+                [ el [ centerX, Font.bold, fontHeading ] (text "What I Do Now")
                 , paragraph [ spacingParagraph ] [ text "I spend a lot of my time on documentary productions, although I still work in other arenas. This has taken me all over the world, working for the major broadcasting channels in over 30 countries and exploring a diverse range of subjects." ]
                 , paragraph [ spacingParagraph ] [ text "I also now specialise in recording ‘The sounds of Africa’ having been commissioned by several top international production companies to record animals and general ambiences of Africa." ]
                 , el [ width fill ]
@@ -813,7 +813,7 @@ achievements { device } =
 
         Tablet ->
             column [ width fill, spacingSmall, Font.center ]
-                [ el [ centerX, Font.bold, fontLarge ] (text "Achievements")
+                [ el [ centerX, Font.bold, fontHeading ] (text "Achievements")
                 , column [ centerX, spacingSmall ]
                     [ column (awardStyle ++ [ fontNormal ])
                         [ paragraph [] [ text "News and Documentary Emmy Awards nominee" ]
@@ -914,7 +914,7 @@ portfolio { device } =
                 , Font.center
                 , htmlAttribute (Html.Attributes.id (toID Portfolio))
                 ]
-                [ el [ centerX, Font.bold, fontLarge ] (text (toString Portfolio))
+                [ el [ centerX, Font.bold, fontHeading ] (text (toString Portfolio))
                 , wrappedRow [ width fill, spacingSmall ]
                     [ youtubeVideo { src = "https://www.youtube.com/embed/Q33TkQKlIMg?controls=1&rel=0&playsinline=0&modestbranding=0&autoplay=0&enablejsapi=1&origin=https%3A%2F%2Fdunnaudio.com&widgetid=1" }
                     , youtubeVideo { src = "https://www.youtube.com/embed/q1UcC7BsI1M?controls=1&rel=0&playsinline=0&modestbranding=0&autoplay=0&enablejsapi=1&origin=https%3A%2F%2Fdunnaudio.com&widgetid=3" }
@@ -1123,7 +1123,7 @@ viewTestimonials { device, window, testimonials, testimonialNonce, testimonialAn
                 , spacingSmall
                 , htmlAttribute (Html.Attributes.id (toID Testimonials))
                 ]
-                [ el [ centerX, Font.bold, fontLarge ] (text (toString Testimonials))
+                [ el [ centerX, Font.bold, fontHeading ] (text (toString Testimonials))
                 , row [ width fill, height (px (240 * 812 // contentWidth)) ]
                     [ el [ width (px testimonialButtonWidthTablet), height fill ] previousButton
                     , row [ width (px contentWidth), height fill, clip ]
@@ -1281,7 +1281,7 @@ contact { device } =
                 , Font.center
                 , htmlAttribute (Html.Attributes.id (toID Contact))
                 ]
-                [ el [ centerX, Font.bold, fontLarge ] (text contactHeading)
+                [ el [ centerX, Font.bold, fontHeading ] (text contactHeading)
                 , emailContact
                 ]
 
