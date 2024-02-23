@@ -585,6 +585,20 @@ aboutMe { device } =
 
         paragraph4 =
             paragraph [ spacingParagraph ] [ text "The elections opened many doors for me and in 1995, I set myself up as a full-time freelance sound recordist. I worked on several local and international productions in the film industry as a boom operator to broaden my experience." ]
+
+        imageFirst =
+            image
+                [ width fill, height fill ]
+                { src = "images/cheetah.webp"
+                , description = "Sebastian wearing sound equipment and standing next to a cheetah"
+                }
+
+        imageSecond =
+            image
+                [ width fill, height fill ]
+                { src = "images/hadza.webp"
+                , description = "Sebastian recording members of the Hadza community in Tanzania"
+                }
     in
     case device.class of
         Phone ->
@@ -596,22 +610,10 @@ aboutMe { device } =
                 ]
                 [ el [ centerX, Font.bold, fontLarge ] (text (toString AboutMe))
                 , paragraph1
-                , el [ width fill ]
-                    (image
-                        [ width fill, height fill ]
-                        { src = "images/cheetah.webp"
-                        , description = "Sebastian wearing sound equipment and standing next to a cheetah"
-                        }
-                    )
+                , el [ width fill ] imageFirst
                 , paragraph2
                 , paragraph3
-                , el [ width fill ]
-                    (image
-                        [ width fill, height fill ]
-                        { src = "images/hadza.webp"
-                        , description = "Sebastian recording members of the Hadza community in Tanzania"
-                        }
-                    )
+                , el [ width fill ] imageSecond
                 , paragraph4
                 ]
 
@@ -624,22 +626,10 @@ aboutMe { device } =
                 ]
                 [ el [ centerX, Font.bold, fontHeading ] (text (toString AboutMe))
                 , paragraph1
-                , el [ width fill ]
-                    (image
-                        [ width fill, height fill ]
-                        { src = "images/cheetah.webp"
-                        , description = "Sebastian wearing sound equipment and standing next to a cheetah"
-                        }
-                    )
+                , el [ width fill ] imageFirst
                 , paragraph2
                 , paragraph3
-                , el [ width fill ]
-                    (image
-                        [ width fill, height fill ]
-                        { src = "images/hadza.webp"
-                        , description = "Sebastian recording members of the Hadza community in Tanzania"
-                        }
-                    )
+                , el [ width fill ] imageSecond
                 , paragraph4
                 ]
 
@@ -657,20 +647,8 @@ aboutMe { device } =
                     , paragraph4
                     ]
                 , column [ width (fillPortion 1), alignTop, spacingSmall ]
-                    [ el [ width (px 590), height (px 350), clip ]
-                        (image
-                            [ width fill, height fill ]
-                            { src = "images/cheetah.webp"
-                            , description = "Sebastian wearing sound equipment and standing next to a cheetah"
-                            }
-                        )
-                    , el [ width (px 590), height (px 350), clip ]
-                        (image
-                            [ width fill, height fill ]
-                            { src = "images/hadza.webp"
-                            , description = "Sebastian recording members of the Hadza community in Tanzania"
-                            }
-                        )
+                    [ el [ width (px 590), height (px 350), clip ] imageFirst
+                    , el [ width (px 590), height (px 350), clip ] imageSecond
                     ]
                 ]
 
