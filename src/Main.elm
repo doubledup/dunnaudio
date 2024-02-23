@@ -1079,7 +1079,6 @@ viewTestimonials { device, window, testimonials, testimonialNonce, testimonialAn
             column
                 [ width fill
                 , spacingSmall
-                , Font.center
                 , htmlAttribute (Html.Attributes.id (toID Testimonials))
                 ]
                 [ el [ centerX, Font.bold, fontLarge ] (text (toString Testimonials))
@@ -1131,7 +1130,6 @@ viewTestimonials { device, window, testimonials, testimonialNonce, testimonialAn
             column
                 [ width fill
                 , spacingSmall
-                , Font.center
                 , htmlAttribute (Html.Attributes.id (toID Testimonials))
                 ]
                 [ el [ centerX, Font.bold, fontLarge ] (text (toString Testimonials))
