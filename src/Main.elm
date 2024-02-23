@@ -612,14 +612,14 @@ aboutMe { device } =
         paragraph4 =
             paragraph [ spacingParagraph ] [ text "The elections opened many doors for me and in 1995, I set myself up as a full-time freelance sound recordist. I worked on several local and international productions in the film industry as a boom operator to broaden my experience." ]
 
-        imageFirst =
+        image1 =
             image
                 [ width fill, height fill ]
                 { src = "images/cheetah.webp"
                 , description = "Sebastian wearing sound equipment and standing next to a cheetah"
                 }
 
-        imageSecond =
+        image2 =
             image
                 [ width fill, height fill ]
                 { src = "images/hadza.webp"
@@ -636,10 +636,10 @@ aboutMe { device } =
                 ]
                 [ el [ centerX, Font.bold, fontLarge ] (text (toString AboutMe))
                 , paragraph1
-                , el [ width fill ] imageFirst
+                , el [ width fill ] image1
                 , paragraph2
                 , paragraph3
-                , el [ width fill ] imageSecond
+                , el [ width fill ] image2
                 , paragraph4
                 ]
 
@@ -652,10 +652,10 @@ aboutMe { device } =
                 ]
                 [ el [ centerX, Font.bold, fontHeading ] (text (toString AboutMe))
                 , paragraph1
-                , el [ width fill ] imageFirst
+                , el [ width fill ] image1
                 , paragraph2
                 , paragraph3
-                , el [ width fill ] imageSecond
+                , el [ width fill ] image2
                 , paragraph4
                 ]
 
@@ -673,8 +673,8 @@ aboutMe { device } =
                     , paragraph4
                     ]
                 , column [ width (fillPortion 1), height fill, alignTop, spacingSmall ]
-                    [ el [ width fill, height (fillPortion 1), clip ] imageFirst
-                    , el [ width fill, height (fillPortion 1), clip ] imageSecond
+                    [ el [ width fill, height (fillPortion 1), clip ] image1
+                    , el [ width fill, height (fillPortion 1), clip ] image2
                     ]
                 ]
 
