@@ -159,20 +159,46 @@ view model =
         content =
             case model.device.class of
                 Phone ->
-                    column [ width fill, height fill, paddingXY 20 40, spacingMedium ]
-                        (List.map (\section -> section model) sections)
+                    column
+                        [ width fill
+                        , height fill
+                        , paddingXY 20 40
+                        , spacingMedium
+                        ]
+                        sectionElements
 
                 Tablet ->
-                    column [ width (fill |> maximum 1000), height fill, centerX, paddingXY 30 50, spacingLarge ]
-                        (List.map (\section -> section model) sections)
+                    column
+                        [ width (fill |> maximum 1000)
+                        , height fill
+                        , centerX
+                        , paddingXY 30 50
+                        , spacingLarge
+                        ]
+                        sectionElements
 
                 Desktop ->
-                    column [ width (px 1200), height fill, centerX, paddingXY 20 50, spacingLarge ]
-                        (List.map (\section -> section model) sections)
+                    column
+                        [ width (px 1200)
+                        , height fill
+                        , centerX
+                        , paddingXY 20 50
+                        , spacingLarge
+                        ]
+                        sectionElements
 
                 BigDesktop ->
-                    column [ width (px 1200), height fill, centerX, paddingXY 20 50, spacingLarge ]
-                        (List.map (\section -> section model) sections)
+                    column
+                        [ width (px 1200)
+                        , height fill
+                        , centerX
+                        , paddingXY 20 50
+                        , spacingLarge
+                        ]
+                        sectionElements
+
+        sectionElements =
+            List.map (\section -> section model) sections
     in
     { title = "Dunn Audio"
     , body =
