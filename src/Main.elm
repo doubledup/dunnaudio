@@ -646,9 +646,9 @@ aboutMe { device } =
                     , paragraph3
                     , paragraph4
                     ]
-                , column [ width (fillPortion 1), alignTop, spacingSmall ]
-                    [ el [ width (px 590), height (px 350), clip ] imageFirst
-                    , el [ width (px 590), height (px 350), clip ] imageSecond
+                , column [ width (fillPortion 1), height fill, alignTop, spacingSmall ]
+                    [ el [ width fill, height (fillPortion 1), clip ] imageFirst
+                    , el [ width fill, height (fillPortion 1), clip ] imageSecond
                     ]
                 ]
 
