@@ -1226,6 +1226,17 @@ testimonialButtonWidthPhone =
 contact : { a | device : Device } -> Element msg
 contact { device } =
     let
+        contactWithFont font =
+            column
+                [ width fill
+                , spacingSmall
+                , Font.center
+                , htmlAttribute (Html.Attributes.id (toID Contact))
+                ]
+                [ el [ centerX, Font.bold, font ] (text "Let's Chat!")
+                , emailContact
+                ]
+
         emailContact =
             paragraph []
                 [ text "Email: "
@@ -1234,46 +1245,19 @@ contact { device } =
                     , label = el [ Font.underline ] (text "seb@dunnaudio.com")
                     }
                 ]
-
-        contactHeading =
-            "Let's Chat!"
     in
     case device.class of
         Phone ->
-            column
-                [ width fill
-                , spacingSmall
-                , Font.center
-                , htmlAttribute (Html.Attributes.id (toID Contact))
-                ]
-                [ el [ centerX, Font.bold, fontLarge ] (text contactHeading)
-                , emailContact
-                ]
+            contactWithFont fontLarge
 
         Tablet ->
-            column
-                [ width fill
-                , spacingSmall
-                , Font.center
-                , htmlAttribute (Html.Attributes.id (toID Contact))
-                ]
-                [ el [ centerX, Font.bold, fontHeading ] (text contactHeading)
-                , emailContact
-                ]
+            contactWithFont fontHeading
 
         Desktop ->
-            column
-                [ width fill
-                , spacingSmall
-                , Font.center
-                , htmlAttribute (Html.Attributes.id (toID Contact))
-                ]
-                [ el [ centerX, Font.bold, fontHeading ] (text contactHeading)
-                , emailContact
-                ]
+            contactWithFont fontHeading
 
         BigDesktop ->
-            none
+            contactWithFont fontHeading
 
 
 socials : { a | device : Device } -> Element msg
