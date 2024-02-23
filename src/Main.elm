@@ -1263,60 +1263,39 @@ contact { device } =
 socials : { a | device : Device } -> Element msg
 socials { device } =
     let
+        socialsWithAttributes spacing rowPadding rowSpacing =
+            column [ width fill, spacing, Font.center ]
+                [ paragraph [] [ text "Follow me on my socials!" ]
+                , wrappedRow [ width fill, rowPadding, rowSpacing ] socialLinks
+                ]
+
         socialLinks =
-            [ newTabLink [ width fill ]
-                { url =
-                    "https://www.facebook.com/dunnaudio"
-                , label = el [ width (px 45), height (px 45) ] (html (Icon.view IconBrands.facebook))
-                }
-            , newTabLink [ width fill ]
-                { url =
-                    "https://www.instagram.com/sebdunnaudio"
-                , label = el [ width (px 45), height (px 45) ] (html (Icon.view IconBrands.instagram))
-                }
-            , newTabLink [ width fill ]
-                { url =
-                    "https://twitter.com/sebdunnaudio"
-                , label = el [ width (px 45), height (px 45) ] (html (Icon.view IconBrands.twitter))
-                }
-            , newTabLink [ width fill ]
-                { url =
-                    "https://www.linkedin.com/in/dunnaudio"
-                , label = el [ width (px 45), height (px 45) ] (html (Icon.view IconBrands.linkedin))
-                }
-            , newTabLink [ width fill ]
-                { url =
-                    "https://www.imdb.com/name/nm2271521"
-                , label = el [ width (px 45), height (px 45) ] (html (Icon.view IconBrands.imdb))
-                }
-            , newTabLink [ width fill ]
-                { url =
-                    "https://soundcloud.com/user-716251106"
-                , label = el [ width (px 45), height (px 45) ] (html (Icon.view IconBrands.soundcloud))
-                }
+            [ socialLink "https://www.facebook.com/dunnaudio" IconBrands.facebook
+            , socialLink "https://www.instagram.com/sebdunnaudio" IconBrands.instagram
+            , socialLink "https://twitter.com/sebdunnaudio" IconBrands.twitter
+            , socialLink "https://www.linkedin.com/in/dunnaudio" IconBrands.linkedin
+            , socialLink "https://www.imdb.com/name/nm2271521" IconBrands.imdb
+            , socialLink "https://soundcloud.com/user-716251106" IconBrands.soundcloud
             ]
+
+        socialLink url icon =
+            newTabLink [ width fill ]
+                { url = url
+                , label = el [ width (px 45), height (px 45) ] (html (Icon.view icon))
+                }
     in
     case device.class of
         Phone ->
-            column [ width fill, spacingSmall, Font.center ]
-                [ paragraph [] [ text "Follow me on my socials!" ]
-                , wrappedRow [ width fill, paddingXY 30 0, spacing 30 ] socialLinks
-                ]
+            socialsWithAttributes spacingSmall (paddingXY 30 0) (spacing 30)
 
         Tablet ->
-            column [ width fill, spacingSmall, Font.center ]
-                [ paragraph [] [ text "Follow me on my socials!" ]
-                , wrappedRow [ width fill, paddingXY 30 0, spacing 30 ] socialLinks
-                ]
+            socialsWithAttributes spacingSmall (paddingXY 30 0) (spacing 30)
 
         Desktop ->
-            column [ width fill, spacingMedium, Font.center ]
-                [ paragraph [] [ text "Follow me on my socials!" ]
-                , row [ width fill, paddingXY 50 0, spacing 150 ] socialLinks
-                ]
+            socialsWithAttributes spacingMedium (paddingXY 50 0) (spacing 150)
 
         BigDesktop ->
-            none
+            socialsWithAttributes spacingMedium (paddingXY 50 0) (spacing 150)
 
 
 
