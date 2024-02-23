@@ -1307,32 +1307,32 @@ socials { device } =
             [ newTabLink [ width fill ]
                 { url =
                     "https://www.facebook.com/dunnaudio"
-                , label = el [ width (px 45), height (px 45), centerX ] (html (Icon.view IconBrands.facebook))
+                , label = el [ width (px 45), height (px 45) ] (html (Icon.view IconBrands.facebook))
                 }
             , newTabLink [ width fill ]
                 { url =
                     "https://www.instagram.com/sebdunnaudio"
-                , label = el [ width (px 45), height (px 45), centerX ] (html (Icon.view IconBrands.instagram))
+                , label = el [ width (px 45), height (px 45) ] (html (Icon.view IconBrands.instagram))
                 }
             , newTabLink [ width fill ]
                 { url =
                     "https://twitter.com/sebdunnaudio"
-                , label = el [ width (px 45), height (px 45), centerX ] (html (Icon.view IconBrands.twitter))
+                , label = el [ width (px 45), height (px 45) ] (html (Icon.view IconBrands.twitter))
                 }
             , newTabLink [ width fill ]
                 { url =
                     "https://www.linkedin.com/in/dunnaudio"
-                , label = el [ width (px 45), height (px 45), centerX ] (html (Icon.view IconBrands.linkedin))
+                , label = el [ width (px 45), height (px 45) ] (html (Icon.view IconBrands.linkedin))
                 }
             , newTabLink [ width fill ]
                 { url =
                     "https://www.imdb.com/name/nm2271521"
-                , label = el [ width (px 45), height (px 45), centerX ] (html (Icon.view IconBrands.imdb))
+                , label = el [ width (px 45), height (px 45) ] (html (Icon.view IconBrands.imdb))
                 }
             , newTabLink [ width fill ]
                 { url =
                     "https://soundcloud.com/user-716251106"
-                , label = el [ width (px 45), height (px 45), centerX ] (html (Icon.view IconBrands.soundcloud))
+                , label = el [ width (px 45), height (px 45) ] (html (Icon.view IconBrands.soundcloud))
                 }
             ]
     in
