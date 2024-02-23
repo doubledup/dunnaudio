@@ -741,17 +741,18 @@ whatIDo { device } =
         Desktop ->
             column [ width fill, spacingMedium ]
                 [ row [ width fill, spacingSmall ]
-                    [ el [ width (fillPortion 2), height fill, clip ] image1
-                    , column [ width (fillPortion 5), spacingMedium, Font.center ]
-                        [ el [ centerX, Font.bold, fontHeading ] (text "What I Do Now")
+                    [ el [ width (fillPortion 2), clip ] image1
+                    , column [ width (fillPortion 5), alignTop, spacingMedium, Font.center ]
+                        [ el [ centerX, alignTop, Font.bold, fontHeading ] (text "What I Do Now")
                         , paragraph1
                         , paragraph2
                         , paragraph3
                         ]
                     ]
-                , row [ width fill, spacingSmall ]
-                    [ el [ width (fillPortion 1), height (px 340), alignTop, clip ] image2
-                    , el [ width (fillPortion 1), height (px 340), alignTop, clip ] image3
+
+                , row [ width fill, height (px 360), spacingSmall ]
+                    [ el [ width (fillPortion 1), height fill, alignTop, clip ] image2
+                    , el [ width (fillPortion 1), height fill, alignTop, clip ] image3
                     ]
                 ]
 
