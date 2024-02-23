@@ -1473,78 +1473,42 @@ banner { window, bannerPictures, bannerAnimationCurrent, bannerAnimationPrevious
 
 footer : { a | device : Device } -> Element msg
 footer { device } =
+    let
+        footerWithAttributes padding spacing fontSize =
+            column
+                [ width fill
+                , padding
+                , spacing
+                , Background.color black
+                , Font.center
+                , Font.color white
+                , Font.light
+                , fontSize
+                ]
+                [ paragraph []
+                    [ text "Copyright © 2023 Dunn Audio" ]
+                , paragraph []
+                    [ text "Powered by ❤️  and "
+                    , link []
+                        { url =
+                            "https://elm-lang.org"
+                        , label = el [ Font.underline ] (text "Elm")
+                        }
+                    ]
+                ]
+    in
     case device.class of
         Phone ->
-            column
-                [ width fill
-                , padding 20
-                , spacing 10
-                , Background.color black
-                , Font.center
-                , Font.color white
-                , Font.light
-                , fontSmall
-                ]
-                [ paragraph []
-                    [ text "Copyright © 2023 Dunn Audio" ]
-                , paragraph []
-                    [ text "Powered by ❤️  and "
-                    , link []
-                        { url =
-                            "https://elm-lang.org"
-                        , label = el [ Font.underline ] (text "Elm")
-                        }
-                    ]
-                ]
+            footerWithAttributes (padding 20) (spacing 10) fontSmall
 
         Tablet ->
-            column
-                [ width fill
-                , padding 30
-                , spacing 10
-                , Background.color black
-                , Font.center
-                , Font.color white
-                , Font.light
-                , fontSmall
-                ]
-                [ paragraph []
-                    [ text "Copyright © 2023 Dunn Audio" ]
-                , paragraph []
-                    [ text "Powered by ❤️  and "
-                    , link []
-                        { url =
-                            "https://elm-lang.org"
-                        , label = el [ Font.underline ] (text "Elm")
-                        }
-                    ]
-                ]
+            footerWithAttributes (padding 30) (spacing 10) fontSmall
 
         Desktop ->
-            column
-                [ width fill
-                , padding 30
-                , spacing 10
-                , Background.color black
-                , Font.center
-                , Font.color white
-                , Font.light
-                , fontNormal
-                ]
-                [ paragraph []
-                    [ text "Copyright © 2023 Dunn Audio" ]
-                , paragraph []
-                    [ text "Powered by ❤️  and "
-                    , link []
-                        { url =
-                            "https://elm-lang.org"
-                        , label = el [ Font.underline ] (text "Elm")
-                        }
-                    ]
-                ]
+            footerWithAttributes (padding 30) (spacing 10) fontNormal
 
         BigDesktop ->
-            none
+            footerWithAttributes (padding 30) (spacing 10) fontNormal
 
 
 
