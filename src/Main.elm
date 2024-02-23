@@ -173,7 +173,7 @@ view model =
 
                     Tablet ->
                         [ banner model
-                        , column [ width (px 600), height fill, centerX, paddingXY 30 50, spacingLarge ]
+                        , column [ width (fill |> maximum 1000), height fill, centerX, paddingXY 30 50, spacingLarge ]
                             -- TODO: rework each section for tablets
                             (List.map (\section -> section model) sections)
                         , footer model
@@ -891,19 +891,19 @@ portfolio { device } =
                     , vimeoVideo { src = "https://player.vimeo.com/video/168173513?color&autopause=0&loop=0&muted=0&title=1&portrait=1&byline=1#t=" }
                     ]
                 , wrappedRow [ width fill, spacingSmall ]
-                    [ clientLogo { description = "Survivor", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-45.png", logoWidth = 120, rowStyle = Wrapped }
-                    , clientLogo { description = "HBO", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-22.jpg", logoWidth = 120, rowStyle = Wrapped }
-                    , clientLogo { description = "Netflix", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-32.jpg", logoWidth = 120, rowStyle = Wrapped }
-                    , clientLogo { description = "Apple TV", src = "https://dunnaudio.com/wp-content/uploads/2023/06/apple-tv__e7aqjl2rqzau_og.png", logoWidth = 120, rowStyle = Wrapped }
-                    , clientLogo { description = "BBC", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-12.jpg", logoWidth = 120, rowStyle = Wrapped }
-                    , clientLogo { description = "National Geographic", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-31.jpg", logoWidth = 120, rowStyle = Wrapped }
-                    , clientLogo { description = "Animal Planet", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-4.jpg", logoWidth = 120, rowStyle = Wrapped }
-                    , clientLogo { description = "Discovery Channel", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-19.jpg", logoWidth = 120, rowStyle = Wrapped }
-                    , clientLogo { description = "PBS", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-34.jpg", logoWidth = 120, rowStyle = Wrapped }
-                    , clientLogo { description = "History", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-25.jpg", logoWidth = 120, rowStyle = Wrapped }
-                    , clientLogo { description = "CBS", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-14.jpg", logoWidth = 120, rowStyle = Wrapped }
-                    , clientLogo { description = "abc primetime", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-2.jpg", logoWidth = 120, rowStyle = Wrapped }
-                    , clientLogo { description = "Sky 1", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-41.gif", logoWidth = 120, rowStyle = Wrapped }
+                    [ clientLogo { description = "Survivor", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-45.png", logoWidth = 120 }
+                    , clientLogo { description = "HBO", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-22.jpg", logoWidth = 120 }
+                    , clientLogo { description = "Netflix", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-32.jpg", logoWidth = 120 }
+                    , clientLogo { description = "Apple TV", src = "https://dunnaudio.com/wp-content/uploads/2023/06/apple-tv__e7aqjl2rqzau_og.png", logoWidth = 120 }
+                    , clientLogo { description = "BBC", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-12.jpg", logoWidth = 120 }
+                    , clientLogo { description = "National Geographic", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-31.jpg", logoWidth = 120 }
+                    , clientLogo { description = "Animal Planet", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-4.jpg", logoWidth = 120 }
+                    , clientLogo { description = "Discovery Channel", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-19.jpg", logoWidth = 120 }
+                    , clientLogo { description = "PBS", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-34.jpg", logoWidth = 120 }
+                    , clientLogo { description = "History", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-25.jpg", logoWidth = 120 }
+                    , clientLogo { description = "CBS", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-14.jpg", logoWidth = 120 }
+                    , clientLogo { description = "abc primetime", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-2.jpg", logoWidth = 120 }
+                    , clientLogo { description = "Sky 1", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-41.gif", logoWidth = 120 }
                     ]
                 ]
 
@@ -915,7 +915,7 @@ portfolio { device } =
                 , htmlAttribute (Html.Attributes.id (toID Portfolio))
                 ]
                 [ el [ centerX, Font.bold, fontLarge ] (text (toString Portfolio))
-                , column [ centerX, spacingSmall ]
+                , wrappedRow [ width fill, spacingSmall ]
                     [ youtubeVideo { src = "https://www.youtube.com/embed/Q33TkQKlIMg?controls=1&rel=0&playsinline=0&modestbranding=0&autoplay=0&enablejsapi=1&origin=https%3A%2F%2Fdunnaudio.com&widgetid=1" }
                     , youtubeVideo { src = "https://www.youtube.com/embed/q1UcC7BsI1M?controls=1&rel=0&playsinline=0&modestbranding=0&autoplay=0&enablejsapi=1&origin=https%3A%2F%2Fdunnaudio.com&widgetid=3" }
                     , youtubeVideo { src = "https://www.youtube.com/embed/Vg93ijoQeJ8?controls=1&rel=0&playsinline=0&modestbranding=0&autoplay=0&enablejsapi=1&origin=https%3A%2F%2Fdunnaudio.com&widgetid=5" }
@@ -924,19 +924,19 @@ portfolio { device } =
                     , vimeoVideo { src = "https://player.vimeo.com/video/168173513?color&autopause=0&loop=0&muted=0&title=1&portrait=1&byline=1#t=" }
                     ]
                 , wrappedRow [ width fill, spacingSmall ]
-                    [ clientLogo { description = "Survivor", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-45.png", logoWidth = 120, rowStyle = Wrapped }
-                    , clientLogo { description = "HBO", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-22.jpg", logoWidth = 120, rowStyle = Wrapped }
-                    , clientLogo { description = "Netflix", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-32.jpg", logoWidth = 120, rowStyle = Wrapped }
-                    , clientLogo { description = "Apple TV", src = "https://dunnaudio.com/wp-content/uploads/2023/06/apple-tv__e7aqjl2rqzau_og.png", logoWidth = 120, rowStyle = Wrapped }
-                    , clientLogo { description = "BBC", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-12.jpg", logoWidth = 120, rowStyle = Wrapped }
-                    , clientLogo { description = "National Geographic", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-31.jpg", logoWidth = 120, rowStyle = Wrapped }
-                    , clientLogo { description = "Animal Planet", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-4.jpg", logoWidth = 120, rowStyle = Wrapped }
-                    , clientLogo { description = "Discovery Channel", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-19.jpg", logoWidth = 120, rowStyle = Wrapped }
-                    , clientLogo { description = "PBS", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-34.jpg", logoWidth = 120, rowStyle = Wrapped }
-                    , clientLogo { description = "History", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-25.jpg", logoWidth = 120, rowStyle = Wrapped }
-                    , clientLogo { description = "CBS", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-14.jpg", logoWidth = 120, rowStyle = Wrapped }
-                    , clientLogo { description = "abc primetime", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-2.jpg", logoWidth = 120, rowStyle = Wrapped }
-                    , clientLogo { description = "Sky 1", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-41.gif", logoWidth = 120, rowStyle = Wrapped }
+                    [ clientLogo { description = "Survivor", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-45.png", logoWidth = 120 }
+                    , clientLogo { description = "HBO", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-22.jpg", logoWidth = 120 }
+                    , clientLogo { description = "Netflix", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-32.jpg", logoWidth = 120 }
+                    , clientLogo { description = "Apple TV", src = "https://dunnaudio.com/wp-content/uploads/2023/06/apple-tv__e7aqjl2rqzau_og.png", logoWidth = 120 }
+                    , clientLogo { description = "BBC", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-12.jpg", logoWidth = 120 }
+                    , clientLogo { description = "National Geographic", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-31.jpg", logoWidth = 120 }
+                    , clientLogo { description = "Animal Planet", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-4.jpg", logoWidth = 120 }
+                    , clientLogo { description = "Discovery Channel", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-19.jpg", logoWidth = 120 }
+                    , clientLogo { description = "PBS", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-34.jpg", logoWidth = 120 }
+                    , clientLogo { description = "History", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-25.jpg", logoWidth = 120 }
+                    , clientLogo { description = "CBS", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-14.jpg", logoWidth = 120 }
+                    , clientLogo { description = "abc primetime", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-2.jpg", logoWidth = 120 }
+                    , clientLogo { description = "Sky 1", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-41.gif", logoWidth = 120 }
                     ]
                 ]
 
@@ -960,23 +960,23 @@ portfolio { device } =
                         ]
                     ]
                 , row [ spacingSmall, width fill ]
-                    [ clientLogo { description = "Survivor", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-45.png", logoWidth = 180, rowStyle = Separate }
-                    , clientLogo { description = "HBO", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-22.jpg", logoWidth = 180, rowStyle = Separate }
-                    , clientLogo { description = "Netflix", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-32.jpg", logoWidth = 180, rowStyle = Separate }
-                    , clientLogo { description = "Apple TV", src = "https://dunnaudio.com/wp-content/uploads/2023/06/apple-tv__e7aqjl2rqzau_og.png", logoWidth = 180, rowStyle = Separate }
+                    [ clientLogo { description = "Survivor", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-45.png", logoWidth = 180 }
+                    , clientLogo { description = "HBO", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-22.jpg", logoWidth = 180 }
+                    , clientLogo { description = "Netflix", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-32.jpg", logoWidth = 180 }
+                    , clientLogo { description = "Apple TV", src = "https://dunnaudio.com/wp-content/uploads/2023/06/apple-tv__e7aqjl2rqzau_og.png", logoWidth = 180 }
                     ]
                 , row [ spacingSmall, width fill ]
-                    [ clientLogo { description = "BBC", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-12.jpg", logoWidth = 180, rowStyle = Separate }
-                    , clientLogo { description = "National Geographic", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-31.jpg", logoWidth = 180, rowStyle = Separate }
-                    , clientLogo { description = "Animal Planet", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-4.jpg", logoWidth = 180, rowStyle = Separate }
-                    , clientLogo { description = "Discovery Channel", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-19.jpg", logoWidth = 180, rowStyle = Separate }
+                    [ clientLogo { description = "BBC", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-12.jpg", logoWidth = 180 }
+                    , clientLogo { description = "National Geographic", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-31.jpg", logoWidth = 180 }
+                    , clientLogo { description = "Animal Planet", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-4.jpg", logoWidth = 180 }
+                    , clientLogo { description = "Discovery Channel", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-19.jpg", logoWidth = 180 }
                     ]
                 , row [ spacingSmall, width fill ]
-                    [ clientLogo { description = "PBS", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-34.jpg", logoWidth = 180, rowStyle = Separate }
-                    , clientLogo { description = "History", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-25.jpg", logoWidth = 180, rowStyle = Separate }
-                    , clientLogo { description = "CBS", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-14.jpg", logoWidth = 180, rowStyle = Separate }
-                    , clientLogo { description = "abc primetime", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-2.jpg", logoWidth = 180, rowStyle = Separate }
-                    , clientLogo { description = "Sky 1", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-41.gif", logoWidth = 180, rowStyle = Separate }
+                    [ clientLogo { description = "PBS", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-34.jpg", logoWidth = 180 }
+                    , clientLogo { description = "History", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-25.jpg", logoWidth = 180 }
+                    , clientLogo { description = "CBS", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-14.jpg", logoWidth = 180 }
+                    , clientLogo { description = "abc primetime", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-2.jpg", logoWidth = 180 }
+                    , clientLogo { description = "Sky 1", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-41.gif", logoWidth = 180 }
                     ]
                 ]
 
@@ -984,65 +984,54 @@ portfolio { device } =
             none
 
 
-type RowStyle
-    = Separate
-    | Wrapped
-
-
-clientLogo : { src : String, description : String, logoWidth : Int, rowStyle : RowStyle } -> Element msg
-clientLogo { src, description, logoWidth, rowStyle } =
-    let
-        centering =
-            case rowStyle of
-                Separate ->
-                    [ centerX ]
-
-                Wrapped ->
-                    [ htmlAttribute (Html.Attributes.style "marginLeft" "auto")
-                    , htmlAttribute (Html.Attributes.style "marginRight" "auto")
-                    ]
-    in
-    el
-        ([ width (px logoWidth)
-         , Border.color (rgb 1 1 1)
-         , Border.rounded 5
-         , Border.width 1
-         , clip
-         ]
-            ++ centering
-        )
-        (image
+clientLogo : { src : String, description : String, logoWidth : Int } -> Element msg
+clientLogo { src, description, logoWidth } =
+    el [ width fill ]
+        (el
             [ width (px logoWidth)
+            , centerX
+            , Border.color (rgb 1 1 1)
+            , Border.rounded 5
+            , Border.width 1
+            , clip
             ]
-            { src = src, description = description }
+            (image
+                [ width (px logoWidth)
+                ]
+                { src = src, description = description }
+            )
         )
 
 
 youtubeVideo : { src : String } -> Element msg
 youtubeVideo { src } =
-    el [ width (fill |> maximum 300), centerX ]
-        (html
-            (Html.iframe
-                [ Html.Attributes.src src
-                , Html.Attributes.attribute "allow" "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                , Html.Attributes.attribute "allowfullscreen" "1"
-                , Html.Attributes.attribute "frameborder" "0"
-                ]
-                []
+    el [ width fill ]
+        (el [ width (fill |> maximum 300), centerX, Background.color black ]
+            (html
+                (Html.iframe
+                    [ Html.Attributes.src src
+                    , Html.Attributes.attribute "allow" "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    , Html.Attributes.attribute "allowfullscreen" "1"
+                    , Html.Attributes.attribute "frameborder" "0"
+                    ]
+                    []
+                )
             )
         )
 
 
 vimeoVideo : { src : String } -> Element msg
 vimeoVideo { src } =
-    el [ width (fill |> maximum 300), centerX, Background.color black ]
-        (html
-            (Html.iframe
-                [ Html.Attributes.src src
-                , Html.Attributes.attribute "frameBorder" "0"
-                , Html.Attributes.attribute "allowfullscreen" ""
-                ]
-                []
+    el [ width fill ]
+        (el [ width (fill |> maximum 300), Background.color black, centerX ]
+            (html
+                (Html.iframe
+                    [ Html.Attributes.src src
+                    , Html.Attributes.attribute "frameBorder" "0"
+                    , Html.Attributes.attribute "allowfullscreen" ""
+                    ]
+                    []
+                )
             )
         )
 
@@ -1135,7 +1124,7 @@ viewTestimonials { device, window, testimonials, testimonialNonce, testimonialAn
                 , htmlAttribute (Html.Attributes.id (toID Testimonials))
                 ]
                 [ el [ centerX, Font.bold, fontLarge ] (text (toString Testimonials))
-                , row [ width fill, height (px 350) ]
+                , row [ width fill, height (px (240 * 812 // ((window.width - 188) |> min 812))) ]
                     [ el [ width (px testimonialButtonWidthTablet), height fill ] previousButton
                     , row [ width contentWidth, height fill, clip ]
                         (case testimonialTransition of
@@ -1229,7 +1218,7 @@ testimonialWidth { width } { class } =
 
         Tablet ->
             -- less 30 for padding and 64 for scroll buttons each side = (30+64)*2 = 188
-            412
+            (width - 188) |> min (1000 - 188)
 
         Desktop ->
             968
