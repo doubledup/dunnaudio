@@ -787,92 +787,93 @@ whatIDo { device } =
 
 achievements : { a | device : Device } -> Element msg
 achievements { device } =
+    let
+        emmy attributes =
+            column (awardStyle ++ attributes)
+                [ paragraph [] [ text "News and Documentary Emmy Awards nominee" ]
+                , paragraph [] [ text "2023" ]
+                , paragraph [] [ text "Outstanding Sound for 'Our Universe'" ]
+                ]
+
+        innovation attributes =
+            column (awardStyle ++ attributes)
+                [ paragraph [] [ text "Innovation in Business Award Winner" ]
+                , paragraph [] [ text "2023" ]
+                , paragraph [] [ text "Most Trusted Sound Recordist" ]
+                ]
+
+        jackson attributes =
+            column (awardStyle ++ attributes)
+                [ paragraph [] [ text "Jackson Wild Media Awards nominee" ]
+                , paragraph [] [ text "2015" ]
+                , paragraph [] [ text "Best Sound for 'Gorongosa Park: Rebirth of Paradise'" ]
+                ]
+
+        bafta attributes =
+            column (awardStyle ++ attributes)
+                [ paragraph [] [ text "BAFTA Craft Awards nominee" ]
+                , paragraph [] [ text "2013" ]
+                , paragraph [] [ text "Best Sound for 'Brazil with Michael Palin'" ]
+                ]
+
+        awardStyle =
+            [ padding 20
+            , centerX
+            , Border.color orange
+            , Border.rounded 10
+            , Border.width 1
+            , Font.bold
+            , Font.center
+            ]
+    in
     case device.class of
         Phone ->
-            column [ width fill, spacingSmall, Font.center ]
+            column [ width fill, spacingSmall ]
                 [ el [ centerX, Font.bold, fontLarge ] (text "Achievements")
-                , column [ centerX, spacingSmall ]
-                    [ column (awardStyle ++ [ fontNormal ])
-                        [ paragraph [] [ text "News and Documentary Emmy Awards nominee" ]
-                        , paragraph [] [ text "2023" ]
-                        , paragraph [] [ text "Outstanding Sound for 'Our Universe'" ]
-                        ]
-                    , column (awardStyle ++ [ fontNormal ])
-                        [ paragraph [] [ text "Innovation in Business Award Winner" ]
-                        , paragraph [] [ text "2023" ]
-                        , paragraph [] [ text "Most Trusted Sound Recordist" ]
-                        ]
-                    , column (awardStyle ++ [ fontNormal ])
-                        [ paragraph [] [ text "Jackson Wild Media Awards nominee" ]
-                        , paragraph [] [ text "2015" ]
-                        , paragraph [] [ text "Best Sound for 'Gorongosa Park: Rebirth of Paradise'" ]
-                        ]
-                    , column (awardStyle ++ [ fontNormal ])
-                        [ paragraph [] [ text "BAFTA Craft Awards nominee" ]
-                        , paragraph [] [ text "2013" ]
-                        , paragraph [] [ text "Best Sound for 'Brazil with Michael Palin'" ]
-                        ]
+                , column [ width fill, spacingSmall ]
+                    [ emmy [ width (fill |> maximum 380), fontNormal ]
+                    , innovation [ width (fill |> maximum 380), fontNormal ]
+                    , jackson [ width (fill |> maximum 380), fontNormal ]
+                    , bafta [ width (fill |> maximum 380), fontNormal ]
                     ]
                 ]
 
         Tablet ->
-            column [ width fill, spacingSmall, Font.center ]
+            column [ width fill, spacingSmall ]
                 [ el [ centerX, Font.bold, fontHeading ] (text "Achievements")
-                , column [ centerX, spacingSmall ]
-                    [ column (awardStyle ++ [ fontNormal ])
-                        [ paragraph [] [ text "News and Documentary Emmy Awards nominee" ]
-                        , paragraph [] [ text "2023" ]
-                        , paragraph [] [ text "Outstanding Sound for 'Our Universe'" ]
-                        ]
-                    , column (awardStyle ++ [ fontNormal ])
-                        [ paragraph [] [ text "Innovation in Business Award Winner" ]
-                        , paragraph [] [ text "2023" ]
-                        , paragraph [] [ text "Most Trusted Sound Recordist" ]
-                        ]
-                    , column (awardStyle ++ [ fontNormal ])
-                        [ paragraph [] [ text "Jackson Wild Media Awards nominee" ]
-                        , paragraph [] [ text "2015" ]
-                        , paragraph [] [ text "Best Sound for 'Gorongosa Park: Rebirth of Paradise'" ]
-                        ]
-                    , column (awardStyle ++ [ fontNormal ])
-                        [ paragraph [] [ text "BAFTA Craft Awards nominee" ]
-                        , paragraph [] [ text "2013" ]
-                        , paragraph [] [ text "Best Sound for 'Brazil with Michael Palin'" ]
-                        ]
+                , wrappedRow [ spacingSmall ]
+                    [ el [ width fill ] (emmy [ width (px 380), fontNormal ])
+                    , el [ width fill ] (innovation [ width (px 380), fontNormal ])
+                    , el [ width fill ] (jackson [ width (px 380), fontNormal ])
+                    , el [ width fill ] (bafta [ width (px 380), fontNormal ])
                     ]
                 ]
 
         Desktop ->
             column [ width fill, spacingMedium ]
                 [ el [ centerX, Font.bold, fontHeading ] (text "Achievements")
-                , row [ centerX, spacingMedium ]
-                    [ column awardStyle
-                        [ paragraph [] [ text "News and Documentary Emmy Awards nominee" ]
-                        , paragraph [] [ text "2023" ]
-                        , paragraph [] [ text "Outstanding Sound for 'Our Universe'" ]
-                        ]
-                    , column awardStyle
-                        [ paragraph [] [ text "Innovation in Business Award Winner" ]
-                        , paragraph [] [ text "2023" ]
-                        , paragraph [] [ text "Most Trusted Sound Recordist" ]
-                        ]
+                , row [ width fill, spacingMedium ]
+                    [ emmy [ width (px 450), fontLarge ]
+                    , innovation [ width (px 450), fontLarge ]
                     ]
-                , row [ centerX, spacingMedium ]
-                    [ column awardStyle
-                        [ paragraph [] [ text "Jackson Wild Media Awards nominee" ]
-                        , paragraph [] [ text "2015" ]
-                        , paragraph [] [ text "Best Sound for 'Gorongosa Park: Rebirth of Paradise'" ]
-                        ]
-                    , column awardStyle
-                        [ paragraph [] [ text "BAFTA Craft Awards nominee" ]
-                        , paragraph [] [ text "2013" ]
-                        , paragraph [] [ text "Best Sound for 'Brazil with Michael Palin'" ]
-                        ]
+                , row [ width fill, spacingMedium ]
+                    [ jackson [ width (px 450), fontLarge ]
+                    , bafta [ width (px 450), fontLarge ]
                     ]
                 ]
 
         BigDesktop ->
-            none
+            column [ width fill, spacingMedium ]
+                [ el [ centerX, Font.bold, fontHeading ] (text "Achievements")
+                , row [ width fill, spacingMedium ]
+                    [ emmy [ width (px 450), fontLarge ]
+                    , innovation [ width (px 450), fontLarge ]
+                    ]
+                , row [ width fill, spacingMedium ]
+                    [ jackson [ width (px 450), fontLarge ]
+                    , bafta [ width (px 450), fontLarge ]
+                    ]
+                ]
 
 
 portfolio : { a | device : Device } -> Element msg
@@ -1614,19 +1615,6 @@ footer { device } =
 
 
 -- STYLE
-
-
-awardStyle : List (Attribute msg)
-awardStyle =
-    [ width fill
-    , padding 20
-    , Border.color orange
-    , Border.rounded 10
-    , Border.width 1
-    , Font.bold
-    , Font.center
-    , fontLarge
-    ]
 
 
 bannerInterpolation : Animation.Interpolation
