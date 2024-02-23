@@ -684,97 +684,74 @@ aboutMe { device } =
 
 whatIDo : { model | device : Device } -> Element Msg
 whatIDo { device } =
+    let
+        paragraph1 =
+            paragraph [ spacingParagraph ] [ text "I spend a lot of my time on documentary productions, although I still work in other arenas. This has taken me all over the world, working for the major broadcasting channels in over 30 countries and exploring a diverse range of subjects." ]
+
+        paragraph2 =
+            paragraph [ spacingParagraph ] [ text "I also now specialise in recording ‘The sounds of Africa’ having been commissioned by several top international production companies to record animals and general ambiences of Africa." ]
+
+        paragraph3 =
+            paragraph [ spacingParagraph ] [ text "My favourite ‘go-to’ is an Ambisonic Microphone that captures immersive surround sounds of the environments I’m recording in - an important tool in the sound design process of most productions." ]
+
+        image1 =
+            image
+                [ width fill, height fill ]
+                { src = "images/ambisonic-gorongosa.webp"
+                , description = "Sebastian recording ambisonic sound on top of a car in Gorongosa National Park in Mozambique"
+                }
+
+        image2 =
+            image
+                [ width fill, height fill ]
+                { src = "images/wauja-palin.webp"
+                , description = "Sebastian standing with a member of the Wauja community in the Amazon"
+                }
+
+        image3 =
+            image
+                [ width fill, height fill ]
+                { src = "images/cape-town.webp"
+                , description = "Sebastian recording sound in front of Cape Town city hall during lockdown"
+                }
+    in
     case device.class of
         Phone ->
             column [ width fill, spacingSmall, Font.center ]
                 [ el [ centerX, Font.bold, fontLarge ] (text "What I Do Now")
-                , paragraph [ spacingParagraph ] [ text "I spend a lot of my time on documentary productions, although I still work in other arenas. This has taken me all over the world, working for the major broadcasting channels in over 30 countries and exploring a diverse range of subjects." ]
-                , paragraph [ spacingParagraph ] [ text "I also now specialise in recording ‘The sounds of Africa’ having been commissioned by several top international production companies to record animals and general ambiences of Africa." ]
-                , el [ width fill ]
-                    (image
-                        [ width fill, height fill ]
-                        { src = "images/ambisonic-gorongosa.webp"
-                        , description = "Sebastian recording ambisonic sound on top of a car in Gorongosa National Park in Mozambique"
-                        }
-                    )
-                , el [ width fill ]
-                    (image
-                        [ width fill, height fill ]
-                        { src = "images/wauja-palin.webp"
-                        , description = "Sebastian standing with a member of the Wauja community in the Amazon"
-                        }
-                    )
-                , paragraph [ spacingParagraph ] [ text "My favourite ‘go-to’ is an Ambisonic Microphone that captures immersive surround sounds of the environments I’m recording in - an important tool in the sound design process of most productions." ]
-                , el [ width fill ]
-                    (image
-                        [ width fill, height fill ]
-                        { src = "images/cape-town.webp"
-                        , description = "Sebastian recording sound in front of Cape Town city hall during lockdown"
-                        }
-                    )
+                , paragraph1
+                , paragraph2
+                , el [ width fill ] image1
+                , el [ width fill ] image2
+                , paragraph3
+                , el [ width fill ] image3
                 ]
 
         Tablet ->
             column [ width fill, spacingSmall, Font.center ]
                 [ el [ centerX, Font.bold, fontHeading ] (text "What I Do Now")
-                , paragraph [ spacingParagraph ] [ text "I spend a lot of my time on documentary productions, although I still work in other arenas. This has taken me all over the world, working for the major broadcasting channels in over 30 countries and exploring a diverse range of subjects." ]
-                , paragraph [ spacingParagraph ] [ text "I also now specialise in recording ‘The sounds of Africa’ having been commissioned by several top international production companies to record animals and general ambiences of Africa." ]
-                , el [ width fill ]
-                    (image
-                        [ width fill, height fill ]
-                        { src = "images/ambisonic-gorongosa.webp"
-                        , description = "Sebastian recording ambisonic sound on top of a car in Gorongosa National Park in Mozambique"
-                        }
-                    )
-                , el [ width fill ]
-                    (image
-                        [ width fill, height fill ]
-                        { src = "images/wauja-palin.webp"
-                        , description = "Sebastian standing with a member of the Wauja community in the Amazon"
-                        }
-                    )
-                , paragraph [ spacingParagraph ] [ text "My favourite ‘go-to’ is an Ambisonic Microphone that captures immersive surround sounds of the environments I’m recording in - an important tool in the sound design process of most productions." ]
-                , el [ width fill ]
-                    (image
-                        [ width fill, height fill ]
-                        { src = "images/cape-town.webp"
-                        , description = "Sebastian recording sound in front of Cape Town city hall during lockdown"
-                        }
-                    )
+                , paragraph1
+                , paragraph2
+                , el [ width fill ] image1
+                , el [ width fill ] image2
+                , paragraph3
+                , el [ width fill ] image3
                 ]
 
         Desktop ->
             column [ width fill, spacingMedium ]
                 [ row [ width fill, spacingSmall ]
-                    [ el [ width (fillPortion 2), height fill, clip ]
-                        (image
-                            [ width fill, height fill ]
-                            { src = "images/ambisonic-gorongosa.webp"
-                            , description = "Sebastian recording ambisonic sound on top of a car in Gorongosa National Park in Mozambique"
-                            }
-                        )
+                    [ el [ width (fillPortion 2), height fill, clip ] image1
                     , column [ width (fillPortion 5), spacingMedium, Font.center ]
                         [ el [ centerX, Font.bold, fontHeading ] (text "What I Do Now")
-                        , paragraph [ spacingParagraph ] [ text "I spend a lot of my time on documentary productions, although I still work in other arenas. This has taken me all over the world, working for the major broadcasting channels in over 30 countries and exploring a diverse range of subjects." ]
-                        , paragraph [ spacingParagraph ] [ text "I also now specialise in recording ‘The sounds of Africa’ having been commissioned by several top international production companies to record animals and general ambiences of Africa." ]
-                        , paragraph [ spacingParagraph ] [ text "My favourite ‘go-to’ is an Ambisonic Microphone that captures immersive surround sounds of the environments I’m recording in - an important tool in the sound design process of most productions." ]
+                        , paragraph1
+                        , paragraph2
+                        , paragraph3
                         ]
                     ]
                 , row [ width fill, spacingSmall ]
-                    [ el [ width (fillPortion 1), height (px 340), alignTop, clip ]
-                        (image
-                            [ width fill, height fill ]
-                            { src = "images/wauja-palin.webp"
-                            , description = "Sebastian standing with a member of the Wauja community in the Amazon"
-                            }
-                        )
-                    , el [ width (fillPortion 1), height (px 340), alignTop, clip ]
-                        (image
-                            [ width fill, height fill ]
-                            { src = "images/cape-town.webp"
-                            , description = "Sebastian recording sound in front of Cape Town city hall during lockdown"
-                            }
-                        )
+                    [ el [ width (fillPortion 1), height (px 340), alignTop, clip ] image2
+                    , el [ width (fillPortion 1), height (px 340), alignTop, clip ] image3
                     ]
                 ]
 
