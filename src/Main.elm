@@ -1097,7 +1097,7 @@ viewTestimonials { device, window, testimonials, testimonialNonce, testimonialAn
                 , htmlAttribute (Html.Attributes.id (toID Testimonials))
                 ]
                 [ el [ centerX, Font.bold, fontLarge ] (text (toString Testimonials))
-                , row [ width fill, height (px (300 * 496 // contentWidth)) ]
+                , row [ width fill, height (px (310 * 496 // contentWidth)) ]
                     [ el [ width (px testimonialButtonWidthPhone), height fill ] previousButton
                     , row [ width (px contentWidth), height fill, clip ]
                         (case testimonialTransition of
