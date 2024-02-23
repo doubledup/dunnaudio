@@ -146,7 +146,11 @@ init flags url navKey =
 
 
 -- VIEW
--- attribute order: width, height, alignment, padding, spacing, background, border font
+-- attribute order: width, height, alignment, border, padding, spacing, events, background, font
+-- order by relevance to:
+--      siblings (width, height, alignment, border)
+--      children (border, padding, spacing)
+--      internal details (events, background, font)
 
 
 view : Model -> Browser.Document Msg
@@ -158,10 +162,10 @@ view model =
                 [ width fill
                 , height fill
                 , moveDown (toFloat navbarHeight)
-                , fontRaleway
-                , fontNormal
                 , Font.color black
                 , Font.letterSpacing 0.5
+                , fontNormal
+                , fontRaleway
                 ]
                 (case model.device.class of
                     Phone ->
@@ -652,14 +656,14 @@ aboutMe { device } =
                 , spacingSmall
                 , htmlAttribute (Html.Attributes.id (toID AboutMe))
                 ]
-                [ column [ spacingMedium, width (fillPortion 1), alignTop, Font.center ]
+                [ column [ width (fillPortion 1), alignTop, spacingMedium, Font.center ]
                     [ el [ centerX, Font.bold, fontHeading ] (text (toString AboutMe))
                     , paragraph1
                     , paragraph2
                     , paragraph3
                     , paragraph4
                     ]
-                , column [ alignTop, spacingSmall, width (fillPortion 1) ]
+                , column [ width (fillPortion 1), alignTop, spacingSmall ]
                     [ el [ width (px 590), height (px 350), clip ]
                         (image
                             [ width fill, height fill ]
@@ -743,8 +747,8 @@ whatIDo { device } =
                 ]
 
         Desktop ->
-            column [ spacingMedium, width fill ]
-                [ row [ spacingSmall, width fill ]
+            column [ width fill, spacingMedium ]
+                [ row [ width fill, spacingSmall ]
                     [ el [ width (fillPortion 2), height fill, clip ]
                         (image
                             [ width fill, height fill ]
@@ -752,22 +756,22 @@ whatIDo { device } =
                             , description = "Sebastian recording ambisonic sound on top of a car in Gorongosa National Park in Mozambique"
                             }
                         )
-                    , column [ spacingMedium, width (fillPortion 5), Font.center ]
+                    , column [ width (fillPortion 5), spacingMedium, Font.center ]
                         [ el [ centerX, Font.bold, fontHeading ] (text "What I Do Now")
                         , paragraph [ spacingParagraph ] [ text "I spend a lot of my time on documentary productions, although I still work in other arenas. This has taken me all over the world, working for the major broadcasting channels in over 30 countries and exploring a diverse range of subjects." ]
                         , paragraph [ spacingParagraph ] [ text "I also now specialise in recording ‘The sounds of Africa’ having been commissioned by several top international production companies to record animals and general ambiences of Africa." ]
                         , paragraph [ spacingParagraph ] [ text "My favourite ‘go-to’ is an Ambisonic Microphone that captures immersive surround sounds of the environments I’m recording in - an important tool in the sound design process of most productions." ]
                         ]
                     ]
-                , row [ spacingSmall, width fill ]
-                    [ el [ alignTop, width (fillPortion 1), height (px 340), clip ]
+                , row [ width fill, spacingSmall ]
+                    [ el [ width (fillPortion 1), height (px 340), alignTop, clip ]
                         (image
                             [ width fill, height fill ]
                             { src = "images/wauja-palin.webp"
                             , description = "Sebastian standing with a member of the Wauja community in the Amazon"
                             }
                         )
-                    , el [ alignTop, width (fillPortion 1), height (px 340), clip ]
+                    , el [ width (fillPortion 1), height (px 340), alignTop, clip ]
                         (image
                             [ width fill, height fill ]
                             { src = "images/cape-town.webp"
@@ -839,7 +843,7 @@ achievements { device } =
                 ]
 
         Desktop ->
-            column [ spacingMedium, width fill ]
+            column [ width fill, spacingMedium ]
                 [ el [ centerX, Font.bold, fontHeading ] (text "Achievements")
                 , row [ centerX, spacingMedium ]
                     [ column awardStyle
@@ -942,12 +946,12 @@ portfolio { device } =
 
         Desktop ->
             column
-                [ spacingMedium
-                , width fill
+                [ width fill
+                , spacingMedium
                 , htmlAttribute (Html.Attributes.id (toID Portfolio))
                 ]
                 [ el [ centerX, Font.bold, fontHeading ] (text (toString Portfolio))
-                , column [ spacingSmall, width fill ]
+                , column [ width fill, spacingSmall ]
                     [ row [ centerX, spacingSmall ]
                         [ youtubeVideo { src = "https://www.youtube.com/embed/Q33TkQKlIMg?controls=1&rel=0&playsinline=0&modestbranding=0&autoplay=0&enablejsapi=1&origin=https%3A%2F%2Fdunnaudio.com&widgetid=1" }
                         , youtubeVideo { src = "https://www.youtube.com/embed/q1UcC7BsI1M?controls=1&rel=0&playsinline=0&modestbranding=0&autoplay=0&enablejsapi=1&origin=https%3A%2F%2Fdunnaudio.com&widgetid=3" }
@@ -959,19 +963,19 @@ portfolio { device } =
                         , vimeoVideo { src = "https://player.vimeo.com/video/168173513?color&autopause=0&loop=0&muted=0&title=1&portrait=1&byline=1#t=" }
                         ]
                     ]
-                , row [ spacingSmall, width fill ]
+                , row [ width fill, spacingSmall ]
                     [ clientLogo { description = "Survivor", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-45.png", logoWidth = 180 }
                     , clientLogo { description = "HBO", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-22.jpg", logoWidth = 180 }
                     , clientLogo { description = "Netflix", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-32.jpg", logoWidth = 180 }
                     , clientLogo { description = "Apple TV", src = "https://dunnaudio.com/wp-content/uploads/2023/06/apple-tv__e7aqjl2rqzau_og.png", logoWidth = 180 }
                     ]
-                , row [ spacingSmall, width fill ]
+                , row [ width fill, spacingSmall ]
                     [ clientLogo { description = "BBC", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-12.jpg", logoWidth = 180 }
                     , clientLogo { description = "National Geographic", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-31.jpg", logoWidth = 180 }
                     , clientLogo { description = "Animal Planet", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-4.jpg", logoWidth = 180 }
                     , clientLogo { description = "Discovery Channel", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-19.jpg", logoWidth = 180 }
                     ]
-                , row [ spacingSmall, width fill ]
+                , row [ width fill, spacingSmall ]
                     [ clientLogo { description = "PBS", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-34.jpg", logoWidth = 180 }
                     , clientLogo { description = "History", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-25.jpg", logoWidth = 180 }
                     , clientLogo { description = "CBS", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-14.jpg", logoWidth = 180 }
@@ -1023,7 +1027,7 @@ youtubeVideo { src } =
 vimeoVideo : { src : String } -> Element msg
 vimeoVideo { src } =
     el [ width fill ]
-        (el [ width (fill |> maximum 300), Background.color black, centerX ]
+        (el [ width (fill |> maximum 300), centerX, Background.color black ]
             (html
                 (Html.iframe
                     [ Html.Attributes.src src
@@ -1069,8 +1073,8 @@ viewTestimonials { device, window, testimonials, testimonialNonce, testimonialAn
                 , height (px 20)
                 , centerX
                 , centerY
-                , Font.color orange
                 , ElementEvents.onClick (PreviousTestimonial testimonialNonce)
+                , Font.color orange
                 ]
                 (html (Icon.view IconSolid.angleLeft))
 
@@ -1080,8 +1084,8 @@ viewTestimonials { device, window, testimonials, testimonialNonce, testimonialAn
                 , height (px 20)
                 , centerX
                 , centerY
-                , Font.color orange
                 , ElementEvents.onClick (NextTestimonial testimonialNonce)
+                , Font.color orange
                 ]
                 (html (Icon.view IconSolid.angleRight))
     in
@@ -1190,9 +1194,9 @@ testimonialContent contentWidth animation testimonial =
          , height fill
          , centerY
          , Font.center
-         , fontNormal
-         , Font.light
          , Font.letterSpacing 0.3
+         , Font.light
+         , fontNormal
          ]
             ++ List.map Element.htmlAttribute (Animation.render animation)
         )
@@ -1370,8 +1374,8 @@ navbar { menuState, device } =
         menuButton =
             el
                 [ width (px 30)
-                , centerY
                 , alignRight
+                , centerY
                 , ElementEvents.onClick ToggleMenuState
                 ]
                 (html (Icon.view IconSolid.bars))
@@ -1381,7 +1385,7 @@ navbar { menuState, device } =
                 [ width fill
                 , Background.color white
                 ]
-                [ row [ width (px 1200), height (px navbarHeight), paddingXY 20 30, centerX ]
+                [ row [ width (px 1200), height (px navbarHeight), centerX, paddingXY 20 30 ]
                     [ logo
                     , row [ alignRight, spacingMedium, fontNormal, Font.light ]
                         [ renderSectionLink [] Home
@@ -1454,7 +1458,7 @@ dropdown menuState =
                 , column [ width (fillPortion 8), padding 20, spacingSmall, Font.light ]
                     (List.intersperse dropdownSeparator
                         (List.map (renderSectionLink [ ElementEvents.onClick ToggleMenuState ]) allSections
-                            ++ [ el [ width fill, Font.center, ElementEvents.onClick ToggleMenuState ] (text "My CV") ]
+                            ++ [ el [ width fill, ElementEvents.onClick ToggleMenuState, Font.center ] (text "My CV") ]
                         )
                     )
                 , el [ width (fillPortion 1) ] none
@@ -1536,7 +1540,16 @@ footer : { a | device : Device } -> Element msg
 footer { device } =
     case device.class of
         Phone ->
-            column [ width fill, padding 20, spacing 10, Background.color black, Font.center, fontSmall, Font.light, Font.color white ]
+            column
+                [ width fill
+                , padding 20
+                , spacing 10
+                , Background.color black
+                , Font.center
+                , Font.color white
+                , Font.light
+                , fontSmall
+                ]
                 [ paragraph []
                     [ text "Copyright © 2023 Dunn Audio" ]
                 , paragraph []
@@ -1550,7 +1563,16 @@ footer { device } =
                 ]
 
         Tablet ->
-            column [ width fill, padding 30, spacing 10, Background.color black, Font.center, fontSmall, Font.light, Font.color white ]
+            column
+                [ width fill
+                , padding 30
+                , spacing 10
+                , Background.color black
+                , Font.center
+                , Font.color white
+                , Font.light
+                , fontSmall
+                ]
                 [ paragraph []
                     [ text "Copyright © 2023 Dunn Audio" ]
                 , paragraph []
@@ -1564,7 +1586,16 @@ footer { device } =
                 ]
 
         Desktop ->
-            column [ width fill, padding 30, spacing 10, Background.color black, Font.center, fontNormal, Font.light, Font.color white ]
+            column
+                [ width fill
+                , padding 30
+                , spacing 10
+                , Background.color black
+                , Font.center
+                , Font.color white
+                , Font.light
+                , fontNormal
+                ]
                 [ paragraph []
                     [ text "Copyright © 2023 Dunn Audio" ]
                 , paragraph []
@@ -1587,14 +1618,14 @@ footer { device } =
 
 awardStyle : List (Attribute msg)
 awardStyle =
-    [ padding 20
-    , width fill
+    [ width fill
+    , padding 20
     , Border.color orange
     , Border.rounded 10
     , Border.width 1
-    , fontLarge
     , Font.bold
     , Font.center
+    , fontLarge
     ]
 
 
