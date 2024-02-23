@@ -1049,10 +1049,10 @@ viewTestimonials :
 viewTestimonials { device, window, testimonials, testimonialNonce, testimonialAnimation, testimonialTransition } =
     let
         contentWidth =
-            px (testimonialWidth window device)
+            testimonialWidth window device
 
         contentTemplate =
-            testimonialContent contentWidth testimonialAnimation
+            testimonialContent (px contentWidth) testimonialAnimation
 
         previous =
             contentTemplate (getPrevious testimonials)
@@ -1093,9 +1093,9 @@ viewTestimonials { device, window, testimonials, testimonialNonce, testimonialAn
                 , htmlAttribute (Html.Attributes.id (toID Testimonials))
                 ]
                 [ el [ centerX, Font.bold, fontLarge ] (text (toString Testimonials))
-                , row [ width fill, height (px (600 * 220 // (window.width - 104))) ]
+                , row [ width fill, height (px (300 * 496 // contentWidth)) ]
                     [ el [ width (px testimonialButtonWidthPhone), height fill ] previousButton
-                    , row [ width contentWidth, height fill, clip ]
+                    , row [ width (px contentWidth), height fill, clip ]
                         (case testimonialTransition of
                             None ->
                                 [ current ]
@@ -1124,9 +1124,9 @@ viewTestimonials { device, window, testimonials, testimonialNonce, testimonialAn
                 , htmlAttribute (Html.Attributes.id (toID Testimonials))
                 ]
                 [ el [ centerX, Font.bold, fontLarge ] (text (toString Testimonials))
-                , row [ width fill, height (px (240 * 812 // ((window.width - 188) |> min 812))) ]
+                , row [ width fill, height (px (240 * 812 // contentWidth)) ]
                     [ el [ width (px testimonialButtonWidthTablet), height fill ] previousButton
-                    , row [ width contentWidth, height fill, clip ]
+                    , row [ width (px contentWidth), height fill, clip ]
                         (case testimonialTransition of
                             None ->
                                 [ current ]
@@ -1157,7 +1157,7 @@ viewTestimonials { device, window, testimonials, testimonialNonce, testimonialAn
                 [ el [ centerX, Font.bold, fontHeading ] (text (toString Testimonials))
                 , row [ width fill, height (px 300) ]
                     [ el [ width (px testimonialButtonWidthDesktop), height fill ] previousButton
-                    , row [ width contentWidth, height fill, clip ]
+                    , row [ width (px contentWidth), height fill, clip ]
                         (case testimonialTransition of
                             None ->
                                 [ current ]
