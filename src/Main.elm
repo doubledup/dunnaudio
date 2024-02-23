@@ -155,6 +155,25 @@ init flags url navKey =
 
 view : Model -> Browser.Document Msg
 view model =
+    let
+        content =
+            case model.device.class of
+                Phone ->
+                    column [ width fill, height fill, paddingXY 20 40, spacingMedium ]
+                        (List.map (\section -> section model) sections)
+
+                Tablet ->
+                    column [ width (fill |> maximum 1000), height fill, centerX, paddingXY 30 50, spacingLarge ]
+                        (List.map (\section -> section model) sections)
+
+                Desktop ->
+                    column [ width (px 1200), height fill, centerX, paddingXY 20 50, spacingLarge ]
+                        (List.map (\section -> section model) sections)
+
+                BigDesktop ->
+                    column [ width (px 1200), height fill, centerX, paddingXY 20 50, spacingLarge ]
+                        (List.map (\section -> section model) sections)
+    in
     { title = "Dunn Audio"
     , body =
         [ layout [ inFront (navbar model), htmlAttribute (Html.Attributes.id (toID Home)) ]
@@ -167,36 +186,10 @@ view model =
                 , fontNormal
                 , fontRaleway
                 ]
-                (case model.device.class of
-                    Phone ->
-                        [ banner model
-                        , column [ width fill, height fill, paddingXY 20 40, spacingMedium ]
-                            (List.map (\section -> section model) sections)
-                        , footer model
-                        ]
-
-                    Tablet ->
-                        [ banner model
-                        , column [ width (fill |> maximum 1000), height fill, centerX, paddingXY 30 50, spacingLarge ]
-                            -- TODO: rework each section for tablets
-                            (List.map (\section -> section model) sections)
-                        , footer model
-                        ]
-
-                    Desktop ->
-                        [ banner model
-                        , column [ width (px 1200), height fill, centerX, paddingXY 20 50, spacingLarge ]
-                            (List.map (\section -> section model) sections)
-                        , footer model
-                        ]
-
-                    BigDesktop ->
-                        [ banner model
-                        , column [ width (px 1200), height fill, centerX, paddingXY 20 50, spacingLarge ]
-                            (List.map (\section -> section model) sections)
-                        , footer model
-                        ]
-                )
+                [ banner model
+                , content
+                , footer model
+                ]
             )
         ]
     }
