@@ -1073,6 +1073,28 @@ viewTestimonials { device, window, testimonials, testimonialNonce, testimonialAn
 
         next =
             contentTemplate (getNext testimonials)
+
+        previousButton =
+            el
+                [ width (px 20)
+                , height (px 20)
+                , centerX
+                , centerY
+                , Font.color orange
+                , ElementEvents.onClick (PreviousTestimonial testimonialNonce)
+                ]
+                (html (Icon.view IconSolid.angleLeft))
+
+        nextButton =
+            el
+                [ width (px 20)
+                , height (px 20)
+                , centerX
+                , centerY
+                , Font.color orange
+                , ElementEvents.onClick (NextTestimonial testimonialNonce)
+                ]
+                (html (Icon.view IconSolid.angleRight))
     in
     case device.class of
         Phone ->
@@ -1083,17 +1105,7 @@ viewTestimonials { device, window, testimonials, testimonialNonce, testimonialAn
                 ]
                 [ el [ centerX, Font.bold, fontLarge ] (text (toString Testimonials))
                 , row [ width fill, height (px (600 * 220 // (window.width - 104))) ]
-                    [ el [ width (px testimonialButtonWidthPhone), height fill ]
-                        (el
-                            [ width (px 20)
-                            , height (px 20)
-                            , centerX
-                            , centerY
-                            , Font.color orange
-                            , ElementEvents.onClick (PreviousTestimonial testimonialNonce)
-                            ]
-                            (html (Icon.view IconSolid.angleLeft))
-                        )
+                    [ el [ width (px testimonialButtonWidthPhone), height fill ] previousButton
                     , row [ width contentWidth, height fill, clip ]
                         (case testimonialTransition of
                             None ->
@@ -1105,17 +1117,7 @@ viewTestimonials { device, window, testimonials, testimonialNonce, testimonialAn
                             Previous ->
                                 [ current, next ]
                         )
-                    , el [ width (px testimonialButtonWidthPhone), height fill ]
-                        (el
-                            [ width (px 20)
-                            , height (px 20)
-                            , centerX
-                            , centerY
-                            , Font.color orange
-                            , ElementEvents.onClick (NextTestimonial testimonialNonce)
-                            ]
-                            (html (Icon.view IconSolid.angleRight))
-                        )
+                    , el [ width (px testimonialButtonWidthPhone), height fill ] nextButton
                     ]
                 , row [ centerX, spacing 5 ]
                     (List.concat
@@ -1134,17 +1136,7 @@ viewTestimonials { device, window, testimonials, testimonialNonce, testimonialAn
                 ]
                 [ el [ centerX, Font.bold, fontLarge ] (text (toString Testimonials))
                 , row [ width fill, height (px 350) ]
-                    [ el [ width (px testimonialButtonWidthTablet), height fill ]
-                        (el
-                            [ width (px 20)
-                            , height (px 20)
-                            , centerX
-                            , centerY
-                            , Font.color orange
-                            , ElementEvents.onClick (PreviousTestimonial testimonialNonce)
-                            ]
-                            (html (Icon.view IconSolid.angleLeft))
-                        )
+                    [ el [ width (px testimonialButtonWidthTablet), height fill ] previousButton
                     , row [ width contentWidth, height fill, clip ]
                         (case testimonialTransition of
                             None ->
@@ -1156,17 +1148,7 @@ viewTestimonials { device, window, testimonials, testimonialNonce, testimonialAn
                             Previous ->
                                 [ current, next ]
                         )
-                    , el [ width (px testimonialButtonWidthTablet), height fill ]
-                        (el
-                            [ width (px 20)
-                            , height (px 20)
-                            , centerX
-                            , centerY
-                            , Font.color orange
-                            , ElementEvents.onClick (NextTestimonial testimonialNonce)
-                            ]
-                            (html (Icon.view IconSolid.angleRight))
-                        )
+                    , el [ width (px testimonialButtonWidthTablet), height fill ] nextButton
                     ]
                 , row [ centerX, spacing 5 ]
                     (List.concat
@@ -1185,17 +1167,7 @@ viewTestimonials { device, window, testimonials, testimonialNonce, testimonialAn
                 ]
                 [ el [ centerX, Font.bold, fontHeading ] (text (toString Testimonials))
                 , row [ width fill, height (px 300) ]
-                    [ el [ width (px testimonialButtonWidthDesktop), height fill ]
-                        (el
-                            [ width (px 20)
-                            , height (px 20)
-                            , centerX
-                            , centerY
-                            , Font.color orange
-                            , ElementEvents.onClick (PreviousTestimonial testimonialNonce)
-                            ]
-                            (html (Icon.view IconSolid.angleLeft))
-                        )
+                    [ el [ width (px testimonialButtonWidthDesktop), height fill ] previousButton
                     , row [ width contentWidth, height fill, clip ]
                         (case testimonialTransition of
                             None ->
@@ -1207,17 +1179,7 @@ viewTestimonials { device, window, testimonials, testimonialNonce, testimonialAn
                             Previous ->
                                 [ current, next ]
                         )
-                    , el [ width (px testimonialButtonWidthDesktop), height fill ]
-                        (el
-                            [ width (px 20)
-                            , height (px 20)
-                            , centerX
-                            , centerY
-                            , Font.color orange
-                            , ElementEvents.onClick (NextTestimonial testimonialNonce)
-                            ]
-                            (html (Icon.view IconSolid.angleRight))
-                        )
+                    , el [ width (px testimonialButtonWidthDesktop), height fill ] nextButton
                     ]
                 , row [ centerX, spacing 5 ]
                     (List.concat
