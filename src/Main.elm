@@ -591,7 +591,7 @@ sections =
     , whatIDo
     , achievements
     , portfolio
-    , viewTestimonials
+    , testimonialsSection
     , contact
     , socials
     ]
@@ -990,7 +990,7 @@ clientLogo { src, description, logoWidth } =
         )
 
 
-viewTestimonials :
+testimonialsSection :
     { a
         | device : Device
         , window : Window
@@ -1000,24 +1000,9 @@ viewTestimonials :
         , testimonialTransition : TestimonialTransition
     }
     -> Element Msg
-viewTestimonials { device, window, testimonials, testimonialNonce, testimonialAnimation, testimonialTransition } =
+testimonialsSection { device, window, testimonials, testimonialNonce, testimonialAnimation, testimonialTransition } =
     let
-        contentWidth =
-            testimonialWidth window device
-
-        contentTemplate =
-            testimonialContent (px contentWidth) testimonialAnimation
-
-        previous =
-            contentTemplate (getPrevious testimonials)
-
-        current =
-            contentTemplate testimonials.current
-
-        next =
-            contentTemplate (getNext testimonials)
-
-        testimonial =
+        testimonialContent =
             case testimonialTransition of
                 None ->
                     [ current ]
@@ -1049,98 +1034,78 @@ viewTestimonials { device, window, testimonials, testimonialNonce, testimonialAn
                 , Font.color orange
                 ]
                 (html (Icon.view IconSolid.angleRight))
+
+        contentWidth =
+            testimonialWidth window device
+
+        ( headingSize, buttonWidth, carouselHeight ) =
+            case device.class of
+                Phone ->
+                    ( fontLarge, 32, px (310 * 496 // contentWidth) )
+
+                Tablet ->
+                    ( fontHeading, 64, px (240 * 812 // contentWidth) )
+
+                Desktop ->
+                    ( fontHeading, 96, px 300 )
+
+                BigDesktop ->
+                    ( fontHeading, 96, px 300 )
+
+        dots =
+            row [ centerX, spacing 5 ]
+                (List.concat
+                    [ testimonials.beforeReversed |> List.map (\_ -> dot grey)
+                    , [ dot orange ]
+                    , testimonials.after |> List.map (\_ -> dot grey)
+                    ]
+                )
+
+        previous =
+            contentTemplate (getPrevious testimonials)
+
+        current =
+            contentTemplate testimonials.current
+
+        next =
+            contentTemplate (getNext testimonials)
+
+        contentTemplate testimonial =
+            column
+                ([ width (px contentWidth)
+                 , height fill
+                 , centerY
+                 , Font.center
+                 , Font.letterSpacing 0.3
+                 , Font.light
+                 , fontNormal
+                 ]
+                    ++ List.map Element.htmlAttribute (Animation.render testimonialAnimation)
+                )
+                [ column [ centerX, centerY, spacing 10 ]
+                    (testimonial.quote |> List.map (\q -> paragraph [] [ text q ]))
+                , paragraph
+                    [ centerY
+                    , paddingEach { top = 30, left = 0, right = 0, bottom = 0 }
+                    , Font.bold
+                    ]
+                    [ text testimonial.name ]
+                , paragraph [ centerY, paddingEach { top = 15, left = 0, right = 0, bottom = 0 } ]
+                    [ text testimonial.company ]
+                ]
     in
-    case device.class of
-        Phone ->
-            column
-                [ width fill
-                , spacingSmall
-                , htmlAttribute (Html.Attributes.id (toID Testimonials))
-                ]
-                [ el [ centerX, Font.bold, fontLarge ] (text (toString Testimonials))
-                , row [ width fill, height (px (310 * 496 // contentWidth)) ]
-                    [ el [ width (px testimonialButtonWidthPhone), height fill ] previousButton
-                    , row [ width (px contentWidth), height fill, clip ] testimonial
-                    , el [ width (px testimonialButtonWidthPhone), height fill ] nextButton
-                    ]
-                , row [ centerX, spacing 5 ]
-                    (List.concat
-                        [ testimonials.beforeReversed |> List.map (\_ -> dot grey)
-                        , [ dot orange ]
-                        , testimonials.after |> List.map (\_ -> dot grey)
-                        ]
-                    )
-                ]
-
-        Tablet ->
-            column
-                [ width fill
-                , spacingSmall
-                , htmlAttribute (Html.Attributes.id (toID Testimonials))
-                ]
-                [ el [ centerX, Font.bold, fontHeading ] (text (toString Testimonials))
-                , row [ width fill, height (px (240 * 812 // contentWidth)) ]
-                    [ el [ width (px testimonialButtonWidthTablet), height fill ] previousButton
-                    , row [ width (px contentWidth), height fill, clip ] testimonial
-                    , el [ width (px testimonialButtonWidthTablet), height fill ] nextButton
-                    ]
-                , row [ centerX, spacing 5 ]
-                    (List.concat
-                        [ testimonials.beforeReversed |> List.map (\_ -> dot grey)
-                        , [ dot orange ]
-                        , testimonials.after |> List.map (\_ -> dot grey)
-                        ]
-                    )
-                ]
-
-        Desktop ->
-            column
-                [ width fill
-                , spacingSmall
-                , htmlAttribute (Html.Attributes.id (toID Testimonials))
-                ]
-                [ el [ centerX, Font.bold, fontHeading ] (text (toString Testimonials))
-                , row [ width fill, height (px 300) ]
-                    [ el [ width (px testimonialButtonWidthDesktop), height fill ] previousButton
-                    , row [ width (px contentWidth), height fill, clip ] testimonial
-                    , el [ width (px testimonialButtonWidthDesktop), height fill ] nextButton
-                    ]
-                , row [ centerX, spacing 5 ]
-                    (List.concat
-                        [ testimonials.beforeReversed |> List.map (\_ -> dot grey)
-                        , [ dot orange ]
-                        , testimonials.after |> List.map (\_ -> dot grey)
-                        ]
-                    )
-                ]
-
-        BigDesktop ->
-            none
-
-
-testimonialContent : Length -> Animation.State -> Testimonial -> Element msg
-testimonialContent contentWidth animation testimonial =
     column
-        ([ width contentWidth
-         , height fill
-         , centerY
-         , Font.center
-         , Font.letterSpacing 0.3
-         , Font.light
-         , fontNormal
-         ]
-            ++ List.map Element.htmlAttribute (Animation.render animation)
-        )
-        [ column [ centerX, centerY, spacing 10 ]
-            (testimonial.quote |> List.map (\q -> paragraph [] [ text q ]))
-        , paragraph
-            [ centerY
-            , paddingEach { top = 30, left = 0, right = 0, bottom = 0 }
-            , Font.bold
+        [ width fill
+        , spacingSmall
+        , htmlAttribute (Html.Attributes.id (toID Testimonials))
+        ]
+        [ el [ centerX, Font.bold, headingSize ] (text (toString Testimonials))
+        , row [ width fill, height carouselHeight ]
+            [ el [ width (px buttonWidth), height fill ] previousButton
+            , row [ width (px contentWidth), height fill, clip ] testimonialContent
+            , el [ width (px buttonWidth), height fill ] nextButton
             ]
-            [ text testimonial.name ]
-        , paragraph [ centerY, paddingEach { top = 15, left = 0, right = 0, bottom = 0 } ]
-            [ text testimonial.company ]
+        , dots
         ]
 
 
@@ -1165,21 +1130,6 @@ testimonialWidth { width } { class } =
 dot : Color -> Element msg
 dot color =
     el [ width (px 16), height (px 16), Border.rounded 8, Background.color color ] none
-
-
-testimonialButtonWidthDesktop : Int
-testimonialButtonWidthDesktop =
-    96
-
-
-testimonialButtonWidthTablet : Int
-testimonialButtonWidthTablet =
-    64
-
-
-testimonialButtonWidthPhone : Int
-testimonialButtonWidthPhone =
-    32
 
 
 contact : { a | device : Device } -> Element msg
