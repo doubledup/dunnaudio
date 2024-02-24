@@ -625,6 +625,25 @@ aboutMe { device } =
                 { src = "images/hadza.webp"
                 , description = "Sebastian recording members of the Hadza community in Tanzania"
                 }
+
+        desktop =
+            row
+                [ width fill
+                , spacingSmall
+                , htmlAttribute (Html.Attributes.id (toID AboutMe))
+                ]
+                [ column [ width (fillPortion 1), alignTop, spacingMedium, Font.center ]
+                    [ el [ centerX, Font.bold, fontHeading ] (text (toString AboutMe))
+                    , paragraph1
+                    , paragraph2
+                    , paragraph3
+                    , paragraph4
+                    ]
+                , column [ width (fillPortion 1), height fill, alignTop, spacingSmall ]
+                    [ el [ width fill, height (fillPortion 1), clip ] image1
+                    , el [ width fill, height (fillPortion 1), clip ] image2
+                    ]
+                ]
     in
     case device.class of
         Phone ->
@@ -660,26 +679,10 @@ aboutMe { device } =
                 ]
 
         Desktop ->
-            row
-                [ width fill
-                , spacingSmall
-                , htmlAttribute (Html.Attributes.id (toID AboutMe))
-                ]
-                [ column [ width (fillPortion 1), alignTop, spacingMedium, Font.center ]
-                    [ el [ centerX, Font.bold, fontHeading ] (text (toString AboutMe))
-                    , paragraph1
-                    , paragraph2
-                    , paragraph3
-                    , paragraph4
-                    ]
-                , column [ width (fillPortion 1), height fill, alignTop, spacingSmall ]
-                    [ el [ width fill, height (fillPortion 1), clip ] image1
-                    , el [ width fill, height (fillPortion 1), clip ] image2
-                    ]
-                ]
+            desktop
 
         BigDesktop ->
-            none
+            desktop
 
 
 whatIDo : { model | device : Device } -> Element Msg
@@ -714,6 +717,23 @@ whatIDo { device } =
                 { src = "images/cape-town.webp"
                 , description = "Sebastian recording sound in front of Cape Town city hall during lockdown"
                 }
+
+        desktop =
+            column [ width fill, spacingMedium ]
+                [ row [ width fill, spacingSmall ]
+                    [ el [ width (fillPortion 2), clip ] image1
+                    , column [ width (fillPortion 5), alignTop, spacingMedium, Font.center ]
+                        [ el [ centerX, alignTop, Font.bold, fontHeading ] (text "What I Do Now")
+                        , paragraph1
+                        , paragraph2
+                        , paragraph3
+                        ]
+                    ]
+                , row [ width fill, height (px 360), spacingSmall ]
+                    [ el [ width (fillPortion 1), height fill, alignTop, clip ] image2
+                    , el [ width (fillPortion 1), height fill, alignTop, clip ] image3
+                    ]
+                ]
     in
     case device.class of
         Phone ->
@@ -739,25 +759,10 @@ whatIDo { device } =
                 ]
 
         Desktop ->
-            column [ width fill, spacingMedium ]
-                [ row [ width fill, spacingSmall ]
-                    [ el [ width (fillPortion 2), clip ] image1
-                    , column [ width (fillPortion 5), alignTop, spacingMedium, Font.center ]
-                        [ el [ centerX, alignTop, Font.bold, fontHeading ] (text "What I Do Now")
-                        , paragraph1
-                        , paragraph2
-                        , paragraph3
-                        ]
-                    ]
-
-                , row [ width fill, height (px 360), spacingSmall ]
-                    [ el [ width (fillPortion 1), height fill, alignTop, clip ] image2
-                    , el [ width (fillPortion 1), height fill, alignTop, clip ] image3
-                    ]
-                ]
+            desktop
 
         BigDesktop ->
-            none
+            desktop
 
 
 achievements : { a | device : Device } -> Element msg
@@ -800,6 +805,19 @@ achievements { device } =
             , Font.bold
             , Font.center
             ]
+
+        desktop =
+            column [ width fill, spacingMedium ]
+                [ el [ centerX, Font.bold, fontHeading ] (text "Achievements")
+                , row [ width fill, spacingMedium ]
+                    [ emmy [ width (px 450), fontLarge ]
+                    , innovation [ width (px 450), fontLarge ]
+                    ]
+                , row [ width fill, spacingMedium ]
+                    [ jackson [ width (px 450), fontLarge ]
+                    , bafta [ width (px 450), fontLarge ]
+                    ]
+                ]
     in
     case device.class of
         Phone ->
@@ -825,30 +843,10 @@ achievements { device } =
                 ]
 
         Desktop ->
-            column [ width fill, spacingMedium ]
-                [ el [ centerX, Font.bold, fontHeading ] (text "Achievements")
-                , row [ width fill, spacingMedium ]
-                    [ emmy [ width (px 450), fontLarge ]
-                    , innovation [ width (px 450), fontLarge ]
-                    ]
-                , row [ width fill, spacingMedium ]
-                    [ jackson [ width (px 450), fontLarge ]
-                    , bafta [ width (px 450), fontLarge ]
-                    ]
-                ]
+            desktop
 
         BigDesktop ->
-            column [ width fill, spacingMedium ]
-                [ el [ centerX, Font.bold, fontHeading ] (text "Achievements")
-                , row [ width fill, spacingMedium ]
-                    [ emmy [ width (px 450), fontLarge ]
-                    , innovation [ width (px 450), fontLarge ]
-                    ]
-                , row [ width fill, spacingMedium ]
-                    [ jackson [ width (px 450), fontLarge ]
-                    , bafta [ width (px 450), fontLarge ]
-                    ]
-                ]
+            desktop
 
 
 portfolio : { a | device : Device } -> Element msg
@@ -878,6 +876,22 @@ portfolio { device } =
             , clientLogo { description = "abc primetime", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-2.jpg", logoWidth = logoWidth }
             , clientLogo { description = "Sky 1", src = "https://dunnaudio.com/wp-content/uploads/2022/09/broadcast-41.gif", logoWidth = logoWidth }
             ]
+
+        desktop =
+            column
+                [ width fill
+                , spacingMedium
+                , htmlAttribute (Html.Attributes.id (toID Portfolio))
+                ]
+                ([ el [ centerX, Font.bold, fontHeading ] (text (toString Portfolio))
+                 , column [ width fill, spacingSmall ]
+                    (List.map (\sublist -> row [ centerX, spacingSmall ] sublist)
+                        (sublistsOf 3 videos)
+                    )
+                 ]
+                    ++ List.map (\sublist -> row [ width fill, spacingSmall ] sublist)
+                        (sublistsOf 4 (logos 180))
+                )
     in
     case device.class of
         Phone ->
@@ -905,23 +919,10 @@ portfolio { device } =
                 ]
 
         Desktop ->
-            column
-                [ width fill
-                , spacingMedium
-                , htmlAttribute (Html.Attributes.id (toID Portfolio))
-                ]
-                ([ el [ centerX, Font.bold, fontHeading ] (text (toString Portfolio))
-                 , column [ width fill, spacingSmall ]
-                    (List.map (\sublist -> row [ centerX, spacingSmall ] sublist)
-                        (sublistsOf 3 videos)
-                    )
-                 ]
-                    ++ List.map (\sublist -> row [ width fill, spacingSmall ] sublist)
-                        (sublistsOf 4 (logos 180))
-                )
+            desktop
 
         BigDesktop ->
-            none
+            desktop
 
 
 sublistsOf : Int -> List a -> List (List a)
