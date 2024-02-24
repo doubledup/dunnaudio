@@ -1017,6 +1017,17 @@ viewTestimonials { device, window, testimonials, testimonialNonce, testimonialAn
         next =
             contentTemplate (getNext testimonials)
 
+        testimonial =
+            case testimonialTransition of
+                None ->
+                    [ current ]
+
+                Next ->
+                    [ previous, current ]
+
+                Previous ->
+                    [ current, next ]
+
         previousButton =
             el
                 [ width (px 20)
@@ -1049,17 +1060,7 @@ viewTestimonials { device, window, testimonials, testimonialNonce, testimonialAn
                 [ el [ centerX, Font.bold, fontLarge ] (text (toString Testimonials))
                 , row [ width fill, height (px (310 * 496 // contentWidth)) ]
                     [ el [ width (px testimonialButtonWidthPhone), height fill ] previousButton
-                    , row [ width (px contentWidth), height fill, clip ]
-                        (case testimonialTransition of
-                            None ->
-                                [ current ]
-
-                            Next ->
-                                [ previous, current ]
-
-                            Previous ->
-                                [ current, next ]
-                        )
+                    , row [ width (px contentWidth), height fill, clip ] testimonial
                     , el [ width (px testimonialButtonWidthPhone), height fill ] nextButton
                     ]
                 , row [ centerX, spacing 5 ]
@@ -1080,17 +1081,7 @@ viewTestimonials { device, window, testimonials, testimonialNonce, testimonialAn
                 [ el [ centerX, Font.bold, fontHeading ] (text (toString Testimonials))
                 , row [ width fill, height (px (240 * 812 // contentWidth)) ]
                     [ el [ width (px testimonialButtonWidthTablet), height fill ] previousButton
-                    , row [ width (px contentWidth), height fill, clip ]
-                        (case testimonialTransition of
-                            None ->
-                                [ current ]
-
-                            Next ->
-                                [ previous, current ]
-
-                            Previous ->
-                                [ current, next ]
-                        )
+                    , row [ width (px contentWidth), height fill, clip ] testimonial
                     , el [ width (px testimonialButtonWidthTablet), height fill ] nextButton
                     ]
                 , row [ centerX, spacing 5 ]
@@ -1111,17 +1102,7 @@ viewTestimonials { device, window, testimonials, testimonialNonce, testimonialAn
                 [ el [ centerX, Font.bold, fontHeading ] (text (toString Testimonials))
                 , row [ width fill, height (px 300) ]
                     [ el [ width (px testimonialButtonWidthDesktop), height fill ] previousButton
-                    , row [ width (px contentWidth), height fill, clip ]
-                        (case testimonialTransition of
-                            None ->
-                                [ current ]
-
-                            Next ->
-                                [ previous, current ]
-
-                            Previous ->
-                                [ current, next ]
-                        )
+                    , row [ width (px contentWidth), height fill, clip ] testimonial
                     , el [ width (px testimonialButtonWidthDesktop), height fill ] nextButton
                     ]
                 , row [ centerX, spacing 5 ]
